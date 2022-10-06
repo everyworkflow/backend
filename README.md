@@ -1,4 +1,4 @@
-# EveryWorkflow
+# EveryWorkflow Platform
 
 A symfony based every workflow platform
 
