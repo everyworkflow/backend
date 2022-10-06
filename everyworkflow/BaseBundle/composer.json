@@ -1,0 +1,43 @@
+{
+    "name": "everyworkflow/base-bundle",
+    "description": "Base bundle for every workflow project.",
+    "type": "package",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "EveryWorkflow",
+            "email": "everyworkflow@gmail.com"
+        }
+    ],
+    "require": {
+        "php": "^8.1",
+        "everyworkflow/core-bundle": "dev-main",
+        "everyworkflow/swagger-bundle": "dev-main",
+        "everyworkflow/developer-bundle": "dev-main",
+        "everyworkflow/mongo-bundle": "dev-main",
+        "everyworkflow/scope-bundle": "dev-main",
+        "everyworkflow/data-form-bundle": "dev-main",
+        "everyworkflow/setting-bundle": "dev-main",
+        "everyworkflow/data-grid-bundle": "dev-main",
+        "everyworkflow/eav-bundle": "dev-main",
+        "everyworkflow/auth-bundle": "dev-main",
+        "everyworkflow/user-bundle": "dev-main",
+        "everyworkflow/import-export-bundle": "dev-main",
+        "everyworkflow/admin-panel-bundle": "dev-main"
+    },
+    "autoload": {
+        "psr-4": {
+            "EveryWorkflow\\BaseBundle\\": "./"
+        },
+        "exclude-from-classmap": [
+            "Resources",
+            "Tests"
+        ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "EveryWorkflow\\BaseBundle\\Tests\\": "Tests/"
+        }
+    },
+    "minimum-stability": "dev"
+}

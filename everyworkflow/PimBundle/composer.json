@@ -1,0 +1,34 @@
+{
+    "name": "everyworkflow/pim-bundle",
+    "description": "Pim bundle for every workflow project.",
+    "type": "package",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "EveryWorkflow",
+            "email": "everyworkflow@gmail.com"
+        }
+    ],
+    "require": {
+        "everyworkflow/base-bundle": "dev-main",
+        "everyworkflow/dam-bundle": "dev-main",
+        "everyworkflow/cms-bundle": "dev-main",
+        "everyworkflow/catalog-category-bundle": "dev-main",
+        "everyworkflow/catalog-product-bundle": "dev-main"
+    },
+    "autoload": {
+        "psr-4": {
+            "EveryWorkflow\\PimBundle\\": "./"
+        },
+        "exclude-from-classmap": [
+            "Resources",
+            "Tests"
+        ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "EveryWorkflow\\PimBundle\\Tests\\": "Tests/"
+        }
+    },
+    "minimum-stability": "dev"
+}

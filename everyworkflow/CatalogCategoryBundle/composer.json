@@ -1,0 +1,30 @@
+{
+    "name": "everyworkflow/catalog-category-bundle",
+    "description": "Catalog category bundle for every workflow project.",
+    "type": "package",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "EveryWorkflow",
+            "email": "everyworkflow@gmail.com"
+        }
+    ],
+    "require": {
+        "everyworkflow/eav-bundle": "dev-main"
+    },
+    "autoload": {
+        "psr-4": {
+            "EveryWorkflow\\CatalogCategoryBundle\\": "./"
+        },
+        "exclude-from-classmap": [
+            "Resources",
+            "Tests"
+        ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "EveryWorkflow\\CatalogCategoryBundle\\Tests\\": "Tests/"
+        }
+    },
+    "minimum-stability": "dev"
+}

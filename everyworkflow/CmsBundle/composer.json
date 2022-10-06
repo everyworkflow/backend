@@ -1,0 +1,37 @@
+{
+    "name": "everyworkflow/cms-bundle",
+    "description": "Cms bundle for every workflow project.",
+    "type": "package",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "EveryWorkflow",
+            "email": "everyworkflow@gmail.com"
+        }
+    ],
+    "require": {
+        "everyworkflow/base-bundle": "dev-main",
+        "everyworkflow/dam-bundle": "dev-main",
+        "everyworkflow/page-builder-bundle": "dev-main",
+        "everyworkflow/page-bundle": "dev-main",
+        "everyworkflow/url-rewrite-bundle": "dev-main",
+        "everyworkflow/static-block-bundle": "dev-main",
+        "everyworkflow/menu-bundle": "dev-main",
+        "everyworkflow/front-panel-bundle": "dev-main"
+    },
+    "autoload": {
+        "psr-4": {
+            "EveryWorkflow\\CmsBundle\\": "./"
+        },
+        "exclude-from-classmap": [
+            "Resources",
+            "Tests"
+        ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "EveryWorkflow\\CmsBundle\\Tests\\": "Tests/"
+        }
+    },
+    "minimum-stability": "dev"
+}

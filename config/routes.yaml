@@ -6,8 +6,8 @@ kernel:
   resource: ../src/Kernel.php
   type: annotation
 
-EveryWorkflowFrontPanelBundle:
-  resource: '@EveryWorkflowFrontPanelBundle/Resources/config/routes.yaml'
+# EveryWorkflowFrontPanelBundle:
+#   resource: '@EveryWorkflowFrontPanelBundle/Resources/config/routes.yaml'
 
 EveryWorkflowAdminPanelBundle:
   resource: '@EveryWorkflowAdminPanelBundle/Resources/config/routes.yaml'

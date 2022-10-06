@@ -1,0 +1,27 @@
+{
+    "name": "everyworkflow/setting-bundle",
+    "description": "Setting bundle for every workflow project.",
+    "type": "package",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "EveryWorkflow",
+            "email": "everyworkflow@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "EveryWorkflow\\SettingBundle\\": "./"
+        },
+        "exclude-from-classmap": [
+            "Resources",
+            "Tests"
+        ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "EveryWorkflow\\SettingBundle\\Tests\\": "Tests/"
+        }
+    },
+    "minimum-stability": "dev"
+}

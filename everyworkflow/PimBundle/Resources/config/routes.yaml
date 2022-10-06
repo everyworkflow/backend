@@ -1,0 +1,9 @@
+EveryWorkflowCatalogCategoryBundle:
+  resource: '@EveryWorkflowCatalogCategoryBundle/Resources/config/routes.yaml'
+
+EveryWorkflowCatalogProductBundle:
+  resource: '@EveryWorkflowCatalogProductBundle/Resources/config/routes.yaml'
+
+# EveryWorkflowPimBundle_Controller:
+#     resource: "../../Controller/"
+#     type: annotation

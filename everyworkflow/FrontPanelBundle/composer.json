@@ -1,0 +1,31 @@
+{
+    "name": "everyworkflow/front-panel-bundle",
+    "description": "Front panel bundle for every workflow project.",
+    "type": "package",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "EveryWorkflow",
+            "email": "everyworkflow@gmail.com"
+        }
+    ],
+    "require": {
+        "symfony/twig-bundle": "6.0.*",
+        "everyworkflow/core-bundle": "dev-main"
+    },
+    "autoload": {
+        "psr-4": {
+            "EveryWorkflow\\FrontPanelBundle\\": "./"
+        },
+        "exclude-from-classmap": [
+            "Resources",
+            "Tests"
+        ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "EveryWorkflow\\FrontPanelBundle\\Tests\\": "Tests/"
+        }
+    },
+    "minimum-stability": "dev"
+}

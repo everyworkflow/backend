@@ -1,0 +1,14 @@
+admin_panel:
+  sidebar_menu:
+    system.entity:
+      label: Entity
+      path: /system/entity
+      parent: system
+    system.attribute:
+      label: Attribute
+      path: /system/attribute
+      parent: system
+    system.attribute_group:
+      label: Attribute Group
+      path: /system/attribute-group
+      parent: system

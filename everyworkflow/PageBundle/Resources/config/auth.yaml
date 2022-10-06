@@ -1,0 +1,7 @@
+auth:
+  permissions:
+    cms.page:
+      view: View Cms page
+      list: List Cms page
+      save: Save Cms page
+      delete: Delete Cms page

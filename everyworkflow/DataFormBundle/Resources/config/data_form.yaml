@@ -1,0 +1,31 @@
+data_form:
+    default:
+        section: base_section
+        field: text_field
+    sections:
+        base_section: EveryWorkflow\DataFormBundle\Section\BaseSection
+        card_section: EveryWorkflow\DataFormBundle\Section\CardSection
+        col_section: EveryWorkflow\DataFormBundle\Section\ColSection
+        row_section: EveryWorkflow\DataFormBundle\Section\RowSection
+    fields:
+        base_field: EveryWorkflow\DataFormBundle\Field\BaseField
+        text_field: EveryWorkflow\DataFormBundle\Field\TextField
+        textarea_field: EveryWorkflow\DataFormBundle\Field\TextareaField
+        markdown_field: EveryWorkflow\DataFormBundle\Field\MarkdownField
+        wysiwyg_field: EveryWorkflow\DataFormBundle\Field\WysiwygField
+        date_picker_field: EveryWorkflow\DataFormBundle\Field\DatePickerField
+        time_picker_field: EveryWorkflow\DataFormBundle\Field\TimePickerField
+        date_time_picker_field: EveryWorkflow\DataFormBundle\Field\DateTimePickerField
+        time_range_picker_field: EveryWorkflow\DataFormBundle\Field\TimeRangePickerField
+        date_range_picker_field: EveryWorkflow\DataFormBundle\Field\DateRangePickerField
+        date_time_range_picker_field: EveryWorkflow\DataFormBundle\Field\DateTimeRangePickerField
+        select_field: EveryWorkflow\DataFormBundle\Field\SelectField
+        multi_select_field: EveryWorkflow\DataFormBundle\Field\MultiSelectField
+        radio_field: EveryWorkflow\DataFormBundle\Field\RadioField
+        check_field: EveryWorkflow\DataFormBundle\Field\CheckField
+        switch_field: EveryWorkflow\DataFormBundle\Field\SwitchField
+        file_field: EveryWorkflow\DataFormBundle\Field\FileField
+        color_picker_field: EveryWorkflow\DataFormBundle\Field\ColorPickerField
+        column_field: EveryWorkflow\DataFormBundle\Field\ColumnField
+        row_field: EveryWorkflow\DataFormBundle\Field\RowField
+        tree_select_field: EveryWorkflow\DataFormBundle\Field\TreeSelectField

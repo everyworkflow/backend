@@ -1,0 +1,5 @@
+auth:
+  permissions:
+    setting:
+      view: View Setting
+      save: Save Setting

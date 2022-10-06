@@ -1,0 +1,6 @@
+EveryWorkflowCustomerBundle:
+    resource: '@EveryWorkflowCustomerBundle/Resources/config/routes.yaml'
+
+# EveryWorkflowCrmBundle_Controller:
+#     resource: "../../Controller/"
+#     type: annotation

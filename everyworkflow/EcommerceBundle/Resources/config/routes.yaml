@@ -1,0 +1,6 @@
+EveryWorkflowSalesOrderBundle:
+    resource: '@EveryWorkflowSalesOrderBundle/Resources/config/routes.yaml'
+
+# EveryWorkflowEcommerceBundle_Controller:
+#     resource: "../../Controller/"
+#     type: annotation

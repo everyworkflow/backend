@@ -1,0 +1,31 @@
+{
+    "name": "everyworkflow/data-grid-bundle",
+    "description": "Data grid bundle for every workflow project.",
+    "type": "package",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "EveryWorkflow",
+            "email": "everyworkflow@gmail.com"
+        }
+    ],
+    "require": {
+        "nesbot/carbon": "^2.55",
+        "everyworkflow/core-bundle": "dev-main"
+    },
+    "autoload": {
+        "psr-4": {
+            "EveryWorkflow\\DataGridBundle\\": "./"
+        },
+        "exclude-from-classmap": [
+            "Resources",
+            "Tests"
+        ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "EveryWorkflow\\DataGridBundle\\Tests\\": "Tests/"
+        }
+    },
+    "minimum-stability": "dev"
+}

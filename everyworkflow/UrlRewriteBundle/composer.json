@@ -1,0 +1,32 @@
+{
+    "name": "everyworkflow/url-rewrite-bundle",
+    "description": "Url rewrite bundle for every workflow project.",
+    "type": "package",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "EveryWorkflow",
+            "email": "everyworkflow@gmail.com"
+        }
+    ],
+    "require": {
+        "everyworkflow/mongo-bundle": "dev-main",
+        "everyworkflow/data-form-bundle": "dev-main",
+        "everyworkflow/data-grid-bundle": "dev-main"
+    },
+    "autoload": {
+        "psr-4": {
+            "EveryWorkflow\\UrlRewriteBundle\\": "./"
+        },
+        "exclude-from-classmap": [
+            "Resources",
+            "Tests"
+        ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "EveryWorkflow\\UrlRewriteBundle\\Tests\\": "Tests/"
+        }
+    },
+    "minimum-stability": "dev"
+}

@@ -1,0 +1,10 @@
+setting:
+    menu:
+        catalog:
+            label: Catalog
+            sort_order: 7000
+        catalog.category:
+            label: Category
+            path: /catalog/category
+            parent: catalog
+            # form_class: EveryWorkflow\SettingBundle\Form\General\WebSettingForm

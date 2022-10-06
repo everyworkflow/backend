@@ -1,0 +1,7 @@
+auth:
+  permissions:
+    user:
+      view: View User
+      list: List User
+      save: Save User
+      delete: Delete User

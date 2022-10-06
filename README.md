@@ -29,19 +29,9 @@ Version: Under Development `dev-main`
 - `bin/console mongo:migrate` to migrate mongo migrations
 
 
-## React setup
+## Swagger UI
 
-- `docker-compose exec cli bash` to get inside cli container if not
-- `yarn install` to install node dependencies
-- `yarn build` for production build
-- `yarn watch` to watch file changes for development
-- `yarn watch:admin_panel`
-- `yarn watch:front_panel`
-
-React app URL:-
-
-- Front Panel: http://localhost:8080
-- Admin Panel: http://localhost:8080/admin/
+- http://localhost:8080/swagger
 
 
 ## Tests
@@ -61,12 +51,10 @@ React app URL:-
 - `XDEBUG_MODE=coverage vendor/bin/phpunit --coverage-html public/test-html`
 - Visit: http://localhost:8080/test-html/index.html
 
+
 ## Quick links
 
 - https://symfony.com
 - https://twig.symfony.com
 - https://docs.mongodb.com/php-library
 - https://carbon.nesbot.com
-- https://reactjs.org
-- https://ant.design
-- https://jestjs.io

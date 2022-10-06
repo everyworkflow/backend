@@ -1,0 +1,7 @@
+auth:
+  permissions:
+    catalog.product:
+      view: View Catalog product
+      list: List Catalog product
+      save: Save Catalog product
+      delete: Delete Catalog product

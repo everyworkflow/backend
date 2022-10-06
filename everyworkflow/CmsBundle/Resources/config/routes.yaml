@@ -1,0 +1,15 @@
+EveryWorkflowPageBuilderBundle:
+    resource: '@EveryWorkflowPageBuilderBundle/Resources/config/routes.yaml'
+
+EveryWorkflowStaticBlockBundle:
+    resource: '@EveryWorkflowStaticBlockBundle/Resources/config/routes.yaml'
+
+EveryWorkflowPageBundle:
+    resource: '@EveryWorkflowPageBundle/Resources/config/routes.yaml'
+
+EveryWorkflowUrlRewriteBundle:
+    resource: '@EveryWorkflowUrlRewriteBundle/Resources/config/routes.yaml'
+
+# EveryWorkflowCmsBundle_Controller:
+#     resource: "../../Controller/"
+#     type: annotation

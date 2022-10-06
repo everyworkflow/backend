@@ -1,0 +1,7 @@
+auth:
+  permissions:
+    catalog.category:
+      view: View Catalog category
+      list: List Catalog category
+      save: Save Catalog category
+      delete: Delete Catalog category

@@ -1,0 +1,25 @@
+page_builder:
+    default:
+        block: paragraph_block
+    blocks:
+        container_block: EveryWorkflow\PageBuilderBundle\Block\ContainerBlock
+        row_block: EveryWorkflow\PageBuilderBundle\Block\RowBlock
+        col_block: EveryWorkflow\PageBuilderBundle\Block\ColBlock
+        heading_block: EveryWorkflow\PageBuilderBundle\Block\HeadingBlock
+        paragraph_block: EveryWorkflow\PageBuilderBundle\Block\ParagraphBlock
+        button_block: EveryWorkflow\PageBuilderBundle\Block\ButtonBlock
+        link_wrapper_block: EveryWorkflow\PageBuilderBundle\Block\LinkWrapperBlock
+        image_block: EveryWorkflow\PageBuilderBundle\Block\ImageBlock
+        data_form_block: EveryWorkflow\PageBuilderBundle\Block\DataFormBlock
+        markdown_block: EveryWorkflow\PageBuilderBundle\Block\MarkdownBlock
+    block_forms:
+        container_block: EveryWorkflow\PageBuilderBundle\Form\Block\ContainerBlockForm
+        row_block: EveryWorkflow\PageBuilderBundle\Form\Block\RowBlockForm
+        col_block: EveryWorkflow\PageBuilderBundle\Form\Block\ColBlockForm
+        heading_block: EveryWorkflow\PageBuilderBundle\Form\Block\HeadingBlockForm
+        paragraph_block: EveryWorkflow\PageBuilderBundle\Form\Block\ParagraphBlockForm
+        button_block: EveryWorkflow\PageBuilderBundle\Form\Block\ButtonBlockForm
+        link_wrapper_block: EveryWorkflow\PageBuilderBundle\Form\Block\LinkWrapperBlockForm
+        image_block: EveryWorkflow\PageBuilderBundle\Form\Block\ImageBlockForm
+        data_form_block: EveryWorkflow\PageBuilderBundle\Form\Block\DataFormBlockForm
+        markdown_block: EveryWorkflow\PageBuilderBundle\Form\Block\MarkdownBlockForm

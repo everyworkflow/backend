@@ -1,0 +1,33 @@
+{
+    "name": "everyworkflow/static-block-bundle",
+    "description": "Static block bundle for every workflow project.",
+    "type": "package",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "EveryWorkflow",
+            "email": "everyworkflow@gmail.com"
+        }
+    ],
+    "require": {
+        "everyworkflow/mongo-bundle": "dev-main",
+        "everyworkflow/data-form-bundle": "dev-main",
+        "everyworkflow/data-grid-bundle": "dev-main",
+        "everyworkflow/page-builder-bundle": "dev-main"
+    },
+    "autoload": {
+        "psr-4": {
+            "EveryWorkflow\\StaticBlockBundle\\": "./"
+        },
+        "exclude-from-classmap": [
+            "Resources",
+            "Tests"
+        ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "EveryWorkflow\\StaticBlockBundle\\Tests\\": "Tests/"
+        }
+    },
+    "minimum-stability": "dev"
+}

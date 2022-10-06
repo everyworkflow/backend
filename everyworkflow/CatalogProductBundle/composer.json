@@ -1,0 +1,30 @@
+{
+    "name": "everyworkflow/catalog-product-bundle",
+    "description": "Catalog product bundle for every workflow project.",
+    "type": "package",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "EveryWorkflow",
+            "email": "everyworkflow@gmail.com"
+        }
+    ],
+    "require": {
+        "everyworkflow/eav-bundle": "dev-main"
+    },
+    "autoload": {
+        "psr-4": {
+            "EveryWorkflow\\CatalogProductBundle\\": "./"
+        },
+        "exclude-from-classmap": [
+            "Resources",
+            "Tests"
+        ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "EveryWorkflow\\CatalogProductBundle\\Tests\\": "Tests/"
+        }
+    },
+    "minimum-stability": "dev"
+}

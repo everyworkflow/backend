@@ -1,0 +1,6 @@
+EveryWorkflowMediaManagerBundle:
+    resource: '@EveryWorkflowMediaManagerBundle/Resources/config/routes.yaml'
+
+# EveryWorkflowDamBundle_Controller:
+#     resource: "../../Controller/"
+#     type: annotation

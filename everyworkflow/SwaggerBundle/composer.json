@@ -1,0 +1,30 @@
+{
+    "name": "everyworkflow/swagger-bundle",
+    "description": "Swagger bundle for every workflow project.",
+    "type": "package",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "EveryWorkflow",
+            "email": "everyworkflow@gmail.com"
+        }
+    ],
+    "require": {
+        "symfony/asset": "6.0.*",
+        "everyworkflow/core-bundle": "dev-main"
+    },
+    "autoload": {
+        "psr-4": {
+            "EveryWorkflow\\SwaggerBundle\\": "./"
+        },
+        "exclude-from-classmap": [
+            "Resources",
+            "Tests"
+        ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "EveryWorkflow\\SwaggerBundle\\Tests\\": "Tests/"
+        }
+    }
+}

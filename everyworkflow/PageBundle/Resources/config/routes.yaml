@@ -1,0 +1,3 @@
+EveryWorkflowPageBundle_Controller:
+    resource: "../../Controller/"
+    type: annotation

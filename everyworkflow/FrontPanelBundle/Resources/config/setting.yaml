@@ -1,0 +1,9 @@
+setting:
+    menu:
+        web_client:
+            label: Web Client
+            sort_order: 10000
+        frontend:
+            label: Frontend
+            parent: web_client
+            form_class: EveryWorkflow\FrontendBundle\Form\FrontendSettingForm

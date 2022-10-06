@@ -1,0 +1,21 @@
+<?php
+
+{{ generate_file_header | raw }}
+
+declare(strict_types=1);
+
+namespace {{ file_namespace }};
+
+use EveryWorkflow\CoreBundle\Annotation\EwRoute;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
+
+class {{ file_name }} extends AbstractController
+{
+    #[EwRoute(path: "test", name: 'test', methods: 'GET')]
+    public function __invoke(Request $request): JsonResponse
+    {
+        return new JsonResponse();
+    }
+}

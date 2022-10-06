@@ -1,0 +1,31 @@
+{
+    "name": "everyworkflow/page-bundle",
+    "description": "Page bundle for every workflow project.",
+    "type": "package",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "EveryWorkflow",
+            "email": "everyworkflow@gmail.com"
+        }
+    ],
+    "require": {
+        "everyworkflow/eav-bundle": "dev-main",
+        "everyworkflow/page-builder-bundle": "dev-main"
+    },
+    "autoload": {
+        "psr-4": {
+            "EveryWorkflow\\PageBundle\\": "./"
+        },
+        "exclude-from-classmap": [
+            "Resources",
+            "Tests"
+        ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "EveryWorkflow\\PageBundle\\Tests\\": "Tests/"
+        }
+    },
+    "minimum-stability": "dev"
+}

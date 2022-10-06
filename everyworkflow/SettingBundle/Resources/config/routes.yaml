@@ -1,0 +1,3 @@
+EveryWorkflowSettingBundle_Controller:
+    resource: "../../Controller/"
+    type: annotation

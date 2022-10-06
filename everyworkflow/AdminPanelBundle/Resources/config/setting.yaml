@@ -1,0 +1,9 @@
+setting:
+    menu:
+        web_client:
+            label: Web Client
+            sort_order: 10000
+        admin_panel:
+            label: Admin Panel
+            parent: web_client
+            form_class: EveryWorkflow\AdminPanelBundle\Form\AdminPanelSettingForm

@@ -1,0 +1,12 @@
+auth:
+  permissions:
+    eav.entity:
+      view: View Entity
+      list: List Entity
+      save: Save Entity
+      delete: Delete Entity
+    eav.attribute:
+      view: View Attribute
+      list: List Attribute
+      save: Save Attribute
+      delete: Delete Attribute

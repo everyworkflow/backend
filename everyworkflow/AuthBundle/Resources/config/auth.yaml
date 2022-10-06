@@ -1,0 +1,10 @@
+auth:
+  permissions:
+    auth:
+      login: Login
+      admin: Admin Login
+    auth.role:
+      view: View Role
+      list: List Role
+      save: Save Role
+      delete: Delete Role

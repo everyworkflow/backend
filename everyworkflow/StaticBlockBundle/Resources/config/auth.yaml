@@ -1,0 +1,7 @@
+auth:
+  permissions:
+    cms.static_block:
+      view: View Static block
+      list: List Static block
+      save: Save Static block
+      delete: Delete Static block

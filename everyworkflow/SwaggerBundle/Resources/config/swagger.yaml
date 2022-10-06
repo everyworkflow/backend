@@ -1,0 +1,8 @@
+swagger:
+    info:
+        title: EveryWorkflow API
+        description: EveryWorkflow API documentation
+        contact:
+            email: everyworkflow@gmail.com
+    servers:
+        # url: http://localhost:8080

@@ -1,0 +1,10 @@
+core:
+    date_time:
+        date_time_format: Y-m-d H:i:s
+        time_zone: Asia/Kathmandu
+    validation_types:
+        array: EveryWorkflow\CoreBundle\Validation\Type\ArrayValidation
+        string: EveryWorkflow\CoreBundle\Validation\Type\StringValidation
+        number: EveryWorkflow\CoreBundle\Validation\Type\NumberValidation
+        boolean: EveryWorkflow\CoreBundle\Validation\Type\BooleanValidation
+        date_time: EveryWorkflow\CoreBundle\Validation\Type\DateTimeValidation

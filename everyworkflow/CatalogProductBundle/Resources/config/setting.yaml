@@ -1,0 +1,13 @@
+setting:
+    menu:
+        catalog:
+            label: Catalog
+            sort_order: 7000
+        catalog.product:
+            label: Product
+            parent: catalog
+            # form_class: EveryWorkflow\SettingBundle\Form\General\WebSettingForm
+        catalog.inventory:
+            label: Inventory
+            parent: catalog
+            # form_class: EveryWorkflow\SettingBundle\Form\General\WebSettingForm

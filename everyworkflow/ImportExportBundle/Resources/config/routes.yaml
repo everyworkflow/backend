@@ -1,0 +1,3 @@
+EveryWorkflowImportexportBundle_Controller:
+    resource: "../../Controller/"
+    type: annotation

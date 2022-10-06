@@ -1,0 +1,3 @@
+EveryWorkflowStaticBlockBundle_Controller:
+    resource: "../../Controller/"
+    type: annotation
