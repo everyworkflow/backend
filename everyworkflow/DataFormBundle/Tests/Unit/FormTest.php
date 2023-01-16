@@ -9,17 +9,21 @@ declare(strict_types=1);
 namespace EveryWorkflow\DataFormBundle\Tests\Unit;
 
 use EveryWorkflow\DataFormBundle\Factory\FieldOptionFactory;
+use EveryWorkflow\DataFormBundle\Factory\FormFactory;
+use EveryWorkflow\DataFormBundle\Factory\FormFieldFactory;
 use EveryWorkflow\DataFormBundle\Field\Select\Option;
-use EveryWorkflow\DataFormBundle\Tests\BaseFormTestCase;
+use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
-class FormTest extends BaseFormTestCase
+class FormTest extends KernelTestCase
 {
     public function test_basic_form(): void
     {
+        self::bootKernel();
         $container = self::getContainer();
-        $formFieldFactory = $this->getFormFieldFactory($container);
-        $formFactory = $this->getFormFactory($container);
-        $fieldOptionFactory = new FieldOptionFactory($this->getDataObjectFactory());
+
+        $formFactory = $container->get(FormFactory::class);
+        $formFieldFactory = $container->get(FormFieldFactory::class);
+        $fieldOptionFactory = $container->get(FieldOptionFactory::class);
 
         $form  = $formFactory->create();
 
@@ -60,24 +64,24 @@ class FormTest extends BaseFormTestCase
 
         $formData = $form->toArray();
 
-        self::assertArrayHasKey('fields', $formData);
+        $this->assertArrayHasKey('fields', $formData);
 
-        self::assertArrayHasKey('label', $formData['fields'][0]);
-        self::assertArrayHasKey('name', $formData['fields'][0]);
-        self::assertArrayHasKey('field_type', $formData['fields'][0]);
+        $this->assertArrayHasKey('label', $formData['fields'][0]);
+        $this->assertArrayHasKey('name', $formData['fields'][0]);
+        $this->assertArrayHasKey('field_type', $formData['fields'][0]);
 
-        self::assertArrayHasKey('label', $formData['fields'][2]);
-        self::assertArrayHasKey('name', $formData['fields'][2]);
-        self::assertArrayHasKey('field_type', $formData['fields'][2]);
-        self::assertArrayHasKey('input_type', $formData['fields'][2]);
-        self::assertEquals('email', $formData['fields'][2]['input_type']);
+        $this->assertArrayHasKey('label', $formData['fields'][2]);
+        $this->assertArrayHasKey('name', $formData['fields'][2]);
+        $this->assertArrayHasKey('field_type', $formData['fields'][2]);
+        $this->assertArrayHasKey('input_type', $formData['fields'][2]);
+        $this->assertEquals('email', $formData['fields'][2]['input_type']);
 
-        self::assertArrayHasKey('label', $formData['fields'][3]);
-        self::assertArrayHasKey('name', $formData['fields'][3]);
-        self::assertArrayHasKey('field_type', $formData['fields'][3]);
-        self::assertArrayHasKey('options', $formData['fields'][3]);
-        self::assertArrayHasKey('key', $formData['fields'][3]['options'][0]);
-        self::assertArrayHasKey('value', $formData['fields'][3]['options'][0]);
-        self::assertEquals('male', $formData['fields'][3]['options'][0]['key']);
+        $this->assertArrayHasKey('label', $formData['fields'][3]);
+        $this->assertArrayHasKey('name', $formData['fields'][3]);
+        $this->assertArrayHasKey('field_type', $formData['fields'][3]);
+        $this->assertArrayHasKey('options', $formData['fields'][3]);
+        $this->assertArrayHasKey('key', $formData['fields'][3]['options'][0]);
+        $this->assertArrayHasKey('value', $formData['fields'][3]['options'][0]);
+        $this->assertEquals('male', $formData['fields'][3]['options'][0]['key']);
     }
 }

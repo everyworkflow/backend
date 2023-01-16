@@ -9,14 +9,19 @@ declare(strict_types=1);
 namespace EveryWorkflow\CoreBundle\Tests\Unit\Model;
 
 use EveryWorkflow\CoreBundle\Model\DataObject;
+use EveryWorkflow\CoreBundle\Model\DataObjectFactory;
 use EveryWorkflow\CoreBundle\Model\DataObjectInterface;
-use EveryWorkflow\CoreBundle\Tests\BaseTestCase;
+use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
-class DataObjectBaseTest extends BaseTestCase
+class DataObjectBaseTest extends KernelTestCase
 {
     public function test_can_do_basic_things(): void
     {
-        $dataObj = new DataObject();
+        self::bootKernel();
+        $container = self::getContainer();
+
+        $dataObjectFactory = $container->get(DataObjectFactory::class);
+        $dataObj = $dataObjectFactory->create();
 
         /* I must be able to set any value to data object */
         $dataObj->setData('name', 'John Doe');

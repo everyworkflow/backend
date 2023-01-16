@@ -7,18 +7,22 @@
 namespace EveryWorkflow\DataFormBundle\Tests\Unit;
 
 use EveryWorkflow\DataFormBundle\Factory\FieldOptionFactory;
+use EveryWorkflow\DataFormBundle\Factory\FormFieldFactory;
 use EveryWorkflow\DataFormBundle\Field\Select\Option;
 use EveryWorkflow\DataFormBundle\Field\SelectField;
 use EveryWorkflow\DataFormBundle\Field\TextField;
-use EveryWorkflow\DataFormBundle\Tests\BaseFormTestCase;
+use EveryWorkflow\DataFormBundle\Model\DataFormConfigProvider;
+use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
-class FormFieldTest extends BaseFormTestCase
+class FormFieldTest extends KernelTestCase
 {
     public function test_default_text_form_field(): void
     {
+        self::bootKernel();
         $container = self::getContainer();
-        $dataFormConfigProvider = $this->getFormConfigProvider();
-        $formFieldFactory = $this->getFormFieldFactory($container);
+
+        $dataFormConfigProvider = $container->get(DataFormConfigProvider::class);
+        $formFieldFactory = $container->get(FormFieldFactory::class);
 
         /** @var TextField $firstNameField */
         $firstNameField = $formFieldFactory->create([
@@ -26,7 +30,7 @@ class FormFieldTest extends BaseFormTestCase
             'name' => 'first_name',
         ]);
 
-        self::assertEquals(
+        $this->assertEquals(
             $dataFormConfigProvider->get('default.field'),
             $firstNameField->getFieldType(),
             'Default field type must be equal to ' . $dataFormConfigProvider->get('default.field')
@@ -41,16 +45,18 @@ class FormFieldTest extends BaseFormTestCase
 
         $lastNameFieldData = $lastNameField->toArray();
 
-        self::assertArrayHasKey('label', $lastNameFieldData);
-        self::assertArrayHasKey('name', $lastNameFieldData);
-        self::assertArrayHasKey('field_type', $lastNameFieldData);
+        $this->assertArrayHasKey('label', $lastNameFieldData);
+        $this->assertArrayHasKey('name', $lastNameFieldData);
+        $this->assertArrayHasKey('field_type', $lastNameFieldData);
     }
 
     public function test_select_field(): void
     {
+        self::bootKernel();
         $container = self::getContainer();
-        $formFieldFactory = $this->getFormFieldFactory($container);
-        $fieldOptionFactory = new FieldOptionFactory($this->getDataObjectFactory());
+
+        $formFieldFactory = $container->get(FormFieldFactory::class);
+        $fieldOptionFactory = $container->get(FieldOptionFactory::class);
 
         /** @var SelectField $selectField */
         $selectField = $formFieldFactory->create([
@@ -75,15 +81,15 @@ class FormFieldTest extends BaseFormTestCase
 
         $genderFieldData = $selectField->toArray();
 
-        self::assertArrayHasKey('label', $genderFieldData);
-        self::assertArrayHasKey('name', $genderFieldData);
-        self::assertArrayHasKey('field_type', $genderFieldData);
-        self::assertArrayHasKey('options', $genderFieldData);
+        $this->assertArrayHasKey('label', $genderFieldData);
+        $this->assertArrayHasKey('name', $genderFieldData);
+        $this->assertArrayHasKey('field_type', $genderFieldData);
+        $this->assertArrayHasKey('options', $genderFieldData);
 
-        self::assertArrayHasKey('key', $genderFieldData['options'][0]);
-        self::assertArrayHasKey('value', $genderFieldData['options'][0]);
+        $this->assertArrayHasKey('key', $genderFieldData['options'][0]);
+        $this->assertArrayHasKey('value', $genderFieldData['options'][0]);
 
-        self::assertEquals('female', $genderFieldData['options'][1]['key']);
-        self::assertEquals('Female', $genderFieldData['options'][1]['value']);
+        $this->assertEquals('female', $genderFieldData['options'][1]['key']);
+        $this->assertEquals('Female', $genderFieldData['options'][1]['value']);
     }
 }
