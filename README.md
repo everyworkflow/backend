@@ -26,6 +26,7 @@ Version: Under Development `dev-main`
 - `composer install` to install composer dependencies
 - `bin/console mongo:database:drop` to drop database
 - `bin/console mongo:migrate` to migrate mongo migrations
+- `bin/console mongo:sync` to sync mongo indexes
 
 
 ## Seeder
