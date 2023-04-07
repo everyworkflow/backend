@@ -27,6 +27,7 @@ class SystemSettingForm extends Form implements SystemSettingFormInterface
                 'title' => 'Storage',
             ])->setFields($this->getStorageFields()),
         ];
+
         return array_merge($sections, parent::getSections());
     }
 

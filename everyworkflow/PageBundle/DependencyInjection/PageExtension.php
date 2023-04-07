@@ -18,9 +18,8 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 class PageExtension extends Extension implements PrependExtensionInterface
 {
     /**
-     * @param array $configs
-     * @param ContainerBuilder $container
      * @throws \Exception
+     *
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
     public function load(array $configs, ContainerBuilder $container): void

@@ -40,4 +40,8 @@ return [
     Symfony\Bundle\MonologBundle\MonologBundle::class => ['all' => true],
     EveryWorkflow\SwaggerBundle\EveryWorkflowSwaggerBundle::class => ['all' => true],
     EveryWorkflow\MenuBundle\EveryWorkflowMenuBundle::class => ['all' => true],
+    EveryWorkflow\CronBundle\EveryWorkflowCronBundle::class => ['all' => true],
+    EveryWorkflow\IndexerBundle\EveryWorkflowIndexerBundle::class => ['all' => true],
+    EveryWorkflow\CatalogSearchBundle\EveryWorkflowCatalogSearchBundle::class => ['all' => true],
+    EveryWorkflow\TypesenseBundle\EveryWorkflowTypesenseBundle::class => ['all' => true],
 ];

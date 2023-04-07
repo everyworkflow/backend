@@ -18,21 +18,20 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 class CatalogProductExtension extends Extension implements PrependExtensionInterface
 {
     /**
-     * @param array $configs
-     * @param ContainerBuilder $container
      * @throws \Exception
+     *
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
     public function load(array $configs, ContainerBuilder $container): void
     {
-        $loader = new PhpFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
+        $loader = new PhpFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.php');
     }
 
     public function prepend(ContainerBuilder $container): void
     {
         $bundles = $container->getParameter('kernel.bundles');
-        $ymlLoader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
+        $ymlLoader = new YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         if (isset($bundles['EveryWorkflowAuthBundle'])) {
             $ymlLoader->load('auth.yaml');
         }

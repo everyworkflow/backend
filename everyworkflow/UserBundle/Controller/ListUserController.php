@@ -16,15 +16,13 @@ use Symfony\Component\HttpFoundation\Request;
 
 class ListUserController extends AbstractController
 {
-    protected UserDataGrid $userDataGrid;
-
-    public function __construct(UserDataGrid $userDataGrid)
-    {
-        $this->userDataGrid = $userDataGrid;
+    public function __construct(
+        protected UserDataGrid $userDataGrid
+    ) {
     }
 
     #[EwRoute(
-        path: "user",
+        path: 'user',
         name: 'user',
         priority: 10,
         methods: 'GET',

@@ -16,16 +16,19 @@ use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 class FormTest extends KernelTestCase
 {
-    public function test_basic_form(): void
+    public function testBasicForm(): void
     {
         self::bootKernel();
         $container = self::getContainer();
 
+        /** @var FormFactory $formFactory */
         $formFactory = $container->get(FormFactory::class);
+        /** @var FormFieldFactory $formFieldFactory */
         $formFieldFactory = $container->get(FormFieldFactory::class);
+        /** @var FieldOptionFactory $fieldOptionFactory */
         $fieldOptionFactory = $container->get(FieldOptionFactory::class);
 
-        $form  = $formFactory->create();
+        $form = $formFactory->create();
 
         $form->setFields([
             $formFieldFactory->create([

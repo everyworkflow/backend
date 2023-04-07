@@ -18,19 +18,14 @@ use EveryWorkflow\DataFormBundle\Model\Form;
 
 class RoleForm extends Form implements RoleFormInterface
 {
-    protected AuthConfigProviderInterface $authConfigProvider;
-    protected FieldOptionFactoryInterface $fieldOptionFactory;
-
     public function __construct(
         DataObjectInterface $dataObject,
         FormSectionFactoryInterface $formSectionFactory,
         FormFieldFactoryInterface $formFieldFactory,
-        AuthConfigProviderInterface $authConfigProvider,
-        FieldOptionFactoryInterface $fieldOptionFactory
+        protected AuthConfigProviderInterface $authConfigProvider,
+        protected FieldOptionFactoryInterface $fieldOptionFactory
     ) {
         parent::__construct($dataObject, $formSectionFactory, $formFieldFactory);
-        $this->authConfigProvider = $authConfigProvider;
-        $this->fieldOptionFactory = $fieldOptionFactory;
     }
 
     protected function getPermissionOptions(): array
@@ -42,7 +37,7 @@ class RoleForm extends Form implements RoleFormInterface
             foreach ($item as $key => $val) {
                 $childOption = $this->fieldOptionFactory->create(Option::class, [
                     'title' => $val,
-                    'value' => $group . '.' . $key,
+                    'value' => $group.'.'.$key,
                     'sort_order' => $sortOrder,
                 ]);
                 ++$sortOrder;
@@ -70,6 +65,7 @@ class RoleForm extends Form implements RoleFormInterface
                 'title' => 'General',
             ])->setFields($this->getGeneralFields()),
         ];
+
         return array_merge($sections, parent::getSections());
     }
 

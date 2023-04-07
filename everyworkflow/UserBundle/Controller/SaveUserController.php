@@ -16,15 +16,13 @@ use Symfony\Component\HttpFoundation\Request;
 
 class SaveUserController extends AbstractController
 {
-    protected UserRepositoryInterface $userRepository;
-
-    public function __construct(UserRepositoryInterface $userRepository)
-    {
-        $this->userRepository = $userRepository;
+    public function __construct(
+        protected UserRepositoryInterface $userRepository
+    ) {
     }
 
     #[EwRoute(
-        path: "user/{uuid}",
+        path: 'user/{uuid}',
         name: 'user.save',
         methods: 'POST',
         permissions: 'user.save',
@@ -34,7 +32,7 @@ class SaveUserController extends AbstractController
                     'name' => 'uuid',
                     'in' => 'path',
                     'default' => 'create',
-                ]
+                ],
             ],
             'requestBody' => [
                 'content' => [
@@ -60,11 +58,11 @@ class SaveUserController extends AbstractController
                                 'phone' => [
                                     'type' => 'string',
                                 ],
-                            ]
-                        ]
-                    ]
-                ]
-            ]
+                            ],
+                        ],
+                    ],
+                ],
+            ],
         ]
     )]
     public function __invoke(Request $request, string $uuid = 'create'): JsonResponse

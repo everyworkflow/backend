@@ -85,12 +85,14 @@ class TextAttributeForm extends AttributeForm implements TextAttributeFormInterf
                 ]),
             ]),
         ];
+
         return array_merge(parent::getSections(), $sections);
     }
 
     public function toArray(): array
     {
         $this->dataObject->setDataIfNot(self::KEY_IS_SIDE_FORM_ANCHOR_ENABLE, true);
+
         return parent::toArray();
     }
 }

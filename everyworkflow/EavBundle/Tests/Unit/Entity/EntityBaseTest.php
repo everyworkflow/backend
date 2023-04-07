@@ -8,41 +8,47 @@ declare(strict_types=1);
 
 namespace EveryWorkflow\EavBundle\Tests\Unit\Entity;
 
-use EveryWorkflow\CoreBundle\Model\DataObject;
-use EveryWorkflow\CoreBundle\Tests\BaseTestCase;
 use EveryWorkflow\EavBundle\Entity\Entity;
+use EveryWorkflow\EavBundle\Repository\EntityRepository;
+use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
-class EntityBaseTest extends BaseTestCase
+class EntityBaseTest extends KernelTestCase
 {
-    public function test_can_do_basic_entity_thing(): void
+    public function testCanDoBasicEntityThing(): void
     {
-        $dataObj = new DataObject();
-        $entity = new Entity($dataObj);
+        self::bootKernel();
+
+        $container = self::getContainer();
+
+        /** @var EntityRepository $entityRepository */
+        $entityRepository = $container->get(EntityRepository::class);
+
+        $entity = $entityRepository->create();
 
         /* Checking most imp getters and setters working properly */
         $entity->setCode('user');
         $entity->setClass(Entity::class);
         $entity->setName('User Name');
 
-        self::assertEquals('user', $entity->getCode(), '$entity->getCode of simple attribute');
+        $this->assertEquals('user', $entity->getCode(), '$entity->getCode of simple attribute');
 
         /* Check if toArray working properly */
-        self::assertContains('user', $entity->toArray(), '$entity->toArray must have user as code');
-        self::assertContains('User Name', $entity->toArray(), '$entity->toArray must have User Name as name');
+        $this->assertContains('user', $entity->toArray(), '$entity->toArray must have user as code');
+        $this->assertContains('User Name', $entity->toArray(), '$entity->toArray must have User Name as name');
 
         /* Checking if serialize and unserialize works properly */
         $newData = serialize($entity);
         $entity = unserialize($newData);
 
-        self::assertEquals('user', $entity->getCode(), '$entity->getCode of simple attribute after unserialize');
+        $this->assertEquals('user', $entity->getCode(), '$entity->getCode of simple attribute after unserialize');
 
         /* Check if toArray working properly after unserialize */
-        self::assertContains(
+        $this->assertContains(
             'user',
             $entity->toArray(),
             '$entity->toArray must have user as code after unserialize'
         );
-        self::assertContains(
+        $this->assertContains(
             'User Name',
             $entity->toArray(),
             '$entity->toArray must have User Name as name after unserialize'

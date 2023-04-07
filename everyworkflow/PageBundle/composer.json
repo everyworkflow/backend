@@ -10,8 +10,8 @@
         }
     ],
     "require": {
-        "everyworkflow/eav-bundle": "dev-main",
-        "everyworkflow/page-builder-bundle": "dev-main"
+        "everyworkflow/eav-bundle": "*",
+        "everyworkflow/page-builder-bundle": "*"
     },
     "autoload": {
         "psr-4": {
@@ -26,6 +26,5 @@
         "psr-4": {
             "EveryWorkflow\\PageBundle\\Tests\\": "Tests/"
         }
-    },
-    "minimum-stability": "dev"
+    }
 }

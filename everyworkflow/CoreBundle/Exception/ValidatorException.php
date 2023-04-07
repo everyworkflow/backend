@@ -15,6 +15,7 @@ class ValidatorException extends \Exception
     public function setValidator(ValidatorInterface $validator): self
     {
         $this->validator = $validator;
+
         return $this;
     }
 

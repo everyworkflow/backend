@@ -10,9 +10,12 @@ namespace EveryWorkflow\EavBundle\Tests\Unit\Attribute;
 
 use EveryWorkflow\CoreBundle\Helper\CoreHelper;
 use EveryWorkflow\CoreBundle\Helper\CoreHelperInterface;
+use EveryWorkflow\CoreBundle\Model\DataObjectFactory;
 use EveryWorkflow\CoreBundle\Model\DataObjectInterface;
-use EveryWorkflow\CoreBundle\Model\SystemDateTime;
 use EveryWorkflow\DataFormBundle\Factory\FieldOptionFactory;
+use EveryWorkflow\DataFormBundle\Factory\FormFactory;
+use EveryWorkflow\DataFormBundle\Factory\FormFieldFactory;
+use EveryWorkflow\DataFormBundle\Factory\FormSectionFactory;
 use EveryWorkflow\DataGridBundle\Factory\ActionFactory;
 use EveryWorkflow\DataGridBundle\Factory\DataGridFactory;
 use EveryWorkflow\EavBundle\Attribute\BaseAttributeInterface;
@@ -20,17 +23,18 @@ use EveryWorkflow\EavBundle\Factory\AttributeFactory;
 use EveryWorkflow\EavBundle\Factory\AttributeFactoryInterface;
 use EveryWorkflow\EavBundle\Form\AttributeForm;
 use EveryWorkflow\EavBundle\GridConfig\AttributeGridConfig;
+use EveryWorkflow\EavBundle\Model\EavConfigProvider;
 use EveryWorkflow\EavBundle\Model\EavConfigProviderInterface;
 use EveryWorkflow\EavBundle\Repository\AttributeRepository;
 use EveryWorkflow\EavBundle\Repository\AttributeRepositoryInterface;
 use EveryWorkflow\EavBundle\Repository\EntityRepository;
-use EveryWorkflow\EavBundle\Tests\Unit\BaseEavTestCase;
 use EveryWorkflow\MongoBundle\Factory\DocumentFactory;
+use EveryWorkflow\MongoBundle\Model\MongoConnection;
 use EveryWorkflow\MongoBundle\Model\MongoConnectionInterface;
-use Symfony\Component\EventDispatcher\EventDispatcher;
+use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\HttpFoundation\Request;
 
-class AttributeCrudTest extends BaseEavTestCase
+class AttributeCrudTest extends KernelTestCase
 {
     protected EavConfigProviderInterface $eavConfigProvider;
     protected AttributeFactoryInterface $attributeFactory;
@@ -45,30 +49,26 @@ class AttributeCrudTest extends BaseEavTestCase
             ->disableOriginalConstructor()
             ->getMock();
 
-        /** @var CoreHelperInterface $coreHelper */
+        /* @var CoreHelperInterface $coreHelper */
         return $coreHelper;
     }
 
     protected function setUp(): void
     {
         parent::setUp();
-        $container = $this->getContainer();
-        $this->mongoConnection = $this->getMongoConnection();
-        $this->eavConfigProvider = $this->getEavConfigProvider();
-        $this->attributeFactory = new AttributeFactory($this->getDataObjectFactory(), $container, $this->eavConfigProvider);
-        $this->attributeRepository = new AttributeRepository(
-            $this->attributeFactory,
-            $this->getNewCoreHelper(),
-            new SystemDateTime($this->getCoreConfigProvider()),
-            $this->getValidatorFactory(),
-            new EventDispatcher(),
-            $this->getMongoConnection()
-        );
+
+        self::bootKernel();
+        $container = self::getContainer();
+
+        $this->mongoConnection = $container->get(MongoConnection::class);
+        $this->eavConfigProvider = $container->get(EavConfigProvider::class);
+        $this->attributeFactory = $container->get(AttributeFactory::class);
+        $this->attributeRepository = $container->get(AttributeRepository::class);
 
         for ($i = 1; $i < 50; ++$i) {
             $this->testAttributeData[] = $this->attributeFactory->createAttribute([
-                'code' => 'attr_' . $i,
-                'name' => 'Test attribute ' . $i,
+                'code' => 'attr_'.$i,
+                'name' => 'Test attribute '.$i,
                 'entity_code' => 'test_entity_crud',
                 'type' => 'text_attribute',
                 'sort_order' => $i,
@@ -87,14 +87,22 @@ class AttributeCrudTest extends BaseEavTestCase
 
     public function testListPageWithPagination(): void
     {
+        self::bootKernel();
         $container = self::getContainer();
-        $dataObjectFactory = $this->getDataObjectFactory();
-        $formSectionFactory = $this->getFormSectionFactory($container);
-        $formFieldFactory = $this->getFormFieldFactory($container);
-        $fieldOptionFactory = new FieldOptionFactory($dataObjectFactory);
-        $actionFactory = new ActionFactory($dataObjectFactory);
+
+        /** @var DataObjectFactory $dataObjectFactory */
+        $dataObjectFactory = $container->get(DataObjectFactory::class);
+        /** @var FormSectionFactory $formSectionFactory */
+        $formSectionFactory = $container->get(FormSectionFactory::class);
+        /** @var FormFieldFactory $formFieldFactory */
+        $formFieldFactory = $container->get(FormFieldFactory::class);
+        /** @var FieldOptionFactory $fieldOptionFactory */
+        $fieldOptionFactory = $container->get(FieldOptionFactory::class);
+        /** @var ActionFactory $actionFactory */
+        $actionFactory = $container->get(ActionFactory::class);
+        /** @var FormFactory $formFactory */
+        $formFactory = $container->get(FormFactory::class);
         $dataGridConfig = new AttributeGridConfig($dataObjectFactory->create(), $actionFactory);
-        $formFactory = $this->getFormFactory($container);
         $dataGridFactory = new DataGridFactory($formFactory, $dataObjectFactory, $actionFactory);
 
         $parameter = $dataGridFactory->createParameter([
@@ -106,45 +114,33 @@ class AttributeCrudTest extends BaseEavTestCase
             'entity_code' => 'test_entity_crud',
         ]);
 
-        $documentFactory = new DocumentFactory($this->getDataObjectFactory());
-
-        $entityRepository = new EntityRepository(
-            $documentFactory,
-            $this->getNewCoreHelper(),
-            new SystemDateTime($this->getCoreConfigProvider()),
-            $this->getValidatorFactory(),
-            new EventDispatcher(),
-            $this->getMongoConnection()
-        );
-        $form = new AttributeForm(
-            $dataObjectFactory->create(),
-            $formSectionFactory,
-            $formFieldFactory,
-            $entityRepository,
-            $this->getEavConfigProvider(),
-            $fieldOptionFactory
-        );
+        /** @var DocumentFactory $documentFactory */
+        $documentFactory = $container->get(DocumentFactory::class);
+        /** @var EntityRepository $entityRepository */
+        $entityRepository = $container->get(EntityRepository::class);
+        /** @var AttributeForm $form */
+        $form = $container->get(AttributeForm::class);
 
         $dataGrid = $dataGridFactory->create($this->attributeRepository, $dataGridConfig, $parameter, $form);
         $gridData = $dataGrid->setFromRequest(new Request(['for' => 'data-grid']))->toArray();
 
-        self::assertIsBool(
+        $this->assertIsBool(
             count($this->testAttributeData) <= count($gridData['data_collection']['results']),
             'Data grid result count must be same.'
         );
 
-        self::assertArrayHasKey('data_collection', $gridData, 'Data must contain >> data_collection << array key.');
-        self::assertArrayHasKey(
+        $this->assertArrayHasKey('data_collection', $gridData, 'Data must contain >> data_collection << array key.');
+        $this->assertArrayHasKey(
             'meta',
             $gridData['data_collection'],
             'Data must contain >> data_collection[meta] << array key.'
         );
-        self::assertArrayHasKey(
+        $this->assertArrayHasKey(
             'results',
             $gridData['data_collection'],
             'Data must contain >> data_collection[results] << array key.'
         );
-        self::assertCount(
+        $this->assertCount(
             count($this->testAttributeData) < 20 ? count($this->testAttributeData) : 20,
             $gridData['data_collection']['results'],
             'Count of data_collection results must be same.'
@@ -159,53 +155,53 @@ class AttributeCrudTest extends BaseEavTestCase
         );
         /** @var BaseAttributeInterface $exampleAttr */
         $exampleAttr = $exampleAttrs[array_key_first($exampleAttrs)];
-        self::assertEquals($exampleAttr->getCode(), $gridData['data_collection']['results'][$testIndex]['code']);
-        self::assertEquals($exampleAttr->getName(), $gridData['data_collection']['results'][$testIndex]['name']);
-        self::assertEquals(
+        $this->assertEquals($exampleAttr->getCode(), $gridData['data_collection']['results'][$testIndex]['code']);
+        $this->assertEquals($exampleAttr->getName(), $gridData['data_collection']['results'][$testIndex]['name']);
+        $this->assertEquals(
             $exampleAttr->getEntityCode(),
             $gridData['data_collection']['results'][$testIndex]['entity_code']
         );
-        self::assertEquals($exampleAttr->getType(), $gridData['data_collection']['results'][$testIndex]['type']);
+        $this->assertEquals($exampleAttr->getType(), $gridData['data_collection']['results'][$testIndex]['type']);
 
-        self::assertArrayHasKey(
+        $this->assertArrayHasKey(
             'data_grid_config',
             $gridData,
             'Data must contain >> data_grid_config << array key.'
         );
 
-        self::assertArrayHasKey(
+        $this->assertArrayHasKey(
             'active_columns',
             $gridData['data_grid_config'],
             'Data must contain >> data_grid_config[active_columns] << array key.'
         );
-        self::assertCount(
+        $this->assertCount(
             count($dataGridConfig->getActiveColumns()),
             $gridData['data_grid_config']['active_columns'],
             'Count of data_grid_config active_columns must be same.'
         );
-        self::assertArrayHasKey(
+        $this->assertArrayHasKey(
             'sortable_columns',
             $gridData['data_grid_config'],
             'Data must contain >> data_grid_config[sortable_columns] << array key.'
         );
-        self::assertCount(
+        $this->assertCount(
             count($dataGridConfig->getSortableColumns()),
             $gridData['data_grid_config']['sortable_columns'],
             'Count of data_grid_config sortable_columns must be same.'
         );
-        self::assertArrayHasKey(
+        $this->assertArrayHasKey(
             'filterable_columns',
             $gridData['data_grid_config'],
             'Data must contain >> data_grid_config[filterable_columns] << array key.'
         );
-        self::assertCount(
+        $this->assertCount(
             count($dataGridConfig->getFilterableColumns()),
             $gridData['data_grid_config']['filterable_columns'],
             'Count of data_grid_config filterable_columns must be same.'
         );
 
-        self::assertArrayHasKey('data_form', $gridData, 'Data must contain >> data_form << array key.');
-        self::assertCount(
+        $this->assertArrayHasKey('data_form', $gridData, 'Data must contain >> data_form << array key.');
+        $this->assertCount(
             count($form->getFields()),
             $gridData['data_form']['fields'],
             'Count of form field and grid data form field must be same.'

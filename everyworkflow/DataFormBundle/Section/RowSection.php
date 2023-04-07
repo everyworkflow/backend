@@ -15,6 +15,7 @@ class RowSection extends BaseSection implements RowSectionInterface
     public function setAlign(string $align): self
     {
         $this->dataObject->setData(self::KEY_ALIGN, $align);
+
         return $this;
     }
 
@@ -26,6 +27,7 @@ class RowSection extends BaseSection implements RowSectionInterface
     public function setGutter(string|int $gutter): self
     {
         $this->dataObject->setData(self::KEY_GUTTER, $gutter);
+
         return $this;
     }
 
@@ -37,6 +39,7 @@ class RowSection extends BaseSection implements RowSectionInterface
     public function setJustify(string $justify): self
     {
         $this->dataObject->setData(self::KEY_JUSTIFY, $justify);
+
         return $this;
     }
 
@@ -48,6 +51,7 @@ class RowSection extends BaseSection implements RowSectionInterface
     public function setWrap(bool $wrap): self
     {
         $this->dataObject->setData(self::KEY_WRAP, $wrap);
+
         return $this;
     }
 

@@ -1,0 +1,19 @@
+<?php
+
+{{ generate_file_header | raw }}
+
+declare(strict_types=1);
+
+namespace {{ file_namespace }};
+
+use EveryWorkflow\MongoBundle\Support\SyncInterface;
+
+class {{ file_name }} implements SyncInterface
+{
+    public function sync(): bool
+    {
+        // Something
+
+        return self::FAILURE;
+    }
+}

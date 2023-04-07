@@ -28,6 +28,7 @@ class HeadingBlock extends AbstractBlock implements HeadingBlockInterface
     public function setHeading(string $heading): self
     {
         $this->dataObject->setData(self::KEY_HEADING, $heading);
+
         return $this;
     }
 
@@ -39,6 +40,7 @@ class HeadingBlock extends AbstractBlock implements HeadingBlockInterface
     public function setSubHeading(string $subHeading): self
     {
         $this->dataObject->setData(self::KEY_SUB_HEADING, $subHeading);
+
         return $this;
     }
 
@@ -50,6 +52,7 @@ class HeadingBlock extends AbstractBlock implements HeadingBlockInterface
     public function setHeadingType(string $headingType): self
     {
         $this->dataObject->setData(self::KEY_HEADING_TYPE, $headingType);
+
         return $this;
     }
 }

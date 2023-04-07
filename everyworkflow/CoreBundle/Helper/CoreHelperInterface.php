@@ -15,6 +15,8 @@ use Psr\Log\LoggerInterface;
 interface CoreHelperInterface
 {
     public function getEWFCacheInterface(): CacheInterface;
+
     public function getMessageInterface(): MessageInterface;
+
     public function getLoggerInterface(): LoggerInterface;
 }

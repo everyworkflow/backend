@@ -10,10 +10,10 @@
         }
     ],
     "require": {
-        "everyworkflow/base-bundle": "dev-main",
-        "everyworkflow/crm-bundle": "dev-main",
-        "everyworkflow/pim-bundle": "dev-main",
-        "everyworkflow/sales-order-bundle": "dev-main"
+        "everyworkflow/base-bundle": "*",
+        "everyworkflow/crm-bundle": "*",
+        "everyworkflow/pim-bundle": "*",
+        "everyworkflow/sales-order-bundle": "*"
     },
     "autoload": {
         "psr-4": {
@@ -28,6 +28,5 @@
         "psr-4": {
             "EveryWorkflow\\EcommerceBundle\\Tests\\": "Tests/"
         }
-    },
-    "minimum-stability": "dev"
+    }
 }

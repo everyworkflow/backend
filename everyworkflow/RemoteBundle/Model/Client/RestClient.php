@@ -13,9 +13,9 @@ use EveryWorkflow\RemoteBundle\Model\Formatter\ArrayFormatterInterface;
 use EveryWorkflow\RemoteBundle\Model\RemoteRequestInterface;
 use EveryWorkflow\RemoteBundle\Model\RemoteResponseInterface;
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\RequestException;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Log\LoggerInterface;
-use GuzzleHttp\Exception\RequestException;
 
 class RestClient extends RemoteClient implements RestClientInterface
 {
@@ -25,8 +25,8 @@ class RestClient extends RemoteClient implements RestClientInterface
 
     public function __construct(
         ArrayFormatterInterface $formatter,
-        LoggerInterface         $ewRemoteLogger,
-        array                   $config = []
+        LoggerInterface $ewRemoteLogger,
+        array $config = []
     ) {
         parent::__construct($formatter, $ewRemoteLogger);
         $this->client = new Client($config);
@@ -56,12 +56,14 @@ class RestClient extends RemoteClient implements RestClientInterface
         if (count($request->getJson())) {
             $returnRequest['json'] = $request->getJson();
         }
+
         return $returnRequest;
     }
 
     public function setResponseHandler(RemoteResponseInterface $remoteResponse): self
     {
         $this->responseHandler = $remoteResponse;
+
         return $this;
     }
 
@@ -82,7 +84,7 @@ class RestClient extends RemoteClient implements RestClientInterface
         } catch (RequestException $e) {
             $response = $e->getResponse();
             if (!$response) {
-                throw new \Exception('Response Error: ' . $e->getMessage());
+                throw new \Exception('Response Error: '.$e->getMessage());
             }
             $this->logRowResponse($request, $response);
         }
@@ -107,13 +109,13 @@ class RestClient extends RemoteClient implements RestClientInterface
         }
 
         $this->logger->info(
-            'Request: ' .
-            $request->getRequestKey() .
-            ' || ' .
-            strtoupper($request->getMethod()) .
-            ': ' .
-            $this->getUrlFromUri($request) .
-            ' || Options: ' .
+            'Request: '.
+            $request->getRequestKey().
+            ' || '.
+            strtoupper($request->getMethod()).
+            ': '.
+            $this->getUrlFromUri($request).
+            ' || Options: '.
             json_encode($options, 1)
         );
     }
@@ -121,13 +123,13 @@ class RestClient extends RemoteClient implements RestClientInterface
     protected function logResponse(RemoteRequestInterface $request, DataObjectInterface $response): void
     {
         $this->logger->info(
-            'Response: ' .
-            $request->getRequestKey() .
-            ' || ' .
-            strtoupper($request->getMethod()) .
-            ': ' .
-            $this->getUrlFromUri($request) .
-            ' || Content: ' .
+            'Response: '.
+            $request->getRequestKey().
+            ' || '.
+            strtoupper($request->getMethod()).
+            ': '.
+            $this->getUrlFromUri($request).
+            ' || Content: '.
             json_encode($response->toArray(), 1)
         );
     }
@@ -135,13 +137,13 @@ class RestClient extends RemoteClient implements RestClientInterface
     protected function logRowResponse(RemoteRequestInterface $request, ResponseInterface $response): void
     {
         $this->logger->info(
-            'Response Error: ' .
-            $request->getRequestKey() .
-            ' || ' .
-            strtoupper($request->getMethod()) .
-            ': ' .
-            $this->getUrlFromUri($request) .
-            ' || StatusCode: ' .
+            'Response Error: '.
+            $request->getRequestKey().
+            ' || '.
+            strtoupper($request->getMethod()).
+            ': '.
+            $this->getUrlFromUri($request).
+            ' || StatusCode: '.
             $response->getStatusCode()
         );
     }

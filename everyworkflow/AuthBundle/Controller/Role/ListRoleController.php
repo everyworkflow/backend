@@ -16,15 +16,13 @@ use Symfony\Component\HttpFoundation\Request;
 
 class ListRoleController extends AbstractController
 {
-    protected DataGridInterface $dataGrid;
-
-    public function __construct(DataGridInterface $dataGrid)
-    {
-        $this->dataGrid = $dataGrid;
+    public function __construct(
+        protected DataGridInterface $dataGrid
+    ) {
     }
 
     #[EwRoute(
-        path: "auth/role",
+        path: 'auth/role',
         name: 'auth.role',
         priority: 10,
         methods: 'GET',

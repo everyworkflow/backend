@@ -24,6 +24,7 @@ class RemoteResponse extends DataObject implements RemoteResponseInterface
     public function setStatusCode(int $statusCode): self
     {
         $this->statusCode = $statusCode;
+
         return $this;
     }
 
@@ -35,12 +36,14 @@ class RemoteResponse extends DataObject implements RemoteResponseInterface
     public function setRequest(RemoteRequestInterface $request): self
     {
         $this->request = $request;
+
         return $this;
     }
 
     public function handle(array $responseData): self
     {
         $this->data = $responseData;
+
         return $this;
     }
 }

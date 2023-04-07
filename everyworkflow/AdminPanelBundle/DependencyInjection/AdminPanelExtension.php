@@ -20,7 +20,7 @@ class AdminPanelExtension extends ConfigurableExtension implements PrependExtens
 {
     protected function loadInternal(array $mergedConfig, ContainerBuilder $container): void
     {
-        $loader = new PhpFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
+        $loader = new PhpFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.php');
 
         $definition = $container->getDefinition(AdminPanelConfigProvider::class);
@@ -30,7 +30,7 @@ class AdminPanelExtension extends ConfigurableExtension implements PrependExtens
     public function prepend(ContainerBuilder $container): void
     {
         $bundles = $container->getParameter('kernel.bundles');
-        $ymlLoader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
+        $ymlLoader = new YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         if (isset($bundles['EveryWorkflowSettingBundle'])) {
             $ymlLoader->load('setting.yaml');
         }

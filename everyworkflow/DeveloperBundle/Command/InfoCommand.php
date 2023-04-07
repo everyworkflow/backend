@@ -8,27 +8,21 @@ declare(strict_types=1);
 
 namespace EveryWorkflow\DeveloperBundle\Command;
 
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
+#[AsCommand(name: 'everyworkflow:info')]
 class InfoCommand extends Command
 {
-    protected static $defaultName = 'everyworkflow:info';
-
-    /**
-     * @return void
-     */
-    protected function configure()
+    protected function configure(): void
     {
         $this->setDescription('Information about every workflow project');
     }
 
-    /**
-     * @return int
-     */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $inputOutput = new SymfonyStyle($input, $output);
 

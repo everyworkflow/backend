@@ -10,22 +10,15 @@ namespace EveryWorkflow\CoreBundle\Validation;
 
 class Configuration implements ConfigurationInterface
 {
-    protected bool $restrictMode;
-    protected array $rules;
-
-    protected ErrorBagInterface $errorBag;
-    protected ValidDataBagInterface $validDataBag;
-
+    /**
+     * @param array<int,mixed> $rules
+     */
     public function __construct(
-        ErrorBagInterface $errorBag,
-        ValidDataBagInterface $validDataBag,
-        array $rules = [],
-        $restrictMode = false
+        protected ErrorBagInterface $errorBag,
+        protected ValidDataBagInterface $validDataBag,
+        protected array $rules = [],
+        protected bool $restrictMode = false
     ) {
-        $this->errorBag = $errorBag;
-        $this->validDataBag = $validDataBag;
-        $this->rules = $rules;
-        $this->restrictMode = $restrictMode;
     }
 
     public function setRestrictMode(bool $restrictMode): self

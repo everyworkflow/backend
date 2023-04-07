@@ -16,15 +16,13 @@ use Symfony\Component\HttpFoundation\Request;
 
 class SaveSettingController extends AbstractController
 {
-    protected SettingDocumentRepositoryInterface $settingDocumentRepository;
-
-    public function __construct(SettingDocumentRepositoryInterface $settingDocumentRepository)
-    {
-        $this->settingDocumentRepository = $settingDocumentRepository;
+    public function __construct(
+        protected SettingDocumentRepositoryInterface $settingDocumentRepository
+    ) {
     }
 
     #[EwRoute(
-        path: "setting/{urlKey}",
+        path: 'setting/{urlKey}',
         name: 'setting.save',
         methods: 'POST',
         permissions: 'setting.save',
@@ -49,9 +47,10 @@ class SaveSettingController extends AbstractController
 
         try {
             $setting = $this->settingDocumentRepository->saveOne($item);
+
             return new JsonResponse([
                 'detail' => 'Successfully saved changes.',
-                'item' => $setting->toArray()
+                'item' => $setting->toArray(),
             ]);
         } catch (\Exception $e) {
             return new JsonResponse([

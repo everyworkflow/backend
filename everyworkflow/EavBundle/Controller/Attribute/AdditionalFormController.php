@@ -18,22 +18,15 @@ use Symfony\Component\HttpFoundation\Request;
 
 class AdditionalFormController extends AbstractController
 {
-    protected AttributeFormInterface $attributeForm;
-    protected EavConfigProviderInterface $eavConfigProvider;
-    protected FormFactoryInterface $formFactory;
-
     public function __construct(
-        AttributeFormInterface $attributeForm,
-        EavConfigProviderInterface $eavConfigProvider,
-        FormFactoryInterface $formFactory
+        protected AttributeFormInterface $attributeForm,
+        protected EavConfigProviderInterface $eavConfigProvider,
+        protected FormFactoryInterface $formFactory
     ) {
-        $this->attributeForm = $attributeForm;
-        $this->eavConfigProvider = $eavConfigProvider;
-        $this->formFactory = $formFactory;
     }
 
     #[EwRoute(
-        path: "eav/attribute/additional-form",
+        path: 'eav/attribute/additional-form',
         name: 'eav.attribute.additional_form',
         methods: 'POST',
         priority: 5,
@@ -43,16 +36,17 @@ class AdditionalFormController extends AbstractController
     public function __invoke(Request $request): JsonResponse
     {
         $submitData = json_decode($request->getContent(), true);
-        $type = (string)$submitData['type'] ?? '';
+        $type = (string) $submitData['type'] ?? '';
 
         $attributeFormClass = $this->eavConfigProvider->get('attribute_forms.' . $type);
         if (!$attributeFormClass) {
             return new JsonResponse([
-                'data_form' => $this->attributeForm->toArray()
+                'data_form' => $this->attributeForm->toArray(),
             ]);
         }
 
         $form = $this->formFactory->createByClassName($attributeFormClass);
+
         return new JsonResponse([
             'data_form' => $form->toArray(),
         ]);

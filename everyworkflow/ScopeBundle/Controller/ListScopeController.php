@@ -17,7 +17,7 @@ use Symfony\Component\HttpFoundation\Request;
 class ListScopeController extends AbstractController
 {
     #[EwRoute(
-        path: "scope",
+        path: 'scope',
         name: 'scope',
         priority: 10,
         methods: 'GET',
@@ -30,12 +30,13 @@ class ListScopeController extends AbstractController
         $scopes = $scopeRepository->find([], [
             'sort' => ['created_at' => -1],
             'skip' => 0,
-            'limit' => 20
+            'limit' => 20,
         ]);
         /** @var ScopeDocumentInterface $scope */
         foreach ($scopes as $scope) {
             $items[] = $scope->toArray();
         }
+
         return new JsonResponse(['items' => $items]);
     }
 }

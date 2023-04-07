@@ -16,15 +16,13 @@ use Symfony\Component\HttpFoundation\Request;
 
 class SaveAttributeController extends AbstractController
 {
-    protected AttributeRepositoryInterface $attributeRepository;
-
-    public function __construct(AttributeRepositoryInterface $attributeRepository)
-    {
-        $this->attributeRepository = $attributeRepository;
+    public function __construct(
+        protected AttributeRepositoryInterface $attributeRepository
+    ) {
     }
 
     #[EwRoute(
-        path: "eav/attribute/{code}",
+        path: 'eav/attribute/{code}',
         name: 'eav.attribute.save',
         methods: 'POST',
         permissions: 'eav.attribute.save',
@@ -34,7 +32,7 @@ class SaveAttributeController extends AbstractController
                     'name' => 'code',
                     'in' => 'path',
                     'default' => 'create',
-                ]
+                ],
             ],
             'requestBody' => [
                 'content' => [
@@ -81,11 +79,11 @@ class SaveAttributeController extends AbstractController
                                     'type' => 'number',
                                     'required' => true,
                                 ],
-                            ]
-                        ]
-                    ]
-                ]
-            ]
+                            ],
+                        ],
+                    ],
+                ],
+            ],
         ]
     )]
     public function __invoke(Request $request, string $code = 'create'): JsonResponse

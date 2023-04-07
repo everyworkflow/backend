@@ -8,10 +8,10 @@ declare(strict_types=1);
 
 namespace EveryWorkflow\UrlRewriteBundle\Document;
 
+use EveryWorkflow\CoreBundle\Validation\Type\StringValidation;
 use EveryWorkflow\MongoBundle\Document\BaseDocument;
 use EveryWorkflow\MongoBundle\Document\HelperTrait\CreatedUpdatedHelperTrait;
 use EveryWorkflow\MongoBundle\Document\HelperTrait\StatusHelperTrait;
-use EveryWorkflow\CoreBundle\Validation\Type\StringValidation;
 
 class UrlRewriteDocument extends BaseDocument implements UrlRewriteDocumentInterface
 {
@@ -22,6 +22,7 @@ class UrlRewriteDocument extends BaseDocument implements UrlRewriteDocumentInter
     public function setUrl(string $url): self
     {
         $this->dataObject->setData(self::KEY_URL, $url);
+
         return $this;
     }
 
@@ -34,6 +35,7 @@ class UrlRewriteDocument extends BaseDocument implements UrlRewriteDocumentInter
     public function setType(string $type): self
     {
         $this->dataObject->setData(self::KEY_TYPE, $type);
+
         return $this;
     }
 
@@ -46,6 +48,7 @@ class UrlRewriteDocument extends BaseDocument implements UrlRewriteDocumentInter
     public function setTypeKey(string $typeKey): self
     {
         $this->dataObject->setData(self::KEY_TYPE_KEY, $typeKey);
+
         return $this;
     }
 

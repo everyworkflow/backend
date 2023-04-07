@@ -12,24 +12,18 @@ use EveryWorkflow\CoreBundle\Model\BaseConfigProvider;
 
 class SettingConfigProvider extends BaseConfigProvider implements SettingConfigProviderInterface
 {
-    // Something
-
-    /**
-     * @param string|null $code
-     * @return mixed
-     */
     public function getMenu(?string $code = null): mixed
     {
         $parsedConfig = $this->parseConfig($this->configs);
         $menuData = isset($parsedConfig['menu']) ? $parsedConfig['menu'] : [];
 
         $value = null;
-        if ($code === null) {
+        if (null === $code) {
             $value = $menuData;
         } elseif (is_string($code)) {
             $indexes = explode('.', $code);
             foreach ($indexes as $index) {
-                if ($value === null && isset($menuData[$index])) {
+                if (null === $value && isset($menuData[$index])) {
                     $value = $menuData[$index];
                 } elseif (isset($value[$index])) {
                     $value = $value[$index];

@@ -17,6 +17,7 @@ class TextAttribute extends BaseAttribute implements TextAttributeInterface
     public function setMinLength(int $length): self
     {
         $this->dataObject->setData(self::KEY_MIN_LENGTH, $length);
+
         return $this;
     }
 
@@ -28,6 +29,7 @@ class TextAttribute extends BaseAttribute implements TextAttributeInterface
     public function setMaxLength(int $length): self
     {
         $this->dataObject->setData(self::KEY_MAX_LENGTH, $length);
+
         return $this;
     }
 

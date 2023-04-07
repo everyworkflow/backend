@@ -17,22 +17,12 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class RemoteServiceFactory implements RemoteServiceFactoryInterface
 {
-    protected string $requestClassName;
-    protected string $responseHandlerClassName;
-
-    protected ContainerInterface $container;
-    protected RemoteClientInterface $client;
-
     public function __construct(
-        ContainerInterface $container,
-        RemoteClientInterface $client,
-        string $requestClassName = RemoteRequest::class,
-        string $responseHandlerClassName = RemoteResponse::class
+        protected ContainerInterface $container,
+        protected RemoteClientInterface $client,
+        protected string $requestClassName = RemoteRequest::class,
+        protected string $responseHandlerClassName = RemoteResponse::class
     ) {
-        $this->container = $container;
-        $this->client = $client;
-        $this->requestClassName = $requestClassName;
-        $this->responseHandlerClassName = $responseHandlerClassName;
     }
 
     public function create(): RemoteServiceInterface

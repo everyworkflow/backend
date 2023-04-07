@@ -39,6 +39,32 @@ class ContainerBlockForm extends AbstractBlockForm implements ContainerBlockForm
                 'name' => 'content_style',
                 'field_type' => 'textarea_field',
             ]),
+            $this->formFieldFactory->create([
+                'label' => 'Use Content JSX style dark',
+                'name' => 'use_content_style_dark',
+                'field_type' => 'switch_field',
+                'default_value' => 0,
+                'is_actionable' => true,
+                'field_actions' => [
+                    [
+                        [
+                            'action_type' => 'hide_field',
+                            'field_names' => ['content_style_dark']
+                        ]
+                    ],
+                    [
+                        [
+                            'action_type' => 'show_field',
+                            'field_names' => ['content_style_dark']
+                        ]
+                    ],
+                ],
+            ]),
+            $this->formFieldFactory->create([
+                'label' => 'Content JSX style dark',
+                'name' => 'content_style_dark',
+                'field_type' => 'textarea_field',
+            ]),
         ];
 
         return array_merge($fields, parent::getFields());

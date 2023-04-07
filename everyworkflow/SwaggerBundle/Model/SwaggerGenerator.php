@@ -9,25 +9,17 @@ declare(strict_types=1);
 namespace EveryWorkflow\SwaggerBundle\Model;
 
 use EveryWorkflow\CoreBundle\Annotation\EwRoute;
-use ReflectionClass;
 use Symfony\Bundle\FrameworkBundle\Routing\Router;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RequestStack;
 
 class SwaggerGenerator implements SwaggerGeneratorInterface
 {
-    protected Router $router;
-    protected RequestStack $requestStack;
-    protected SwaggerConfigProviderInterface $configProvider;
-
     public function __construct(
-        Router $router,
-        RequestStack $requestStack,
-        SwaggerConfigProviderInterface $configProvider
+        protected Router $router,
+        protected RequestStack $requestStack,
+        protected SwaggerConfigProviderInterface $configProvider
     ) {
-        $this->router = $router;
-        $this->requestStack = $requestStack;
-        $this->configProvider = $configProvider;
     }
 
     public function generate(): SwaggerData
@@ -36,7 +28,7 @@ class SwaggerGenerator implements SwaggerGeneratorInterface
         $servers = [
             [
                 'url' => $this->requestStack->getCurrentRequest()->getSchemeAndHttpHost(),
-            ]
+            ],
         ];
         if (isset($config['servers']) && is_array($config['servers'])) {
             foreach ($config['servers'] as $server) {
@@ -56,8 +48,8 @@ class SwaggerGenerator implements SwaggerGeneratorInterface
                     'bearerAuth' => [
                         'type' => 'http',
                         'scheme' => 'bearer',
-                        'bearerFormat' => 'JWT'
-                    ]
+                        'bearerFormat' => 'JWT',
+                    ],
                 ],
             ],
             ...$config,
@@ -107,7 +99,7 @@ class SwaggerGenerator implements SwaggerGeneratorInterface
                 ],
                 'produces' => [
                     'application/json',
-                ]
+                ],
             ];
 
             if (is_array($controllerSwaggerData)) {
@@ -127,11 +119,10 @@ class SwaggerGenerator implements SwaggerGeneratorInterface
 
     protected function getSwaggerDataForController(string $controllerClassName, string $routeName): mixed
     {
-        $reflectionClass = new ReflectionClass($controllerClassName);
+        $reflectionClass = new \ReflectionClass($controllerClassName);
         foreach ($reflectionClass->getMethods() as $method) {
-
             foreach ($method->getAttributes() as $attribute) {
-                if ($attribute->getName() === EwRoute::class) {
+                if (EwRoute::class === $attribute->getName()) {
                     $attrArgs = $attribute->getArguments();
                     if (isset($attrArgs['name']) && $attrArgs['name'] === $routeName && isset($attrArgs['swagger'])) {
                         $swaggerData = $attrArgs['swagger'];
@@ -166,11 +157,11 @@ class SwaggerGenerator implements SwaggerGeneratorInterface
                                                     'detail' => [
                                                         'default' => 'You do not have permission to access this resource.',
                                                         'type' => 'string',
-                                                    ]
-                                                ]
-                                            ]
-                                        ]
-                                    ]
+                                                    ],
+                                                ],
+                                            ],
+                                        ],
+                                    ],
                                 ];
                             }
                         }
@@ -180,19 +171,20 @@ class SwaggerGenerator implements SwaggerGeneratorInterface
                                 (isset($swaggerData['responses']) && !isset($swaggerData['responses'][200]))
                             )
                         ) {
-                            if ($method->getReturnType()->getName() === JsonResponse::class) {
+                            if (JsonResponse::class === $method->getReturnType()->getName()) {
                                 $swaggerData['responses'][200] = [
                                     'description' => 'Json response',
                                     'content' => [
                                         'application/json' => [],
                                     ],
                                 ];
-                            } else if (!empty($method->getReturnType()->getName())) {
+                            } elseif (!empty($method->getReturnType()->getName())) {
                                 $swaggerData['responses'][200] = [
                                     'description' => 'Success',
                                 ];
                             }
                         }
+
                         return $swaggerData;
                         break;
                     }

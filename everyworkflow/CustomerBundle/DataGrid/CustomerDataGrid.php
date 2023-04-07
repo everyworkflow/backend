@@ -22,23 +22,16 @@ use EveryWorkflow\DataGridBundle\RowAction\ButtonRowAction;
 
 class CustomerDataGrid extends DataGrid implements CustomerDataGridInterface
 {
-    protected DataObjectFactoryInterface $dataObjectFactory;
-    protected CustomerRepositoryInterface $customerRepository;
-    protected ActionFactoryInterface $actionFactory;
-
     public function __construct(
         DataObjectInterface $dataObject,
         DataGridConfigInterface $dataGridConfig,
         FormInterface $form,
         ArraySourceInterface $source,
-        DataObjectFactoryInterface $dataObjectFactory,
-        CustomerRepositoryInterface $customerRepository,
-        ActionFactoryInterface $actionFactory,
+        protected DataObjectFactoryInterface $dataObjectFactory,
+        protected CustomerRepositoryInterface $customerRepository,
+        protected ActionFactoryInterface $actionFactory,
     ) {
         parent::__construct($dataObject, $dataGridConfig, $form, $source);
-        $this->dataObjectFactory = $dataObjectFactory;
-        $this->customerRepository = $customerRepository;
-        $this->actionFactory = $actionFactory;
     }
 
     public function getConfig(): DataGridConfigInterface

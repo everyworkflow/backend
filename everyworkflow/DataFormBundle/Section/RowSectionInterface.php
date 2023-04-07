@@ -14,7 +14,7 @@ interface RowSectionInterface extends BaseSectionInterface
     public const KEY_GUTTER = 'gutter';
     public const KEY_JUSTIFY = 'justify';
     public const KEY_WRAP = 'wrap';
-    
+
     public function setAlign(string $align): self;
 
     public function getAlign(): ?string;

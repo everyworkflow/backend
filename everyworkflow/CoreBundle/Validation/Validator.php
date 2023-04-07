@@ -11,19 +11,13 @@ namespace EveryWorkflow\CoreBundle\Validation;
 use Doctrine\Inflector\InflectorFactory;
 use EveryWorkflow\CoreBundle\Factory\ValidationTypeFactoryInterface;
 use EveryWorkflow\CoreBundle\Support\ArrayableInterface;
-use ReflectionClass;
 
 class Validator implements ValidatorInterface
 {
-    protected ValidationTypeFactoryInterface $validationTypeFactory;
-    protected ConfigurationInterface $configuration;
-
     public function __construct(
-        ValidationTypeFactoryInterface $validationTypeFactory,
-        ConfigurationInterface $configuration
+        protected ValidationTypeFactoryInterface $validationTypeFactory,
+        protected ConfigurationInterface $configuration
     ) {
-        $this->validationTypeFactory = $validationTypeFactory;
-        $this->configuration = $configuration;
     }
 
     public function isRestrictMode(): bool
@@ -95,6 +89,7 @@ class Validator implements ValidatorInterface
     public function validateObject(ArrayableInterface $object): bool
     {
         $this->resolveObjectRules($object);
+
         return $this->validateArray($object->toArray());
     }
 
@@ -102,12 +97,12 @@ class Validator implements ValidatorInterface
     {
         $rules = $this->getRules();
 
-        $reflectionClass = new ReflectionClass(get_class($object));
+        $reflectionClass = new \ReflectionClass(get_class($object));
         foreach ($reflectionClass->getMethods() as $method) {
             $dataKey = $method->getName();
             $propertyName = InflectorFactory::create()->build()->tableize($dataKey);
             $propertyNameArr = explode('_', $propertyName);
-            if (count($propertyNameArr) && ($propertyNameArr[0] === 'set' || $propertyNameArr[0] === 'get')) {
+            if (count($propertyNameArr) && ('set' === $propertyNameArr[0] || 'get' === $propertyNameArr[0])) {
                 array_shift($propertyNameArr);
             }
             $propertyName = implode('_', $propertyNameArr);

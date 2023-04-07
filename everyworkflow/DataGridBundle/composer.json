@@ -10,8 +10,8 @@
         }
     ],
     "require": {
-        "nesbot/carbon": "^2.55",
-        "everyworkflow/core-bundle": "dev-main"
+        "nesbot/carbon": "^2.66",
+        "everyworkflow/core-bundle": "*"
     },
     "autoload": {
         "psr-4": {
@@ -26,6 +26,5 @@
         "psr-4": {
             "EveryWorkflow\\DataGridBundle\\Tests\\": "Tests/"
         }
-    },
-    "minimum-stability": "dev"
+    }
 }

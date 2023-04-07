@@ -16,10 +16,7 @@ use EveryWorkflow\MongoBundle\Support\Attribute\RepositoryAttribute;
 #[RepositoryAttribute(documentClass: EntityDocument::class, primaryKey: 'code')]
 class EntityRepository extends BaseDocumentRepository implements EntityRepositoryInterface
 {
-    /**
-     * @return array|object|null
-     */
-    public function deleteByCode(string $entityCode, array $otherFilter = []): object | array | null
+    public function deleteByCode(string $entityCode, array $otherFilter = []): object|array|null
     {
         return $this->deleteByFilter(array_merge(['code' => $entityCode], $otherFilter));
     }

@@ -7,7 +7,6 @@
 namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
 use EveryWorkflow\CoreBundle\EventListener\KernelExceptionListener;
-use EveryWorkflow\CoreBundle\Model\CoreConfigProvider;
 use EveryWorkflow\CoreBundle\Model\DataObject;
 use EveryWorkflow\CoreBundle\Model\DataObjectFactory;
 use EveryWorkflow\CoreBundle\Model\DataObjectFactoryInterface;
@@ -20,6 +19,10 @@ return function (ContainerConfigurator $configurator) {
         ->defaults()
         ->autowire()
         ->autoconfigure();
+
+    if (isset($_SERVER['APP_ENV']) && 'test' === $_SERVER['APP_ENV']) {
+        $services->public();
+    }
 
     $services
         ->load('EveryWorkflow\\CoreBundle\\', '../../*')

@@ -19,19 +19,14 @@ use EveryWorkflow\EavBundle\Repository\BaseEntityRepositoryInterface;
 
 class EntityAttributeForm extends Form implements EntityAttributeFormInterface
 {
-    protected AttributeFieldFactoryInterface $attributeFieldFactory;
-    protected FieldOptionFactoryInterface $fieldOptionFactory;
-
     public function __construct(
         DataObjectInterface $dataObject,
         FormSectionFactoryInterface $formSectionFactory,
         FormFieldFactoryInterface $formFieldFactory,
-        AttributeFieldFactoryInterface $attributeFieldFactory,
-        FieldOptionFactoryInterface $fieldOptionFactory
+        protected AttributeFieldFactoryInterface $attributeFieldFactory,
+        protected FieldOptionFactoryInterface $fieldOptionFactory
     ) {
         parent::__construct($dataObject, $formSectionFactory, $formFieldFactory);
-        $this->attributeFieldFactory = $attributeFieldFactory;
-        $this->fieldOptionFactory = $fieldOptionFactory;
     }
 
     public function loadAttributeFields(BaseEntityRepositoryInterface $baseEntityRepository): self
@@ -42,16 +37,18 @@ class EntityAttributeForm extends Form implements EntityAttributeFormInterface
                 'label' => 'UUID',
                 'is_readonly' => true,
                 'sort_order' => 1,
-            ])
+            ]),
         ];
 
         try {
             $attributes = $baseEntityRepository->getAttributes();
             foreach ($attributes as $attribute) {
-                if ($attribute->isUsedInForm() && !in_array($attribute->getCode(), [
+                if (
+                    $attribute->isUsedInForm() && !in_array($attribute->getCode(), [
                     'created_at',
                     'updated_at',
-                ])) {
+                    ])
+                ) {
                     $fields[$attribute->getCode()] = $this->attributeFieldFactory->createFromAttribute($attribute);
                 }
             }

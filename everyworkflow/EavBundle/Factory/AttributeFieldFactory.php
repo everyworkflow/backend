@@ -19,15 +19,12 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class AttributeFieldFactory extends FormFieldFactory implements AttributeFieldFactoryInterface
 {
-    protected EavConfigProviderInterface $eavConfigProvider;
-
     public function __construct(
         ContainerInterface $container,
         DataFormConfigProviderInterface $dataFormConfigProvider,
-        EavConfigProviderInterface $eavConfigProvider
+        protected EavConfigProviderInterface $eavConfigProvider
     ) {
         parent::__construct($container, $dataFormConfigProvider);
-        $this->eavConfigProvider = $eavConfigProvider;
     }
 
     public function createFromAttribute(BaseAttributeInterface $attribute): BaseFieldInterface

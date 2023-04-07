@@ -16,15 +16,13 @@ use Symfony\Component\HttpFoundation\Request;
 
 class LoginController extends AbstractController
 {
-    protected AuthManagerInterface $authManager;
-
-    public function __construct(AuthManagerInterface $authManager)
-    {
-        $this->authManager = $authManager;
+    public function __construct(
+        protected AuthManagerInterface $authManager
+    ) {
     }
 
     #[EwRoute(
-        path: "login",
+        path: 'login',
         name: 'login',
         methods: 'POST',
         swagger: [
@@ -43,11 +41,11 @@ class LoginController extends AbstractController
                                     'default' => 'test@123',
                                     'type' => 'string',
                                     'required' => true,
-                                ]
-                            ]
-                        ]
-                    ]
-                ]
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
             ],
             'responses' => [
                 '200' => [
@@ -59,11 +57,11 @@ class LoginController extends AbstractController
                                 'properties' => [
                                     'session_token' => [
                                         'type' => 'string',
-                                    ]
-                                ]
-                            ]
-                        ]
-                    ]
+                                    ],
+                                ],
+                            ],
+                        ],
+                    ],
                 ],
                 '401' => [
                     'description' => 'Invalid credentials.',
@@ -81,12 +79,12 @@ class LoginController extends AbstractController
                                     'detail' => [
                                         'type' => 'string',
                                     ],
-                                ]
-                            ]
-                        ]
-                    ]
-                ]
-            ]
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+            ],
         ]
     )]
     public function login(Request $request): JsonResponse
@@ -97,24 +95,25 @@ class LoginController extends AbstractController
             return new JsonResponse([
                 'title' => 'An error occurred',
                 'status' => 401,
-                'detail' => 'Enter valid credentials.'
+                'detail' => 'Enter valid credentials.',
             ], 401);
         }
 
         try {
             $sessionData = $this->authManager->session($data['username'], $data['password']);
+
             return new JsonResponse($sessionData);
         } catch (\Exception $e) {
             return new JsonResponse([
                 'title' => 'An error occurred',
                 'status' => 400,
-                'detail' => $e->getMessage()
+                'detail' => $e->getMessage(),
             ], 400);
         }
     }
 
     #[EwRoute(
-        path: "login/session",
+        path: 'login/session',
         name: 'login.session',
         methods: 'POST',
         swagger: [
@@ -131,11 +130,11 @@ class LoginController extends AbstractController
                                 'session_name' => [
                                     'default' => 'Test session',
                                     'type' => 'string',
-                                ]
-                            ]
-                        ]
-                    ]
-                ]
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
             ],
             'responses' => [
                 '200' => [
@@ -153,11 +152,11 @@ class LoginController extends AbstractController
                                     ],
                                     'token' => [
                                         'type' => 'string',
-                                    ]
-                                ]
-                            ]
-                        ]
-                    ]
+                                    ],
+                                ],
+                            ],
+                        ],
+                    ],
                 ],
                 '401' => [
                     'description' => 'Invalid session token.',
@@ -175,12 +174,12 @@ class LoginController extends AbstractController
                                     'detail' => [
                                         'type' => 'string',
                                     ],
-                                ]
-                            ]
-                        ]
-                    ]
-                ]
-            ]
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+            ],
         ]
     )]
     public function session(Request $request): JsonResponse
@@ -191,24 +190,25 @@ class LoginController extends AbstractController
             return new JsonResponse([
                 'title' => 'An error occurred',
                 'status' => 401,
-                'detail' => 'Invalid session token.'
+                'detail' => 'Invalid session token.',
             ], 401);
         }
 
         try {
             $jwtData = $this->authManager->JWT($data['session_token'], $data['session_name'] ?? 'Not defined');
+
             return new JsonResponse($jwtData);
         } catch (\Exception $e) {
             return new JsonResponse([
                 'title' => 'An error occurred',
                 'status' => 401,
-                'detail' => 'Invalid session token.'
+                'detail' => 'Invalid session token.',
             ], 401);
         }
     }
 
     #[EwRoute(
-        path: "login/refresh",
+        path: 'login/refresh',
         name: 'login.refresh',
         methods: 'POST',
         swagger: [
@@ -225,11 +225,11 @@ class LoginController extends AbstractController
                                 'refresh_token' => [
                                     'type' => 'string',
                                     'required' => true,
-                                ]
-                            ]
-                        ]
-                    ]
-                ]
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
             ],
             'responses' => [
                 '200' => [
@@ -247,11 +247,11 @@ class LoginController extends AbstractController
                                     ],
                                     'token' => [
                                         'type' => 'string',
-                                    ]
-                                ]
-                            ]
-                        ]
-                    ]
+                                    ],
+                                ],
+                            ],
+                        ],
+                    ],
                 ],
                 '401' => [
                     'description' => 'Invalid session token or refresh token.',
@@ -269,12 +269,12 @@ class LoginController extends AbstractController
                                     'detail' => [
                                         'type' => 'string',
                                     ],
-                                ]
-                            ]
-                        ]
-                    ]
-                ]
-            ]
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+            ],
         ]
     )]
     public function refresh(Request $request): JsonResponse
@@ -285,18 +285,19 @@ class LoginController extends AbstractController
             return new JsonResponse([
                 'title' => 'An error occurred',
                 'status' => 401,
-                'detail' => 'Invalid session token or refresh token.'
+                'detail' => 'Invalid session token or refresh token.',
             ], 401);
         }
 
         try {
             $jwtData = $this->authManager->refreshJWT($data['session_token'], $data['refresh_token']);
+
             return new JsonResponse($jwtData);
         } catch (\Exception $e) {
             return new JsonResponse([
                 'title' => 'An error occurred',
                 'status' => 401,
-                'detail' => $e->getMessage()
+                'detail' => $e->getMessage(),
             ], 401);
         }
     }

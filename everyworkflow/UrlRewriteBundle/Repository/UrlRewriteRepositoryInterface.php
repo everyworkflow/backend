@@ -19,7 +19,7 @@ interface UrlRewriteRepositoryInterface extends BaseDocumentRepositoryInterface
     public function deleteByUrl(string $url, array $otherFilter = []);
 
     /**
-     * @return UrlRewriteDocumentInterface[] 
+     * @return UrlRewriteDocumentInterface[]
      */
     public function find(array $filter = [], array $options = []): array;
 

@@ -15,16 +15,13 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 
 class ScopeTreeController extends AbstractController
 {
-    protected ScopeRepositoryInterface $scopeRepository;
-
     public function __construct(
-        ScopeRepositoryInterface $scopeRepository
+        protected ScopeRepositoryInterface $scopeRepository
     ) {
-        $this->scopeRepository = $scopeRepository;
     }
 
     #[EwRoute(
-        path: "scope-tree/{code}",
+        path: 'scope-tree/{code}',
         name: 'scope.tree',
         priority: 10,
         methods: 'GET',
@@ -35,8 +32,8 @@ class ScopeTreeController extends AbstractController
                     'name' => 'uuid',
                     'in' => 'path',
                     'default' => 'create',
-                ]
-            ]
+                ],
+            ],
         ]
     )]
     public function __invoke(string $code = 'default'): JsonResponse
@@ -48,6 +45,7 @@ class ScopeTreeController extends AbstractController
         }
 
         $items = $this->fetchRecursively($mainItem->getData('code'), 99);
+
         return new JsonResponse(['items' => $items]);
     }
 
@@ -61,7 +59,7 @@ class ScopeTreeController extends AbstractController
             if ($currentCode && $maxLevel > 1) {
                 $itemData['children'] = $this->fetchRecursively($currentCode, $maxLevel - 1);
                 $itemData['children_count'] = count($itemData['children']);
-            } else if ($currentCode && $maxLevel === 1) {
+            } elseif ($currentCode && 1 === $maxLevel) {
                 $itemData['children'] = $this->fetchRecursively($currentCode, $maxLevel - 1);
                 $itemData['children_count'] = count($itemData['children']);
                 $itemData['children_ids'] = $itemData['children'];
@@ -69,6 +67,7 @@ class ScopeTreeController extends AbstractController
             }
             $itemList[] = $itemData;
         }
+
         return $itemList;
     }
 }

@@ -14,17 +14,17 @@ use EveryWorkflow\MongoBundle\Document\HelperTrait\StatusHelperTraitInterface;
 
 interface ScopeDocumentInterface extends BaseDocumentInterface, CreatedUpdatedHelperTraitInterface, StatusHelperTraitInterface
 {
-    public const KEY_CODE = "code";
-    public const KEY_NAME = "name";
-    public const KEY_PARENT = "parent";
-    public const KEY_SORT_ORDER = "sort_order";
-    public const KEY_CHILDREN = "children";
+    public const KEY_CODE = 'code';
+    public const KEY_NAME = 'name';
+    public const KEY_PARENT = 'parent';
+    public const KEY_SORT_ORDER = 'sort_order';
+    public const KEY_CHILDREN = 'children';
 
-    public const DEFAULT_CODE = "default";
+    public const DEFAULT_CODE = 'default';
 
-    public const ADMIN_SCOPE_CODE = "admin";
+    public const ADMIN_SCOPE_CODE = 'admin';
 
-    public const FRONTEND_SCOPE_CODE = "frontend";
+    public const FRONTEND_SCOPE_CODE = 'frontend';
 
     public function setCode(string $code): self;
 

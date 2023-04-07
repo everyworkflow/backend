@@ -8,27 +8,20 @@ declare(strict_types=1);
 
 namespace EveryWorkflow\SalesOrderBundle\Migration;
 
-use EveryWorkflow\SalesOrderBundle\Entity\SalesOrderEntity;
-use EveryWorkflow\SalesOrderBundle\Repository\SalesOrderRepositoryInterface;
 use EveryWorkflow\EavBundle\Document\EntityDocument;
 use EveryWorkflow\EavBundle\Repository\AttributeRepositoryInterface;
 use EveryWorkflow\EavBundle\Repository\EntityRepositoryInterface;
 use EveryWorkflow\MongoBundle\Support\MigrationInterface;
+use EveryWorkflow\SalesOrderBundle\Entity\SalesOrderEntity;
+use EveryWorkflow\SalesOrderBundle\Repository\SalesOrderRepositoryInterface;
 
 class Mongo_2021_01_10_00_00_00_SalesOrder_Migration implements MigrationInterface
 {
-    protected EntityRepositoryInterface $entityRepository;
-    protected AttributeRepositoryInterface $attributeRepository;
-    protected SalesOrderRepositoryInterface $salesOrderRepository;
-
     public function __construct(
-        EntityRepositoryInterface $entityRepository,
-        AttributeRepositoryInterface $attributeRepository,
-        SalesOrderRepositoryInterface $salesOrderRepository
+        protected EntityRepositoryInterface $entityRepository,
+        protected AttributeRepositoryInterface $attributeRepository,
+        protected SalesOrderRepositoryInterface $salesOrderRepository
     ) {
-        $this->entityRepository = $entityRepository;
-        $this->attributeRepository = $attributeRepository;
-        $this->salesOrderRepository = $salesOrderRepository;
     }
 
     public function migrate(): bool

@@ -10,8 +10,8 @@
         }
     ],
     "require": {
-        "symfony/asset": "6.0.*",
-        "everyworkflow/core-bundle": "dev-main"
+        "symfony/asset": "6.2.*",
+        "everyworkflow/core-bundle": "*"
     },
     "autoload": {
         "psr-4": {

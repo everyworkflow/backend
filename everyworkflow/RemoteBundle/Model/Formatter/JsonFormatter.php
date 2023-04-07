@@ -13,11 +13,9 @@ use Psr\Log\LoggerInterface;
 
 class JsonFormatter extends ArrayFormatter implements JsonFormatterInterface
 {
-    protected LoggerInterface $logger;
-
-    public function __construct(LoggerInterface $ewRemoteErrorLogger)
-    {
-        $this->logger = $ewRemoteErrorLogger;
+    public function __construct(
+        protected LoggerInterface $ewRemoteErrorLogger
+    ) {
     }
 
     public function handle(mixed $rawResponse): mixed
@@ -26,8 +24,8 @@ class JsonFormatter extends ArrayFormatter implements JsonFormatterInterface
             return null;
         }
 
-        if ($rawResponse->getStatusCode() !== 200) {
-            throw new \Exception('Remote request failed: ' . $rawResponse->getReasonPhrase() . '.');
+        if (200 !== $rawResponse->getStatusCode()) {
+            throw new \Exception('Remote request failed: '.$rawResponse->getReasonPhrase().'.');
         }
 
         $remoteContent = $rawResponse->getBody()->getContents();

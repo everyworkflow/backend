@@ -14,11 +14,9 @@ use EveryWorkflow\ScopeBundle\Repository\ScopeRepositoryInterface;
 
 class Mongo_2021_01_01_04_00_00_Scope_Data_Migration implements MigrationInterface
 {
-    private ScopeRepositoryInterface $scopeRepository;
-
-    public function __construct(ScopeRepositoryInterface $scopeRepository)
-    {
-        $this->scopeRepository = $scopeRepository;
+    public function __construct(
+        protected ScopeRepositoryInterface $scopeRepository
+    ) {
     }
 
     public function migrate(): bool
@@ -34,48 +32,57 @@ class Mongo_2021_01_01_04_00_00_Scope_Data_Migration implements MigrationInterfa
                 'name' => 'Default',
                 'code' => ScopeDocumentInterface::DEFAULT_CODE,
                 'parent' => '--',
+                'status' => 'enable',
             ],
             [
                 'name' => 'Admin',
                 'code' => ScopeDocumentInterface::ADMIN_SCOPE_CODE,
                 'parent' => 'default',
+                'status' => 'enable',
             ],
             [
                 'name' => 'Frontend',
                 'code' => ScopeDocumentInterface::FRONTEND_SCOPE_CODE,
                 'parent' => 'default',
+                'status' => 'enable',
             ],
 
             [
                 'name' => 'Nepal',
                 'code' => 'np',
                 'parent' => 'frontend',
+                'status' => 'enable',
             ],
             [
                 'name' => 'English',
                 'code' => 'np_en',
                 'parent' => 'np',
+                'status' => 'enable',
             ],
             [
                 'name' => 'Nepali',
                 'code' => 'np_np',
                 'parent' => 'np',
+                'status' => 'enable',
             ],
 
             [
                 'name' => 'India',
                 'code' => 'in',
                 'parent' => 'frontend',
+                'status' => 'enable',
             ],
             [
                 'name' => 'English',
                 'code' => 'in_en',
                 'parent' => 'in',
+                'status' => 'enable',
             ],
             [
                 'name' => 'Hindi',
                 'code' => 'in_hi',
                 'parent' => 'in',
+                'status' => 'enable',
             ],
         ];
         $i = 0;

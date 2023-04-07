@@ -16,15 +16,13 @@ use Symfony\Component\HttpFoundation\Request;
 
 class GetCustomerController extends AbstractController
 {
-    protected CustomerRepositoryInterface $customerRepository;
-
-    public function __construct(CustomerRepositoryInterface $customerRepository)
-    {
-        $this->customerRepository = $customerRepository;
+    public function __construct(
+        protected CustomerRepositoryInterface $customerRepository
+    ) {
     }
 
     #[EwRoute(
-        path: "customer/{uuid}",
+        path: 'customer/{uuid}',
         name: 'customer.view',
         methods: 'GET',
         permissions: 'customer.view',
@@ -34,22 +32,22 @@ class GetCustomerController extends AbstractController
                     'name' => 'uuid',
                     'in' => 'path',
                     'default' => 'create',
-                ]
-            ]
+                ],
+            ],
         ]
     )]
     public function __invoke(Request $request, string $uuid = 'create'): JsonResponse
     {
         $data = [];
 
-        if ($uuid !== 'create') {
+        if ('create' !== $uuid) {
             $item = $this->customerRepository->findById($uuid);
             if ($item) {
                 $data['item'] = $item->toArray();
             }
         }
 
-        if ($request->get('for') === 'data-form') {
+        if ('data-form' === $request->get('for')) {
             $data['data_form'] = $this->customerRepository->getForm()->toArray();
         }
 

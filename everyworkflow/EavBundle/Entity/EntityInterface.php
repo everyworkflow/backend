@@ -34,6 +34,7 @@ interface EntityInterface extends ArrayableInterface
 
     /**
      * @param BaseAttributeInterface[]
+     *
      * @return Entity
      */
     public function setAttributes(array $attributes): self;

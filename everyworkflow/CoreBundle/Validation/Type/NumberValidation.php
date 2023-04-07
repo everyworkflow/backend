@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright EveryWorkflow. All rights reserved.
  */
@@ -7,6 +8,7 @@ declare(strict_types=1);
 
 namespace EveryWorkflow\CoreBundle\Validation\Type;
 
+#[\Attribute(\Attribute::TARGET_METHOD)]
 class NumberValidation extends AbstractValidation
 {
     public const KEY_MINIUM = 'minimum';
@@ -141,6 +143,7 @@ class NumberValidation extends AbstractValidation
                 $this->getProperty(),
                 sprintf('%s is not valid number.', $this->getPropertyName())
             );
+
             return false;
         }
 

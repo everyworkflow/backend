@@ -12,6 +12,8 @@ interface ArrayableInterface
 {
     /**
      * Export data to array.
+     *
+     * @return array<int,mixed>
      */
     public function toArray(): array;
 }

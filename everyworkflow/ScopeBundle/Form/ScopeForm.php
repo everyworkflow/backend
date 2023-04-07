@@ -23,6 +23,7 @@ class ScopeForm extends Form implements ScopeFormInterface
     public function setFieldOptionFactory(FieldOptionFactoryInterface $fieldOptionFactory): self
     {
         $this->fieldOptionFactory = $fieldOptionFactory;
+
         return $this;
     }
 
@@ -30,6 +31,7 @@ class ScopeForm extends Form implements ScopeFormInterface
     public function setScopeRepository(ScopeRepositoryInterface $scopeRepository): self
     {
         $this->scopeRepository = $scopeRepository;
+
         return $this;
     }
 
@@ -47,6 +49,7 @@ class ScopeForm extends Form implements ScopeFormInterface
                 ]);
             }
         }
+
         return $itemList;
     }
 

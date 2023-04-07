@@ -25,6 +25,7 @@ class RemoteRequest extends DataObject implements RemoteRequestInterface
     public function setUri(string $uri): self
     {
         $this->uri = $uri;
+
         return $this;
     }
 
@@ -36,6 +37,7 @@ class RemoteRequest extends DataObject implements RemoteRequestInterface
     public function setMethod(string $method): self
     {
         $this->method = $method;
+
         return $this;
     }
 
@@ -52,12 +54,14 @@ class RemoteRequest extends DataObject implements RemoteRequestInterface
     public function setRequestKey(string $requestKey): self
     {
         $this->setData(self::KEY_REQUEST_KEY, $requestKey);
+
         return $this;
     }
 
     public function setBody(array $body): self
     {
         $this->setData(self::KEY_BODY, $body);
+
         return $this;
     }
 
@@ -69,6 +73,7 @@ class RemoteRequest extends DataObject implements RemoteRequestInterface
     public function setJson(array $json): self
     {
         $this->setData(self::KEY_JSON, $json);
+
         return $this;
     }
 
@@ -80,6 +85,7 @@ class RemoteRequest extends DataObject implements RemoteRequestInterface
     public function setOptions(array $options): self
     {
         $this->setData(self::KEY_OPTIONS, $options);
+
         return $this;
     }
 

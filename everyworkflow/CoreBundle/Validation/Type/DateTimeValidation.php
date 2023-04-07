@@ -11,6 +11,7 @@ namespace EveryWorkflow\CoreBundle\Validation\Type;
 use EveryWorkflow\CoreBundle\Model\SystemDateTimeInterface;
 use Symfony\Contracts\Service\Attribute\Required;
 
+#[\Attribute(\Attribute::TARGET_METHOD)]
 class DateTimeValidation extends AbstractValidation
 {
     public const KEY_FORMAT = 'format';
@@ -23,12 +24,14 @@ class DateTimeValidation extends AbstractValidation
     public function setSystemDateTime(SystemDateTimeInterface $systemDateTime): self
     {
         $this->systemDateTime = $systemDateTime;
+
         return $this;
     }
 
     public function setFormat(string $format): self
     {
         $this->setData(self::KEY_FORMAT, $format);
+
         return $this;
     }
 
@@ -40,6 +43,7 @@ class DateTimeValidation extends AbstractValidation
     public function setMinDate(string $minDate): self
     {
         $this->setData(self::KEY_MIN_DATE, $minDate);
+
         return $this;
     }
 
@@ -51,6 +55,7 @@ class DateTimeValidation extends AbstractValidation
     public function setMaxDate(string $maxDate): self
     {
         $this->setData(self::KEY_MAX_DATE, $maxDate);
+
         return $this;
     }
 
@@ -62,7 +67,7 @@ class DateTimeValidation extends AbstractValidation
     protected function transform(mixed $value): mixed
     {
         $format = $this->getFormat();
-        if ($format === null) {
+        if (null === $format) {
             $format = $this->systemDateTime->getDateTimeFormat();
         }
 
@@ -112,8 +117,9 @@ class DateTimeValidation extends AbstractValidation
 
     protected function _validate(mixed $value): bool
     {
-        if (!$this->isRequired() && ($value === null || $value === '')) {
+        if (!$this->isRequired() && (null === $value || '' === $value)) {
             $this->setValidData($value);
+
             return true;
         }
 

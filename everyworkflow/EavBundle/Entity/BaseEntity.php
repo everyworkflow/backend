@@ -14,6 +14,6 @@ use EveryWorkflow\MongoBundle\Document\HelperTrait\StatusHelperTrait;
 
 class BaseEntity extends BaseDocument implements BaseEntityInterface
 {
-    use StatusHelperTrait, CreatedUpdatedHelperTrait;
-
+    use StatusHelperTrait;
+    use CreatedUpdatedHelperTrait;
 }

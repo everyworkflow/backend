@@ -16,9 +16,8 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 class PimExtension extends Extension
 {
     /**
-     * @param array $configs
-     * @param ContainerBuilder $container
      * @throws \Exception
+     *
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
     public function load(array $configs, ContainerBuilder $container): void

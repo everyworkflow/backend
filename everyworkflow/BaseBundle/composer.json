@@ -10,20 +10,19 @@
         }
     ],
     "require": {
-        "php": "^8.1",
-        "everyworkflow/core-bundle": "dev-main",
-        "everyworkflow/swagger-bundle": "dev-main",
-        "everyworkflow/developer-bundle": "dev-main",
-        "everyworkflow/mongo-bundle": "dev-main",
-        "everyworkflow/scope-bundle": "dev-main",
-        "everyworkflow/data-form-bundle": "dev-main",
-        "everyworkflow/setting-bundle": "dev-main",
-        "everyworkflow/data-grid-bundle": "dev-main",
-        "everyworkflow/eav-bundle": "dev-main",
-        "everyworkflow/auth-bundle": "dev-main",
-        "everyworkflow/user-bundle": "dev-main",
-        "everyworkflow/import-export-bundle": "dev-main",
-        "everyworkflow/admin-panel-bundle": "dev-main"
+        "everyworkflow/core-bundle": "*",
+        "everyworkflow/swagger-bundle": "*",
+        "everyworkflow/developer-bundle": "*",
+        "everyworkflow/mongo-bundle": "*",
+        "everyworkflow/scope-bundle": "*",
+        "everyworkflow/data-form-bundle": "*",
+        "everyworkflow/setting-bundle": "*",
+        "everyworkflow/data-grid-bundle": "*",
+        "everyworkflow/eav-bundle": "*",
+        "everyworkflow/auth-bundle": "*",
+        "everyworkflow/user-bundle": "*",
+        "everyworkflow/import-export-bundle": "*",
+        "everyworkflow/admin-panel-bundle": "*"
     },
     "autoload": {
         "psr-4": {
@@ -38,6 +37,5 @@
         "psr-4": {
             "EveryWorkflow\\BaseBundle\\Tests\\": "Tests/"
         }
-    },
-    "minimum-stability": "dev"
+    }
 }

@@ -15,6 +15,7 @@ class CardSection extends BaseSection implements CardSectionInterface
     public function setTitle(string $title): self
     {
         $this->dataObject->setData(self::KEY_TITLE, $title);
+
         return $this;
     }
 
@@ -26,6 +27,7 @@ class CardSection extends BaseSection implements CardSectionInterface
     public function setDescription(string $description): self
     {
         $this->dataObject->setData(self::KEY_DESCRIPTION, $description);
+
         return $this;
     }
 

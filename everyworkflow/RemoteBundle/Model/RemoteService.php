@@ -13,23 +13,17 @@ use EveryWorkflow\RemoteBundle\Model\Client\RestClientInterface;
 
 class RemoteService implements RemoteServiceInterface
 {
-    protected RemoteClientInterface $client;
-    protected RemoteRequestInterface $request;
-    protected RemoteResponseInterface $responseHandler;
-
     public function __construct(
-        RemoteClientInterface   $client,
-        RemoteRequestInterface  $request,
-        RemoteResponseInterface $responseHandler
+        protected RemoteClientInterface $client,
+        protected RemoteRequestInterface $request,
+        protected RemoteResponseInterface $responseHandler
     ) {
-        $this->client = $client;
-        $this->request = $request;
-        $this->responseHandler = $responseHandler;
     }
 
     public function setClient(RemoteClientInterface $client): self
     {
         $this->client = $client;
+
         return $this;
     }
 
@@ -41,6 +35,7 @@ class RemoteService implements RemoteServiceInterface
     public function setRequest(RemoteRequestInterface $request): self
     {
         $this->request = $request;
+
         return $this;
     }
 
@@ -52,6 +47,7 @@ class RemoteService implements RemoteServiceInterface
     public function setResponseHandler(RemoteResponseInterface $responseHandler): self
     {
         $this->responseHandler = $responseHandler;
+
         return $this;
     }
 
@@ -64,6 +60,7 @@ class RemoteService implements RemoteServiceInterface
     {
         /** @var RestClientInterface $restClient */
         $restClient = $this->client;
+
         return $restClient
             ->setResponseHandler($this->getResponseHandler())
             ->send($this->getRequest());

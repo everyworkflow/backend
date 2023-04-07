@@ -8,8 +8,7 @@ declare(strict_types=1);
 
 namespace EveryWorkflow\CoreBundle\Validation\Type;
 
-use Exception;
-
+#[\Attribute(\Attribute::TARGET_METHOD)]
 class StringValidation extends AbstractValidation
 {
     public const KEY_MIN_LENGTH = 'min_length';
@@ -54,7 +53,7 @@ class StringValidation extends AbstractValidation
 
     protected function validateRequired($value): ?bool
     {
-        if ($this->isRequired() && $value === '') {
+        if ($this->isRequired() && '' === $value) {
             $this->errorBag->addError(
                 $this->getProperty(),
                 sprintf('%s is required.', $this->getPropertyName())
@@ -63,7 +62,7 @@ class StringValidation extends AbstractValidation
             return false;
         }
 
-        if (!$this->isRequired() && $value === '') {
+        if (!$this->isRequired() && '' === $value) {
             $this->setDefaultIfNot();
 
             return true;
@@ -114,7 +113,7 @@ class StringValidation extends AbstractValidation
     {
         try {
             $value = $this->transform($value);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $this->errorBag->addError(
                 $this->getProperty(),
                 sprintf(

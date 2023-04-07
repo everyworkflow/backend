@@ -32,7 +32,7 @@ class AttributeGridConfig extends DataGridConfig implements AttributeGridConfigI
         'is_used_in_form',
         'sort_order',
         'created_at',
-        'updated_at'
+        'updated_at',
     ];
 
     public function __construct(
@@ -68,6 +68,7 @@ class AttributeGridConfig extends DataGridConfig implements AttributeGridConfigI
                 'button_type' => 'primary',
             ]),
         ];
+
         return array_merge($headerActions, parent::getHeaderActions());
     }
 
@@ -89,6 +90,7 @@ class AttributeGridConfig extends DataGridConfig implements AttributeGridConfigI
                 'confirm_message' => 'Are you sure, you want to delete this item?',
             ]),
         ];
+
         return array_merge($rowActions, parent::getBulkActions());
     }
 
@@ -108,6 +110,7 @@ class AttributeGridConfig extends DataGridConfig implements AttributeGridConfigI
                 'path_type' => ButtonBulkAction::PATH_TYPE_POST_CALL,
             ]),
         ];
+
         return array_merge($bulkActions, parent::getBulkActions());
     }
 }

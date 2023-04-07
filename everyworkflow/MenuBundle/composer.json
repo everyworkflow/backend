@@ -10,7 +10,7 @@
         }
     ],
     "require": {
-        "everyworkflow/eav-bundle": "dev-main"
+        "everyworkflow/eav-bundle": "*"
     },
     "autoload": {
         "psr-4": {

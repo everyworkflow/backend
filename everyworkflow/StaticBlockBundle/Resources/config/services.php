@@ -12,7 +12,6 @@ use EveryWorkflow\StaticBlockBundle\Controller\ListStaticBlockController;
 use EveryWorkflow\StaticBlockBundle\Form\StaticBlockForm;
 use EveryWorkflow\StaticBlockBundle\GridConfig\StaticBlockGridConfig;
 use EveryWorkflow\StaticBlockBundle\Repository\StaticBlockRepository;
-use Symfony\Component\DependencyInjection\Loader\Configurator\DefaultsConfigurator;
 
 return function (ContainerConfigurator $configurator) {
     /** @var DefaultsConfigurator $services */

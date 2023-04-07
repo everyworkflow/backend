@@ -16,15 +16,13 @@ use Symfony\Component\HttpFoundation\Request;
 
 class SaveStaticBlockController extends AbstractController
 {
-    protected StaticBlockRepositoryInterface $staticBlockRepository;
-
-    public function __construct(StaticBlockRepositoryInterface $staticBlockRepository)
-    {
-        $this->staticBlockRepository = $staticBlockRepository;
+    public function __construct(
+        protected StaticBlockRepositoryInterface $staticBlockRepository
+    ) {
     }
 
     #[EwRoute(
-        path: "cms/static-block/{uuid}",
+        path: 'cms/static-block/{uuid}',
         name: 'cms.static_block.save',
         methods: 'POST',
         permissions: 'cms.static_block.save',
@@ -34,7 +32,7 @@ class SaveStaticBlockController extends AbstractController
                     'name' => 'uuid',
                     'in' => 'path',
                     'default' => 'create',
-                ]
+                ],
             ],
             'requestBody' => [
                 'content' => [
@@ -52,11 +50,11 @@ class SaveStaticBlockController extends AbstractController
                                 'page_builder_data' => [
                                     'type' => 'json',
                                 ],
-                            ]
-                        ]
-                    ]
-                ]
-            ]
+                            ],
+                        ],
+                    ],
+                ],
+            ],
         ]
     )]
     public function __invoke(Request $request, string $uuid = 'create'): JsonResponse
@@ -69,7 +67,7 @@ class SaveStaticBlockController extends AbstractController
                     $itemByKey = $this->staticBlockRepository->findOne(['block_key' => $submitData['block_key']]);
                     if ($itemByKey) {
                         return new JsonResponse([
-                            'message' => "Static block with key '${submitData['block_key']}' already exists.",
+                            'message' => 'Static block with key ' . $submitData['block_key'] . ' already exists.',
                         ], JsonResponse::HTTP_BAD_REQUEST);
                     }
                 } catch (\Exception $e) {

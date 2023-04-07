@@ -15,15 +15,13 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 
 class DeleteStaticBlockController extends AbstractController
 {
-    protected StaticBlockRepositoryInterface $staticBlockRepository;
-
-    public function __construct(StaticBlockRepositoryInterface $staticBlockRepository)
-    {
-        $this->staticBlockRepository = $staticBlockRepository;
+    public function __construct(
+        protected StaticBlockRepositoryInterface $staticBlockRepository
+    ) {
     }
 
     #[EwRoute(
-        path: "cms/static-block/{uuid}",
+        path: 'cms/static-block/{uuid}',
         name: 'cms.static_block.delete',
         methods: 'DELETE',
         permissions: 'cms.static_block.delete',
@@ -32,15 +30,16 @@ class DeleteStaticBlockController extends AbstractController
                 [
                     'name' => 'uuid',
                     'in' => 'path',
-                ]
-            ]
+                ],
+            ],
         ]
     )]
     public function __invoke(string $uuid): JsonResponse
     {
         try {
             $this->staticBlockRepository->deleteOneByFilter(['_id' => new \MongoDB\BSON\ObjectId($uuid)]);
-            return new JsonResponse(['detail' => 'ID: ' . $uuid . ' deleted successfully.']);
+
+            return new JsonResponse(['detail' => 'ID: '.$uuid.' deleted successfully.']);
         } catch (\Exception $e) {
             return new JsonResponse(['detail' => $e->getMessage()], 500);
         }

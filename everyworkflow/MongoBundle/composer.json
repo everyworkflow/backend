@@ -11,10 +11,10 @@
     ],
     "require": {
         "ext-mongodb": "*",
-        "mongodb/mongodb": "^1.10",
-        "symfony/console": "6.0.*",
-        "nesbot/carbon": "^2.55",
-        "everyworkflow/core-bundle": "dev-main"
+        "mongodb/mongodb": "^1.15",
+        "nesbot/carbon": "^2.66",
+        "symfony/console": "6.2.*",
+        "everyworkflow/core-bundle": "*"
     },
     "autoload": {
         "psr-4": {
@@ -29,6 +29,5 @@
         "psr-4": {
             "EveryWorkflow\\MongoBundle\\Tests\\": "Tests/"
         }
-    },
-    "minimum-stability": "dev"
+    }
 }

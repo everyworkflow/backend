@@ -115,24 +115,26 @@ class AttributeDocument extends BaseDocument implements AttributeDocumentInterfa
     public function setIsUsedInGrid(bool $isUsedInGrid): self
     {
         $this->dataObject->setData(self::KEY_IS_USED_IN_GRID, $isUsedInGrid);
+
         return $this;
     }
 
     public function isUsedInGrid(): bool
     {
-        return (bool)$this->dataObject->getData(self::KEY_IS_USED_IN_GRID);
+        return (bool) $this->dataObject->getData(self::KEY_IS_USED_IN_GRID);
     }
 
     #[BooleanValidation(default: false)]
     public function setIsUsedInForm(bool $isUsedInForm): self
     {
         $this->dataObject->setData(self::KEY_IS_USED_IN_FORM, $isUsedInForm);
+
         return $this;
     }
 
     public function isUsedInForm(): bool
     {
-        return (bool)$this->dataObject->getData(self::KEY_IS_USED_IN_FORM);
+        return (bool) $this->dataObject->getData(self::KEY_IS_USED_IN_FORM);
     }
 
     #[NumberValidation()]

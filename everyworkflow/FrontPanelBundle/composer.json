@@ -10,8 +10,8 @@
         }
     ],
     "require": {
-        "symfony/twig-bundle": "6.0.*",
-        "everyworkflow/core-bundle": "dev-main"
+        "symfony/twig-bundle": "6.2.*",
+        "everyworkflow/core-bundle": "*"
     },
     "autoload": {
         "psr-4": {
@@ -26,6 +26,5 @@
         "psr-4": {
             "EveryWorkflow\\FrontPanelBundle\\Tests\\": "Tests/"
         }
-    },
-    "minimum-stability": "dev"
+    }
 }

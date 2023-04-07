@@ -17,19 +17,16 @@ use EveryWorkflow\CoreBundle\Validation\ValidDataBag;
 
 class ValidatorFactory implements ValidatorFactoryInterface
 {
-    protected ValidationTypeFactoryInterface $validationTypeFactory;
-
     public function __construct(
-        ValidationTypeFactoryInterface $validationTypeFactory,
+        protected ValidationTypeFactoryInterface $validationTypeFactory,
     ) {
-        $this->validationTypeFactory = $validationTypeFactory;
     }
 
     public function create(
         array $rules = [],
         ?ConfigurationInterface $configuration = null
     ): ValidatorInterface {
-        if ($configuration === null) {
+        if (null === $configuration) {
             $errorBag = $errorBag ?? new ErrorBag();
             $validDataBag = $validDataBag ?? new ValidDataBag();
             $configuration = new Configuration($errorBag, $validDataBag, $rules);

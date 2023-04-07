@@ -17,7 +17,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 class LayoutController extends AbstractController
 {
     #[EwRoute(
-        path: "page-builder/layout",
+        path: 'page-builder/layout',
         name: 'page_builder.layout',
         methods: 'GET',
         swagger: true

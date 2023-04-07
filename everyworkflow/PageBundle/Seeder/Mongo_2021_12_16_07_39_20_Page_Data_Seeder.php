@@ -8,21 +8,16 @@ declare(strict_types=1);
 
 namespace EveryWorkflow\PageBundle\Seeder;
 
+use EveryWorkflow\MongoBundle\Support\SeederInterface;
 use EveryWorkflow\PageBundle\Block\HomePageBlockInterface;
 use EveryWorkflow\PageBundle\Repository\PageRepositoryInterface;
-use EveryWorkflow\MongoBundle\Support\SeederInterface;
 
 class Mongo_2021_12_16_07_39_20_Page_Data_Seeder implements SeederInterface
 {
-    protected PageRepositoryInterface $pageRepository;
-    protected HomePageBlockInterface $homePageBlock;
-
     public function __construct(
-        PageRepositoryInterface $pageRepository,
-        HomePageBlockInterface $homePageBlock
+        protected PageRepositoryInterface $pageRepository,
+        protected HomePageBlockInterface $homePageBlock
     ) {
-        $this->pageRepository = $pageRepository;
-        $this->homePageBlock = $homePageBlock;
     }
 
     public function seed(): bool

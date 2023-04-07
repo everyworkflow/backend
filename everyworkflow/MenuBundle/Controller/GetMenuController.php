@@ -27,7 +27,7 @@ class GetMenuController extends AbstractController
         path: "menu/{code}",
         name: 'menu.view',
         methods: 'GET',
-        permissions: 'menu.view',
+        // permissions: 'menu.view',
         swagger: [
             'parameters' => [
                 [

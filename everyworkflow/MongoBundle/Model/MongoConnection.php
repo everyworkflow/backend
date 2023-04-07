@@ -38,7 +38,7 @@ class MongoConnection implements MongoConnectionInterface
      */
     protected $database;
 
-    public function __construct(string $mongoUri, string $mongoDb)
+    public function __construct(string $mongoUri = '', string $mongoDb = '')
     {
         $this->mongoUri = $mongoUri;
         $this->mongoDb = $mongoDb;

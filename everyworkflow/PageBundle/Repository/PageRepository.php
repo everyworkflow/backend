@@ -8,11 +8,11 @@ declare(strict_types=1);
 
 namespace EveryWorkflow\PageBundle\Repository;
 
-use EveryWorkflow\PageBundle\Entity\PageEntity;
-use EveryWorkflow\PageBundle\Entity\PageEntityInterface;
 use EveryWorkflow\EavBundle\Repository\BaseEntityRepository;
 use EveryWorkflow\EavBundle\Support\Attribute\EntityRepositoryAttribute;
 use EveryWorkflow\MongoBundle\Document\HelperTrait\StatusHelperTraitInterface;
+use EveryWorkflow\PageBundle\Entity\PageEntity;
+use EveryWorkflow\PageBundle\Entity\PageEntityInterface;
 use EveryWorkflow\UrlRewriteBundle\Document\UrlRewriteDocumentInterface;
 use EveryWorkflow\UrlRewriteBundle\Repository\UrlRewriteRepositoryInterface;
 use Symfony\Contracts\Service\Attribute\Required;
@@ -61,6 +61,7 @@ class PageRepository extends BaseEntityRepository implements PageRepositoryInter
             }
             $this->urlRewriteRepository->saveOne($urlRewrite);
         }
+
         return $this->saveOne($entity, $otherFilter, $otherOptions);
     }
 }

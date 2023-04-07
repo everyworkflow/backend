@@ -12,9 +12,7 @@ use EveryWorkflow\MongoBundle\Document\BaseDocumentInterface;
 use EveryWorkflow\MongoBundle\Document\HelperTrait\CreatedUpdatedHelperTraitInterface;
 use EveryWorkflow\MongoBundle\Document\HelperTrait\StatusHelperTraitInterface;
 
-interface AttributeDocumentInterface extends BaseDocumentInterface,
-    CreatedUpdatedHelperTraitInterface,
-    StatusHelperTraitInterface
+interface AttributeDocumentInterface extends BaseDocumentInterface, CreatedUpdatedHelperTraitInterface, StatusHelperTraitInterface
 {
     public const KEY_CODE = 'code';
     public const KEY_NAME = 'name';

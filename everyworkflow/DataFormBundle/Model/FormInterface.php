@@ -25,7 +25,7 @@ interface FormInterface extends ArrayableInterface
     public const KEY_SECTIONS = 'sections';
 
     public function setFormUpdatePath(string $formUpdatePath): self;
-    
+
     public function getFormUpdatePath(): ?string;
 
     public function setIsSideFormAnchorEnable(bool $isSideFormAnchorEnable): self;
@@ -57,13 +57,11 @@ interface FormInterface extends ArrayableInterface
 
     /**
      * @param BaseFieldInterface[] $fields
-     * @return self
      */
     public function setFields(array $fields): self;
 
     /**
      * @param BaseFieldInterface[] $fields
-     * @return self
      */
     public function addFields(array $fields): self;
 

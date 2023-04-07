@@ -14,15 +14,10 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class FormFieldFactory implements FormFieldFactoryInterface
 {
-    protected ContainerInterface $container;
-    protected DataFormConfigProviderInterface $dataFormConfigProvider;
-
     public function __construct(
-        ContainerInterface $container,
-        DataFormConfigProviderInterface $dataFormConfigProvider
+        protected ContainerInterface $container,
+        protected DataFormConfigProviderInterface $dataFormConfigProvider
     ) {
-        $this->container = $container;
-        $this->dataFormConfigProvider = $dataFormConfigProvider;
     }
 
     public function createFromClassName(string $className, array $data = []): ?BaseFieldInterface
@@ -33,6 +28,7 @@ class FormFieldFactory implements FormFieldFactoryInterface
                 return $field->resetData($data);
             }
         }
+
         return null;
     }
 
@@ -42,6 +38,7 @@ class FormFieldFactory implements FormFieldFactoryInterface
         if (isset($fields[$fieldType])) {
             return $this->createFromClassName($fields[$fieldType], $data);
         }
+
         return $this->create($data);
     }
 
@@ -52,6 +49,7 @@ class FormFieldFactory implements FormFieldFactoryInterface
             return $this->createFromClassName($fields[$data['field_type']], $data);
         }
         $fieldType = $this->dataFormConfigProvider->get('default.field');
+
         return $this->createFromClassName($fields[$fieldType], $data);
     }
 }

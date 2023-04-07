@@ -13,27 +13,17 @@ use EveryWorkflow\DataFormBundle\Factory\FieldOptionFactoryInterface;
 use EveryWorkflow\DataFormBundle\Factory\FormFactoryInterface;
 use EveryWorkflow\DataFormBundle\Factory\FormFieldFactoryInterface;
 use EveryWorkflow\DataFormBundle\Field\Select\Option;
-use EveryWorkflow\MediaManagerBundle\Field\MediaFileSelectorField;
-use EveryWorkflow\MediaManagerBundle\Field\MediaImageGallerySelectorField;
-use EveryWorkflow\MediaManagerBundle\Field\MediaImageSelectorField;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 class DataFormController extends AbstractController
 {
-    protected FormFactoryInterface $formFactory;
-    protected FormFieldFactoryInterface $formFieldFactory;
-    protected FieldOptionFactoryInterface $fieldOptionFactory;
-
     public function __construct(
-        FormFactoryInterface $formFactory,
-        FormFieldFactoryInterface $formFieldFactory,
-        FieldOptionFactoryInterface $fieldOptionFactory
+        protected FormFactoryInterface $formFactory,
+        protected FormFieldFactoryInterface $formFieldFactory,
+        protected FieldOptionFactoryInterface $fieldOptionFactory
     ) {
-        $this->formFactory = $formFactory;
-        $this->formFieldFactory = $formFieldFactory;
-        $this->fieldOptionFactory = $fieldOptionFactory;
     }
 
     #[EwRoute(

@@ -26,16 +26,18 @@ class BaseAttribute extends AttributeDocument implements BaseAttributeInterface
         $this->dataObject->setDataIfNot(self::KEY_STATUS, self::STATUS_ENABLE);
         $this->dataObject->setDataIfNot(self::KEY_SORT_ORDER, 0);
     }
-    
+
     public function resetData(array $data): self
     {
         $this->dataObject->resetData($data);
+
         return $this;
     }
 
     public function toArray(): array
     {
         $this->dataObject->setDataIfNot(self::KEY_TYPE, $this->attributeType);
+
         return parent::toArray();
     }
 }

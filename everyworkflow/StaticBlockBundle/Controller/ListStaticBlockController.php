@@ -16,15 +16,13 @@ use Symfony\Component\HttpFoundation\Request;
 
 class ListStaticBlockController extends AbstractController
 {
-    protected DataGridInterface $dataGrid;
-
-    public function __construct(DataGridInterface $dataGrid)
-    {
-        $this->dataGrid = $dataGrid;
+    public function __construct(
+        protected DataGridInterface $dataGrid
+    ) {
     }
 
     #[EwRoute(
-        path: "cms/static-block",
+        path: 'cms/static-block',
         name: 'cms.static_block',
         priority: 10,
         methods: 'GET',
@@ -34,6 +32,7 @@ class ListStaticBlockController extends AbstractController
     public function __invoke(Request $request): JsonResponse
     {
         $dataGrid = $this->dataGrid->setFromRequest($request);
+
         return new JsonResponse($dataGrid->toArray());
     }
 }

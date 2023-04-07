@@ -31,4 +31,4 @@ eav:
         currency_attribute: EveryWorkflow\EavBundle\Attribute\FieldMapper\CurrencyMapper
         date_attribute: EveryWorkflow\EavBundle\Attribute\FieldMapper\DateMapper
         date_time_attribute: EveryWorkflow\EavBundle\Attribute\FieldMapper\DateTimeMapper
-        boolean_attribute: EveryWorkflow\EavBundle\Attribute\FieldMapper\BooleanAttribute
+        boolean_attribute: EveryWorkflow\EavBundle\Attribute\FieldMapper\BooleanMapper

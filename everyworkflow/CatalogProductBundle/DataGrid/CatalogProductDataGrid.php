@@ -22,23 +22,16 @@ use EveryWorkflow\DataGridBundle\RowAction\ButtonRowAction;
 
 class CatalogProductDataGrid extends DataGrid implements CatalogProductDataGridInterface
 {
-    protected DataObjectFactoryInterface $dataObjectFactory;
-    protected CatalogProductRepositoryInterface $catalogProductRepository;
-    protected ActionFactoryInterface $actionFactory;
-
     public function __construct(
         DataObjectInterface $dataObject,
         DataGridConfigInterface $dataGridConfig,
         FormInterface $form,
         ArraySourceInterface $source,
-        DataObjectFactoryInterface $dataObjectFactory,
-        CatalogProductRepositoryInterface $catalogProductRepository,
-        ActionFactoryInterface $actionFactory,
+        protected DataObjectFactoryInterface $dataObjectFactory,
+        protected CatalogProductRepositoryInterface $catalogProductRepository,
+        protected ActionFactoryInterface $actionFactory,
     ) {
         parent::__construct($dataObject, $dataGridConfig, $form, $source);
-        $this->dataObjectFactory = $dataObjectFactory;
-        $this->catalogProductRepository = $catalogProductRepository;
-        $this->actionFactory = $actionFactory;
     }
 
     public function getConfig(): DataGridConfigInterface

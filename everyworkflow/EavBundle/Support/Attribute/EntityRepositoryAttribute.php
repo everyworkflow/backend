@@ -6,9 +6,7 @@
 
 namespace EveryWorkflow\EavBundle\Support\Attribute;
 
-use Attribute;
-
-#[Attribute(Attribute::TARGET_CLASS)]
+#[\Attribute(\Attribute::TARGET_CLASS)]
 class EntityRepositoryAttribute extends \EveryWorkflow\MongoBundle\Support\Attribute\RepositoryAttribute
 {
     protected string $entityCode = '';

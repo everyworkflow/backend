@@ -10,11 +10,11 @@
         }
     ],
     "require": {
-        "everyworkflow/base-bundle": "dev-main",
-        "everyworkflow/dam-bundle": "dev-main",
-        "everyworkflow/cms-bundle": "dev-main",
-        "everyworkflow/catalog-category-bundle": "dev-main",
-        "everyworkflow/catalog-product-bundle": "dev-main"
+        "everyworkflow/base-bundle": "*",
+        "everyworkflow/dam-bundle": "*",
+        "everyworkflow/cms-bundle": "*",
+        "everyworkflow/catalog-category-bundle": "*",
+        "everyworkflow/catalog-product-bundle": "*"
     },
     "autoload": {
         "psr-4": {
@@ -29,6 +29,5 @@
         "psr-4": {
             "EveryWorkflow\\PimBundle\\Tests\\": "Tests/"
         }
-    },
-    "minimum-stability": "dev"
+    }
 }

@@ -14,5 +14,6 @@ use EveryWorkflow\MongoBundle\Document\HelperTrait\StatusHelperTrait;
 
 class LoginSessionDocument extends BaseDocument implements LoginSessionDocumentInterface
 {
-    use CreatedUpdatedHelperTrait, StatusHelperTrait;
+    use CreatedUpdatedHelperTrait;
+    use StatusHelperTrait;
 }

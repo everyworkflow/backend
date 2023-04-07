@@ -16,15 +16,13 @@ use Symfony\Component\HttpFoundation\Request;
 
 class SaveRoleController extends AbstractController
 {
-    protected RoleRepositoryInterface $roleRepository;
-
-    public function __construct(RoleRepositoryInterface $roleRepository)
-    {
-        $this->roleRepository = $roleRepository;
+    public function __construct(
+        protected RoleRepositoryInterface $roleRepository
+    ) {
     }
 
     #[EwRoute(
-        path: "auth/role/{uuid}",
+        path: 'auth/role/{uuid}',
         name: 'auth.role.save',
         methods: 'POST',
         permissions: 'auth.role.save',
@@ -34,7 +32,7 @@ class SaveRoleController extends AbstractController
                     'name' => 'uuid',
                     'in' => 'path',
                     'default' => 'create',
-                ]
+                ],
             ],
             'requestBody' => [
                 'content' => [
@@ -51,12 +49,12 @@ class SaveRoleController extends AbstractController
                                 ],
                                 'permissions' => [
                                     'type' => 'array',
-                                ]
-                            ]
-                        ]
-                    ]
-                ]
-            ]
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+            ],
         ]
     )]
     public function __invoke(Request $request, string $uuid = 'create'): JsonResponse

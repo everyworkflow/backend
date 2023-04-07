@@ -14,15 +14,10 @@ use EveryWorkflow\MongoBundle\Support\MigrationInterface;
 
 class Mongo_2021_01_01_01_00_00_Eav_Data_Migration implements MigrationInterface
 {
-    protected EntityRepositoryInterface $entityRepository;
-    protected AttributeRepositoryInterface $attributeRepository;
-
     public function __construct(
-        EntityRepositoryInterface $entityRepository,
-        AttributeRepositoryInterface $attributeRepository
+        protected EntityRepositoryInterface $entityRepository,
+        protected AttributeRepositoryInterface $attributeRepository
     ) {
-        $this->entityRepository = $entityRepository;
-        $this->attributeRepository = $attributeRepository;
     }
 
     public function migrate(): bool
@@ -37,6 +32,7 @@ class Mongo_2021_01_01_01_00_00_Eav_Data_Migration implements MigrationInterface
             $indexKeys[$key] = 1;
         }
         $this->attributeRepository->getCollection()->createIndex($indexKeys, ['unique' => true]);
+
         return self::SUCCESS;
     }
 
@@ -44,6 +40,7 @@ class Mongo_2021_01_01_01_00_00_Eav_Data_Migration implements MigrationInterface
     {
         $this->entityRepository->getCollection()->drop();
         $this->attributeRepository->getCollection()->drop();
+
         return self::SUCCESS;
     }
 }

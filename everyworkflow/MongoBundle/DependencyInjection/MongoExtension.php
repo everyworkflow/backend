@@ -10,6 +10,7 @@ namespace EveryWorkflow\MongoBundle\DependencyInjection;
 
 use EveryWorkflow\MongoBundle\Support\MigrationInterface;
 use EveryWorkflow\MongoBundle\Support\SeederInterface;
+use EveryWorkflow\MongoBundle\Support\SyncInterface;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\PhpFileLoader;
@@ -19,6 +20,7 @@ class MongoExtension extends Extension
 {
     /**
      * @throws \Exception
+     *
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
     public function load(array $configs, ContainerBuilder $container): void
@@ -30,6 +32,10 @@ class MongoExtension extends Extension
             ->addTag('everyworkflow.migration');
 
         $container->registerForAutoconfiguration(SeederInterface::class)
-        ->addTag('everyworkflow.seeder');
+            ->addTag('everyworkflow.seeder');
+
+        $container->registerForAutoconfiguration(SyncInterface::class)
+            ->addTag('everyworkflow.mongo.sync_list');
+
     }
 }

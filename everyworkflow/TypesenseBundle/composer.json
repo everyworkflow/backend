@@ -1,0 +1,30 @@
+{
+    "name": "everyworkflow/typesense-bundle",
+    "description": "",
+    "type": "package",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "EveryWorkflow",
+            "email": "everyworkflow@gmail.com"
+        }
+    ],
+    "require": {
+        "php-http/curl-client": "^2.2",
+        "typesense/typesense-php": "^4.8"
+    },
+    "autoload": {
+        "psr-4": {
+            "EveryWorkflow\\TypesenseBundle\\": "./"
+        },
+        "exclude-from-classmap": [
+            "Resources",
+            "Tests"
+        ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "EveryWorkflow\\TypesenseBundle\\Tests\\": "Tests/"
+        }
+    }
+}

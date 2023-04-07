@@ -15,11 +15,12 @@ use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 class DataObjectBaseTest extends KernelTestCase
 {
-    public function test_can_do_basic_things(): void
+    public function testCanDoBasicThings(): void
     {
         self::bootKernel();
         $container = self::getContainer();
 
+        /** @var DataObjectFactory $dataObjectFactory */
         $dataObjectFactory = $container->get(DataObjectFactory::class);
         $dataObj = $dataObjectFactory->create();
 
@@ -47,7 +48,7 @@ class DataObjectBaseTest extends KernelTestCase
         self::assertEquals('john@doe.com', $dataObj->getData('email'), 'get email after unserialize');
     }
 
-    public function test_can_construct_and_diconstruct_data_object(): void
+    public function testCanConstructAndDiconstructDataObject(): void
     {
         /* Preparing data to revive DataObject */
         $data = [

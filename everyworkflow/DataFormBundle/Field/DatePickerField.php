@@ -24,6 +24,7 @@ class DatePickerField extends BaseField implements DatePickerFieldInterface
     public function setPicker(string $picker): self
     {
         $this->dataObject->setData(self::KEY_PICKER, $picker);
+
         return $this;
     }
 
@@ -35,6 +36,7 @@ class DatePickerField extends BaseField implements DatePickerFieldInterface
     public function setFormat(string $format): self
     {
         $this->dataObject->setData(self::KEY_FORMAT, $format);
+
         return $this;
     }
 }

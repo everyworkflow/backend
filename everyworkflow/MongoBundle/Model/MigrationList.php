@@ -17,7 +17,7 @@ class MigrationList implements MigrationListInterface
      */
     protected iterable $migrations;
 
-    public function __construct(iterable $migrations)
+    public function __construct(iterable $migrations = [])
     {
         $this->migrations = $migrations;
     }

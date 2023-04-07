@@ -8,8 +8,6 @@ declare(strict_types=1);
 
 namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-use EveryWorkflow\PageBuilderBundle\Model\PageBuilderConfigProvider;
-use Symfony\Component\DependencyInjection\Loader\Configurator\DefaultsConfigurator;
 use Symfony\Component\Asset\Package;
 use Symfony\Component\Asset\VersionStrategy\EmptyVersionStrategy;
 

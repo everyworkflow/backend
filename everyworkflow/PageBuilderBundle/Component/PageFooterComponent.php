@@ -12,27 +12,11 @@ use Symfony\Component\Asset\Package;
 
 class PageFooterComponent implements ComponentInterface
 {
-    /**
-     * @var LinkComponentFactory
-     */
-    protected LinkComponentFactory $linkComponentFactory;
-    /**
-     * @var Package
-     */
-    protected Package $package;
-    /**
-     * @var ImageComponentFactory
-     */
-    protected ImageComponentFactory $imageComponentFactory;
-
     public function __construct(
-        LinkComponentFactory $linkComponentFactory,
-        Package $package,
-        ImageComponentFactory $imageComponentFactory
+        protected LinkComponentFactory $linkComponentFactory,
+        protected Package $package,
+        protected ImageComponentFactory $imageComponentFactory
     ) {
-        $this->linkComponentFactory = $linkComponentFactory;
-        $this->package = $package;
-        $this->imageComponentFactory = $imageComponentFactory;
     }
 
     public function getData(): ?array
@@ -46,6 +30,7 @@ class PageFooterComponent implements ComponentInterface
         $data['footer_social_links'] = $this->getSocialLinks();
         $data['copyright'] = '© ' . date('Y') . ' EveryWorkflow. All rights reserved.';
         $data['tagline'] = 'Something wonderful';
+
         return $data;
     }
 
@@ -55,6 +40,7 @@ class PageFooterComponent implements ComponentInterface
         $data[] = $this->linkComponentFactory->create()->setLabel('Facebook')->setUrl('#')->getData();
         $data[] = $this->linkComponentFactory->create()->setLabel('Linkedin')->setUrl('#')->getData();
         $data[] = $this->linkComponentFactory->create()->setLabel('Twitter')->setUrl('#')->getData();
+
         return $data;
     }
 
@@ -66,6 +52,7 @@ class PageFooterComponent implements ComponentInterface
         $data[] = $this->linkComponentFactory->create()->setLabel('Support')->setUrl('/support')->getData();
         $data[] = $this->linkComponentFactory->create()->setLabel('Privacy policy')->setUrl('/privacy-policy')->getData();
         $data[] = $this->linkComponentFactory->create()->setLabel('Terms of use')->setUrl('/terms-of-use')->getData();
+
         return $data;
     }
 }

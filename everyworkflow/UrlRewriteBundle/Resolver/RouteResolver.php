@@ -15,15 +15,10 @@ use Symfony\Component\HttpFoundation\Request;
 
 class RouteResolver implements RouteResolverInterface
 {
-    protected UrlRewriteRepositoryInterface $urlRewriteRepository;
-    protected PageResolverInterface $pageResolver;
-
     public function __construct(
-        UrlRewriteRepositoryInterface $urlRewriteRepository,
-        PageResolverInterface $pageResolver
+        protected UrlRewriteRepositoryInterface $urlRewriteRepository,
+        protected PageResolverInterface $pageResolver
     ) {
-        $this->urlRewriteRepository = $urlRewriteRepository;
-        $this->pageResolver = $pageResolver;
     }
 
     public function resolve($url, Request $request): JsonResponse

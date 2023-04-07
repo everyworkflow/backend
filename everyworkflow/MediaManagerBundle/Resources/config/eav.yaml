@@ -1,0 +1,7 @@
+eav:
+    attribute_types:
+        media_attribute: EveryWorkflow\MediaManagerBundle\Attribute\Type\MediaAttribute
+    attribute_forms:
+        media_attribute: EveryWorkflow\MediaManagerBundle\Form\Attribute\MediaAttributeForm
+    attribute_type_to_form_field_mapper:
+        media_attribute: EveryWorkflow\MediaManagerBundle\Attribute\FieldMapper\MediaMapper

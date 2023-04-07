@@ -13,6 +13,6 @@ use EveryWorkflow\DataFormBundle\Model\FormInterface;
 interface FormFactoryInterface
 {
     public function create(array $data = []): ?FormInterface;
-    
+
     public function createByClassName($className): ?FormInterface;
 }

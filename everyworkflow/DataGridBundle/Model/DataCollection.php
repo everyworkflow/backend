@@ -15,11 +15,9 @@ class DataCollection implements DataCollectionInterface
 {
     protected array $results = [];
 
-    protected DataObjectInterface $dataObject;
-
-    public function __construct(DataObjectInterface $dataObject)
-    {
-        $this->dataObject = $dataObject;
+    public function __construct(
+        protected DataObjectInterface $dataObject
+    ) {
     }
 
     /**

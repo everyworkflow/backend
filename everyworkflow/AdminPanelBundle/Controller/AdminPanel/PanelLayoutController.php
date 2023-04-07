@@ -21,7 +21,7 @@ class PanelLayoutController extends AbstractController
         path: 'api/admin-panel/layout',
         name: 'admin_panel.layout',
         methods: 'GET',
-        permissions: 'auth.admin',
+        // permissions: 'auth.admin',
         swagger: true
     )]
     public function __invoke(

@@ -14,5 +14,5 @@ use EveryWorkflow\MongoBundle\Document\HelperTrait\StatusHelperTraitInterface;
 
 interface SettingDocumentInterface extends BaseDocumentInterface, CreatedUpdatedHelperTraitInterface, StatusHelperTraitInterface
 {
-    public const KEY_CODE = "code";
+    public const KEY_CODE = 'code';
 }

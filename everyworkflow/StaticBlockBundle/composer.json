@@ -10,10 +10,10 @@
         }
     ],
     "require": {
-        "everyworkflow/mongo-bundle": "dev-main",
-        "everyworkflow/data-form-bundle": "dev-main",
-        "everyworkflow/data-grid-bundle": "dev-main",
-        "everyworkflow/page-builder-bundle": "dev-main"
+        "everyworkflow/mongo-bundle": "*",
+        "everyworkflow/data-form-bundle": "*",
+        "everyworkflow/data-grid-bundle": "*",
+        "everyworkflow/page-builder-bundle": "*"
     },
     "autoload": {
         "psr-4": {
@@ -28,6 +28,5 @@
         "psr-4": {
             "EveryWorkflow\\StaticBlockBundle\\Tests\\": "Tests/"
         }
-    },
-    "minimum-stability": "dev"
+    }
 }

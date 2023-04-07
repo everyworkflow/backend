@@ -14,14 +14,9 @@ use EveryWorkflow\DataGridBundle\Model\DataCollectionInterface;
 
 class DataCollectionFactory implements DataCollectionFactoryInterface
 {
-    /**
-     * @var DataObjectFactoryInterface
-     */
-    protected DataObjectFactoryInterface $dataObjectFactory;
-
-    public function __construct(DataObjectFactoryInterface $dataObjectFactory)
-    {
-        $this->dataObjectFactory = $dataObjectFactory;
+    public function __construct(
+        protected DataObjectFactoryInterface $dataObjectFactory
+    ) {
     }
 
     public function create(array $data = []): DataCollectionInterface

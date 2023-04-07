@@ -15,6 +15,7 @@ class ColSection extends BaseSection implements ColSectionInterface
     public function setFlex(string|int $flex): self
     {
         $this->dataObject->setData(self::KEY_FLEX, $flex);
+
         return $this;
     }
 
@@ -26,6 +27,7 @@ class ColSection extends BaseSection implements ColSectionInterface
     public function setOffset(string|int $offset): self
     {
         $this->dataObject->setData(self::KEY_OFFSET, $offset);
+
         return $this;
     }
 
@@ -37,6 +39,7 @@ class ColSection extends BaseSection implements ColSectionInterface
     public function setOrder(string|int $order): self
     {
         $this->dataObject->setData(self::KEY_ORDER, $order);
+
         return $this;
     }
 
@@ -48,6 +51,7 @@ class ColSection extends BaseSection implements ColSectionInterface
     public function setPull(string|int $pull): self
     {
         $this->dataObject->setData(self::KEY_PULL, $pull);
+
         return $this;
     }
 
@@ -59,6 +63,7 @@ class ColSection extends BaseSection implements ColSectionInterface
     public function setPush(string|int $push): self
     {
         $this->dataObject->setData(self::KEY_PUSH, $push);
+
         return $this;
     }
 
@@ -70,6 +75,7 @@ class ColSection extends BaseSection implements ColSectionInterface
     public function setSpan(string|int $span): self
     {
         $this->dataObject->setData(self::KEY_SPAN, $span);
+
         return $this;
     }
 

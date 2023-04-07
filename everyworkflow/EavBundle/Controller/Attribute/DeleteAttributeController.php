@@ -15,15 +15,13 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 
 class DeleteAttributeController extends AbstractController
 {
-    protected AttributeRepositoryInterface $attributeRepository;
-
-    public function __construct(AttributeRepositoryInterface $attributeRepository)
-    {
-        $this->attributeRepository = $attributeRepository;
+    public function __construct(
+        protected AttributeRepositoryInterface $attributeRepository
+    ) {
     }
 
     #[EwRoute(
-        path: "eav/attribute/{code}",
+        path: 'eav/attribute/{code}',
         name: 'eav.attribute.delete',
         methods: 'DELETE',
         permissions: 'eav.attribute.delete',
@@ -32,14 +30,15 @@ class DeleteAttributeController extends AbstractController
                 [
                     'name' => 'code',
                     'in' => 'path',
-                ]
-            ]
+                ],
+            ],
         ]
     )]
     public function __invoke(string $code): JsonResponse
     {
         try {
             $this->attributeRepository->deleteOneByFilter(['code' => $code]);
+
             return new JsonResponse(['detail' => 'Attribute with code: ' . $code . ' deleted successfully.']);
         } catch (\Exception $e) {
             return new JsonResponse(['detail' => $e->getMessage()], 500);

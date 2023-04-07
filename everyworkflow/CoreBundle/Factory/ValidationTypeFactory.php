@@ -16,18 +16,11 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class ValidationTypeFactory implements ValidationTypeFactoryInterface
 {
-    protected ContainerInterface $container;
-    protected CoreConfigProviderInterface $coreConfigProvider;
-    protected DataObjectFactoryInterface $dataObjectFactory;
-
     public function __construct(
-        ContainerInterface $container,
-        CoreConfigProviderInterface $coreConfigProvider,
-        DataObjectFactoryInterface $dataObjectFactory
+        protected ContainerInterface $container,
+        protected CoreConfigProviderInterface $coreConfigProvider,
+        protected DataObjectFactoryInterface $dataObjectFactory
     ) {
-        $this->container = $container;
-        $this->coreConfigProvider = $coreConfigProvider;
-        $this->dataObjectFactory = $dataObjectFactory;
     }
 
     public function create(
@@ -51,7 +44,7 @@ class ValidationTypeFactory implements ValidationTypeFactoryInterface
         ?ConfigurationInterface $configuration = null,
         array $data = []
     ): ?AbstractValidation {
-        $validationClassName = $this->coreConfigProvider->get('validation_types.' . $type);
+        $validationClassName = $this->coreConfigProvider->get('validation_types.'.$type);
         if ($validationClassName) {
             return $this->createFromClassName($validationClassName, $property, $configuration, $data);
         }
@@ -70,7 +63,7 @@ class ValidationTypeFactory implements ValidationTypeFactoryInterface
             if ($validation instanceof AbstractValidation) {
                 $validation->resetData($data);
                 $validation->setProperty($property);
-                if ($configuration !== null) {
+                if (null !== $configuration) {
                     $validation->setConfiguration($configuration);
                 }
 

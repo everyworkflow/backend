@@ -10,9 +10,9 @@
         }
     ],
     "require": {
-        "everyworkflow/mongo-bundle": "dev-main",
-        "everyworkflow/data-form-bundle": "dev-main",
-        "everyworkflow/data-grid-bundle": "dev-main"
+        "everyworkflow/mongo-bundle": "*",
+        "everyworkflow/data-form-bundle": "*",
+        "everyworkflow/data-grid-bundle": "*"
     },
     "autoload": {
         "psr-4": {
@@ -27,6 +27,5 @@
         "psr-4": {
             "EveryWorkflow\\ScopeBundle\\Tests\\": "Tests/"
         }
-    },
-    "minimum-stability": "dev"
+    }
 }

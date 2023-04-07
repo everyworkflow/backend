@@ -8,21 +8,16 @@ declare(strict_types=1);
 
 namespace EveryWorkflow\DataGridBundle\Model;
 
-use EveryWorkflow\CoreBundle\Model\DataObjectInterface;
 use EveryWorkflow\CoreBundle\Component\Action\Button;
+use EveryWorkflow\CoreBundle\Model\DataObjectInterface;
 
 class Action extends Button implements ActionInterface
 {
     protected string $actionType = 'link';
 
-    /**
-     * @var DataObjectInterface
-     */
-    protected DataObjectInterface $dataObject;
-
-    public function __construct(DataObjectInterface $dataObject)
-    {
-        $this->dataObject = $dataObject;
+    public function __construct(
+        protected DataObjectInterface $dataObject
+    ) {
     }
 
     public function getActionType(): ?string
@@ -33,6 +28,7 @@ class Action extends Button implements ActionInterface
     public function setName(string $name): self
     {
         $this->dataObject->setData(self::KEY_NAME, $name);
+
         return $this;
     }
 
@@ -44,6 +40,7 @@ class Action extends Button implements ActionInterface
     public function setPathType(string $pathType): self
     {
         $this->dataObject->setData(self::KEY_PATH_TYPE, $pathType);
+
         return $this;
     }
 
@@ -55,6 +52,7 @@ class Action extends Button implements ActionInterface
     public function setIsConfirm(bool $confirm): self
     {
         $this->dataObject->setData(self::KEY_IS_CONFIRM, $confirm);
+
         return $this;
     }
 
@@ -66,6 +64,7 @@ class Action extends Button implements ActionInterface
     public function setConfirmMessage(string $message): self
     {
         $this->dataObject->setData(self::KEY_CONFIRM_MESSAGE, $message);
+
         return $this;
     }
 
@@ -77,6 +76,7 @@ class Action extends Button implements ActionInterface
     public function setIconSvg(string $iconSvg): self
     {
         $this->dataObject->setData(self::KEY_ICON_SVG, $iconSvg);
+
         return $this;
     }
 
@@ -104,6 +104,7 @@ class Action extends Button implements ActionInterface
         if ($this->isConfirm() && !$this->getConfirmMessage()) {
             $data[self::KEY_CONFIRM_MESSAGE] = 'Are you sure?';
         }
+
         return $data;
     }
 }

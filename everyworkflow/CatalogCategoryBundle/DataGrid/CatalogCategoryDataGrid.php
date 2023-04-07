@@ -22,23 +22,16 @@ use EveryWorkflow\DataGridBundle\RowAction\ButtonRowAction;
 
 class CatalogCategoryDataGrid extends DataGrid implements CatalogCategoryDataGridInterface
 {
-    protected DataObjectFactoryInterface $dataObjectFactory;
-    protected CatalogCategoryRepositoryInterface $catalogCategoryRepository;
-    protected ActionFactoryInterface $actionFactory;
-
     public function __construct(
         DataObjectInterface $dataObject,
         DataGridConfigInterface $dataGridConfig,
         FormInterface $form,
         ArraySourceInterface $source,
-        DataObjectFactoryInterface $dataObjectFactory,
-        CatalogCategoryRepositoryInterface $catalogCategoryRepository,
-        ActionFactoryInterface $actionFactory,
+        protected DataObjectFactoryInterface $dataObjectFactory,
+        protected CatalogCategoryRepositoryInterface $catalogCategoryRepository,
+        protected ActionFactoryInterface $actionFactory,
     ) {
         parent::__construct($dataObject, $dataGridConfig, $form, $source);
-        $this->dataObjectFactory = $dataObjectFactory;
-        $this->catalogCategoryRepository = $catalogCategoryRepository;
-        $this->actionFactory = $actionFactory;
     }
 
     public function getConfig(): DataGridConfigInterface
@@ -51,7 +44,7 @@ class CatalogCategoryDataGrid extends DataGrid implements CatalogCategoryDataGri
                 $allColumns[] = $attribute->getCode();
             }
         }
-        foreach (['status', 'created_at', 'updated_at'] as $item) {
+        foreach (['parent', 'status', 'created_at', 'updated_at'] as $item) {
             if (!isset($allColumns[$item])) {
                 $allColumns[] = $item;
             }

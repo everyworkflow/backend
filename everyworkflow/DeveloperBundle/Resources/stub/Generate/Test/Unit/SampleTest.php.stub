@@ -6,9 +6,9 @@ declare(strict_types=1);
 
 namespace {{ file_namespace }};
 
-use PHPUnit\Framework\TestCase;
+use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
-class {{ file_name }} extends TestCase
+class {{ file_name }} extends KernelTestCase
 {
     // Something
 }

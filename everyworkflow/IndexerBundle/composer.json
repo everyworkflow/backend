@@ -1,0 +1,28 @@
+{
+    "name": "everyworkflow/indexer-bundle",
+    "description": "",
+    "type": "package",
+    "authors": [
+        {
+            "name": "EveryWorkflow",
+            "email": "everyworkflow@gmail.com"
+        }
+    ],
+    "require": {
+        "everyworkflow/cron-bundle": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "EveryWorkflow\\IndexerBundle\\": "./"
+        },
+        "exclude-from-classmap": [
+            "Resources",
+            "Tests"
+        ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "EveryWorkflow\\IndexerBundle\\Tests\\": "Tests/"
+        }
+    }
+}

@@ -69,13 +69,6 @@ class Mongo_2021_01_05_00_00_00_Menu_Migration implements MigrationInterface
             $this->attributeRepository->saveOne($attribute);
         }
 
-        $indexKeys = [];
-        foreach ($this->menuRepository->getIndexKeys() as $key) {
-            $indexKeys[$key] = 1;
-        }
-        $this->menuRepository->getCollection()
-            ->createIndex($indexKeys, ['unique' => true]);
-
         return self::SUCCESS;
     }
 

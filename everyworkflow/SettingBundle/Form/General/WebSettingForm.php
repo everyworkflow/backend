@@ -23,6 +23,7 @@ class WebSettingForm extends Form implements WebSettingFormInterface
                 'title' => 'General',
             ])->setFields($this->getGeneralFields()),
         ];
+
         return array_merge($sections, parent::getSections());
     }
 
@@ -33,13 +34,13 @@ class WebSettingForm extends Form implements WebSettingFormInterface
                 'label' => 'Base URL',
                 'name' => 'base_url',
                 'field_type' => 'text_field',
-                'is_required' => true
+                'is_required' => true,
             ]),
             $this->formFieldFactory->create([
                 'label' => 'Media Base URL',
                 'name' => 'media_base_url',
                 'field_type' => 'text_field',
-                'is_required' => true
+                'is_required' => true,
             ]),
         ];
 

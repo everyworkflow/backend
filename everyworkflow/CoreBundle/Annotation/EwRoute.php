@@ -14,6 +14,7 @@ use Symfony\Component\Routing\Annotation\Route;
  * Annotation class for @EwRoute().
  *
  * @Annotation
+ *
  * @Target({"CLASS", "METHOD"})
  */
 #[\Attribute(\Attribute::IS_REPEATABLE | \Attribute::TARGET_CLASS | \Attribute::TARGET_METHOD)]

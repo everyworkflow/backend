@@ -12,11 +12,9 @@ use EveryWorkflow\CoreBundle\Model\DataObjectInterface;
 
 class Option implements OptionInterface
 {
-    protected DataObjectInterface $dataObject;
-
-    public function __construct(DataObjectInterface $dataObject)
-    {
-        $this->dataObject = $dataObject;
+    public function __construct(
+        protected DataObjectInterface $dataObject
+    ) {
     }
 
     public function setKey(string $key): self
@@ -34,6 +32,7 @@ class Option implements OptionInterface
     public function setIsEnabled(bool $isEnabled): self
     {
         $this->dataObject->setData(self::KEY_IS_ENABLED, $isEnabled);
+
         return $this;
     }
 

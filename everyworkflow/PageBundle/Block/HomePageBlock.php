@@ -14,14 +14,11 @@ use EveryWorkflow\PageBuilderBundle\Factory\BlockFactoryInterface;
 
 class HomePageBlock extends ContainerBlock implements HomePageBlockInterface
 {
-    protected BlockFactoryInterface $blockFactory;
-
     public function __construct(
-        BlockFactoryInterface $blockFactory,
+        protected BlockFactoryInterface $blockFactory,
         DataObjectInterface $dataObject
     ) {
         parent::__construct($dataObject);
-        $this->blockFactory = $blockFactory;
     }
 
     public function toArray(): array
@@ -34,7 +31,7 @@ class HomePageBlock extends ContainerBlock implements HomePageBlockInterface
                 'block_type' => 'link_wrapper_block',
                 'link_path' => '/contact',
                 'link_target' => '_blank',
-                "style" => '{"background": "#e6f7ff", "borderRadius": 8, "textAlign": "center", "boxShadow": "rgb(0 0 0 / 10%) 0px 1px 3px 0px, rgb(0 0 0 / 6%) 0px 1px 2px 0px"}',
+                'style' => '{"background": "#e6f7ff", "borderRadius": 8, "textAlign": "center", "boxShadow": "rgb(0 0 0 / 10%) 0px 1px 3px 0px, rgb(0 0 0 / 6%) 0px 1px 2px 0px"}',
             ])->setBlocks([
                 $this->blockFactory->createBlock([
                     'block_type' => 'image_block',
@@ -47,7 +44,7 @@ class HomePageBlock extends ContainerBlock implements HomePageBlockInterface
                 ]),
                 $this->blockFactory->createBlock([
                     'block_type' => 'container_block',
-                    "style" => '{"padding": 8}',
+                    'style' => '{"padding": 8}',
                 ])->setBlocks([
                     $this->blockFactory->createBlock([
                         'block_type' => 'heading_block',
@@ -179,6 +176,7 @@ class HomePageBlock extends ContainerBlock implements HomePageBlockInterface
 
         $data = parent::toArray();
         $data[self::KEY_BLOCK_DATA] = $blockData;
+
         return $data;
     }
 }

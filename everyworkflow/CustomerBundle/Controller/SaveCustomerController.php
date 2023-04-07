@@ -17,15 +17,13 @@ use Symfony\Component\HttpFoundation\Request;
 
 class SaveCustomerController extends AbstractController
 {
-    protected CustomerRepositoryInterface $customerRepository;
-
-    public function __construct(CustomerRepositoryInterface $customerRepository)
-    {
-        $this->customerRepository = $customerRepository;
+    public function __construct(
+        protected CustomerRepositoryInterface $customerRepository
+    ) {
     }
 
     #[EwRoute(
-        path: "customer/{uuid}",
+        path: 'customer/{uuid}',
         name: 'customer.save',
         methods: 'POST',
         permissions: 'customer.save',
@@ -35,7 +33,7 @@ class SaveCustomerController extends AbstractController
                     'name' => 'uuid',
                     'in' => 'path',
                     'default' => 'create',
-                ]
+                ],
             ],
             'requestBody' => [
                 'content' => [
@@ -53,12 +51,12 @@ class SaveCustomerController extends AbstractController
                                 'last_name' => [
                                     'type' => 'string',
                                     'required' => true,
-                                ]
-                            ]
-                        ]
-                    ]
-                ]
-            ]
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+            ],
         ]
     )]
     public function __invoke(Request $request, string $uuid = 'create'): JsonResponse

@@ -6,25 +6,34 @@
 
 namespace EveryWorkflow\MongoBundle\Tests\Unit;
 
+use EveryWorkflow\MongoBundle\Model\MongoConnection;
 use EveryWorkflow\MongoBundle\Repository\BaseRepository;
-use EveryWorkflow\MongoBundle\Tests\BaseMongoTestCase;
+use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
-class MongoConnectionTest extends BaseMongoTestCase
+class MongoConnectionTest extends KernelTestCase
 {
+    public const COLLECTION_NAME = 'test_document_collection';
+
     protected function tearDown(): void
     {
         parent::tearDown();
-        $mongoConnection = $this->getMongoConnection();
-        $baseRepository = new BaseRepository($mongoConnection);
-        $baseRepository->setCollectionName('test_document_collection')
-            ->getCollection()
-            ->drop();
+
+        $container = self::getContainer();
+
+        /** @var MongoConnection $mongoConnection */
+        $mongoConnection = $container->get(MongoConnection::class);
+        $userRepository = new BaseRepository($mongoConnection, self::COLLECTION_NAME);
+        $userRepository->getCollection()->drop();
     }
 
-    public function test_mongodb_test_connection(): void
+    public function testMongodbTestConnection(): void
     {
-        $mongoConnection = $this->getMongoConnection();
-        $baseRepository = new BaseRepository($mongoConnection);
+        self::bootKernel();
+        $container = self::getContainer();
+
+        /** @var MongoConnection $mongoConnection */
+        $mongoConnection = $container->get(MongoConnection::class);
+        $userRepository = new BaseRepository($mongoConnection, self::COLLECTION_NAME);
 
         $userData = [
             [
@@ -40,29 +49,28 @@ class MongoConnectionTest extends BaseMongoTestCase
                 'gender' => 'male',
             ],
         ];
-        $userRepository = $baseRepository->setCollectionName('test_document_collection');
         $userRepository->getCollection()->insertMany($userData);
 
-        self::assertCount($userRepository->getCollection()->countDocuments(), $userData, 'Stored document count must be same.');
+        $this->assertCount($userRepository->getCollection()->countDocuments(), $userData, 'Stored document count must be same.');
 
         /** @var \MongoDB\Model\BSONDocument $dbUser1 */
-        $dbUser1 = $baseRepository->getCollection()->findOne(['email' => 'test1@example.com']);
+        $dbUser1 = $userRepository->getCollection()->findOne(['email' => 'test1@example.com']);
         $dbUser1Data = $dbUser1->getArrayCopy();
-        self::assertArrayHasKey('_id', $dbUser1Data, 'Db user1 data must have >> _id << array key.');
-        self::assertArrayHasKey('first_name', $dbUser1Data, 'Db user1 data must have >> first_name << array key.');
-        self::assertArrayHasKey('last_name', $dbUser1Data, 'Db user1 data must have >> last_name << array key.');
-        self::assertArrayHasKey('email', $dbUser1Data, 'Db user1 data must have >> email << array key.');
-        self::assertEquals('test1@example.com', $dbUser1Data['email'], 'Db user1 email must be same.');
-        self::assertArrayHasKey('gender', $dbUser1Data, 'Db user1 data must have >> gender << array key.');
+        $this->assertArrayHasKey('_id', $dbUser1Data, 'Db user1 data must have >> _id << array key.');
+        $this->assertArrayHasKey('first_name', $dbUser1Data, 'Db user1 data must have >> first_name << array key.');
+        $this->assertArrayHasKey('last_name', $dbUser1Data, 'Db user1 data must have >> last_name << array key.');
+        $this->assertArrayHasKey('email', $dbUser1Data, 'Db user1 data must have >> email << array key.');
+        $this->assertEquals('test1@example.com', $dbUser1Data['email'], 'Db user1 email must be same.');
+        $this->assertArrayHasKey('gender', $dbUser1Data, 'Db user1 data must have >> gender << array key.');
 
         /** @var \MongoDB\Model\BSONDocument $dbUser2 */
-        $dbUser2 = $baseRepository->getCollection()->findOne(['email' => 'test2@example.com']);
+        $dbUser2 = $userRepository->getCollection()->findOne(['email' => 'test2@example.com']);
         $dbUser2Data = $dbUser2->getArrayCopy();
-        self::assertArrayHasKey('_id', $dbUser2Data, 'Db user2 data must have >> _id << array key.');
-        self::assertArrayHasKey('first_name', $dbUser2Data, 'Db user2 data must have >> first_name << array key.');
-        self::assertArrayHasKey('last_name', $dbUser2Data, 'Db user2 data must have >> last_name << array key.');
-        self::assertArrayHasKey('email', $dbUser2Data, 'Db user2 data must have >> email << array key.');
-        self::assertEquals('test2@example.com', $dbUser2Data['email'], 'Db user2 email must be same.');
-        self::assertArrayHasKey('gender', $dbUser2Data, 'Db user2 data must have >> gender << array key.');
+        $this->assertArrayHasKey('_id', $dbUser2Data, 'Db user2 data must have >> _id << array key.');
+        $this->assertArrayHasKey('first_name', $dbUser2Data, 'Db user2 data must have >> first_name << array key.');
+        $this->assertArrayHasKey('last_name', $dbUser2Data, 'Db user2 data must have >> last_name << array key.');
+        $this->assertArrayHasKey('email', $dbUser2Data, 'Db user2 data must have >> email << array key.');
+        $this->assertEquals('test2@example.com', $dbUser2Data['email'], 'Db user2 email must be same.');
+        $this->assertArrayHasKey('gender', $dbUser2Data, 'Db user2 data must have >> gender << array key.');
     }
 }

@@ -16,19 +16,14 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 
 class AttributeTypeController extends AbstractController
 {
-    protected AttributeRepositoryInterface $attributeRepository;
-    protected AttributeFieldFactoryInterface $attributeFieldFactory;
-
     public function __construct(
-        AttributeRepositoryInterface $attributeRepository,
-        AttributeFieldFactoryInterface $attributeFieldFactory
+        protected AttributeRepositoryInterface $attributeRepository,
+        protected AttributeFieldFactoryInterface $attributeFieldFactory
     ) {
-        $this->attributeRepository = $attributeRepository;
-        $this->attributeFieldFactory = $attributeFieldFactory;
     }
 
     #[EwRoute(
-        path: "eav/attribute-type",
+        path: 'eav/attribute-type',
         name: 'eav.attribute_type',
         priority: 10,
         methods: 'GET',

@@ -8,13 +8,20 @@ declare(strict_types=1);
 
 namespace EveryWorkflow\CoreBundle\Tests\Unit\Validation;
 
-use EveryWorkflow\CoreBundle\Tests\BaseTestCase;
+use EveryWorkflow\CoreBundle\Factory\ValidatorFactory;
+use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
-class SimpleFormValidationTest extends BaseTestCase
+class SimpleFormValidationTest extends KernelTestCase
 {
-    public function test_it_should_be_able_to_validate_a_simple_form()
+    public function testShouldBeAbleToValidateSimpleForm(): void
     {
-        $validator = $this->getValidatorFactory()->create([
+        self::bootKernel();
+        $container = self::getContainer();
+
+        /** @var ValidatorFactory $validatorFactory */
+        $validatorFactory = $container->get(ValidatorFactory::class);
+
+        $validator = $validatorFactory->create([
             'name' => [
                 'type' => 'string',
                 'min_length' => 10,
@@ -28,7 +35,7 @@ class SimpleFormValidationTest extends BaseTestCase
             ],
             'is_policy_accepted' => [
                 'type' => 'boolean',
-                'property_name' => 'Is policy accepted'
+                'property_name' => 'Is policy accepted',
             ],
             'date_of_birth' => [
                 'type' => 'date_time',

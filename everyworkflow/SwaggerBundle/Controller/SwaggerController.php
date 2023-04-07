@@ -14,12 +14,13 @@ use Symfony\Component\HttpFoundation\Response;
 
 class SwaggerController extends AbstractController
 {
-    #[EwRoute(path: "swagger", name: 'swagger', priority: 500, methods: 'GET')]
+    #[EwRoute(path: 'swagger', name: 'swagger', priority: 500, methods: 'GET')]
     public function __invoke(): Response
     {
-        if ($this->getParameter('kernel.environment') === 'prod') {
+        if ('prod' === $this->getParameter('kernel.environment')) {
             throw $this->createNotFoundException('Only available in dev environment');
         }
+
         return $this->render('swagger.html.twig');
     }
 }

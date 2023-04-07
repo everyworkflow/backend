@@ -53,6 +53,32 @@ abstract class AbstractBlockForm extends Form implements AbstractBlockFormInterf
                 'name' => 'style',
                 'field_type' => 'textarea_field',
             ]),
+            $this->formFieldFactory->create([
+                'label' => 'Use JSX style dark',
+                'name' => 'use_style_dark',
+                'field_type' => 'switch_field',
+                'default_value' => 0,
+                'is_actionable' => true,
+                'field_actions' => [
+                    [
+                        [
+                            'action_type' => 'hide_field',
+                            'field_names' => ['style_dark']
+                        ]
+                    ],
+                    [
+                        [
+                            'action_type' => 'show_field',
+                            'field_names' => ['style_dark']
+                        ]
+                    ],
+                ],
+            ]),
+            $this->formFieldFactory->create([
+                'label' => 'JSX style dark',
+                'name' => 'style_dark',
+                'field_type' => 'textarea_field',
+            ]),
         ];
         return array_merge($fields, parent::getFields());
     }

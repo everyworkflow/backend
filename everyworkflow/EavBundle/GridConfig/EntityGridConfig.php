@@ -54,6 +54,11 @@ class EntityGridConfig extends DataGridConfig implements EntityGridConfigInterfa
     public function getRowActions(): array
     {
         return array_merge([
+        $this->getActionFactory()->create(ButtonRowAction::class, [
+                'button_label' => 'Attributes',
+                'button_path' => '/system/attribute?filter={"entity_code":"{code}"}',
+                'button_type' => 'primary',
+            ]),
             $this->getActionFactory()->create(ButtonRowAction::class, [
                 'button_label' => 'Edit',
                 'button_path' => '/system/entity/{code}/edit',
@@ -87,6 +92,7 @@ class EntityGridConfig extends DataGridConfig implements EntityGridConfigInterfa
                 'path_type' => ButtonBulkAction::PATH_TYPE_POST_CALL,
             ]),
         ];
+
         return array_merge($bulkActions, parent::getBulkActions());
     }
 }

@@ -10,7 +10,6 @@ use EveryWorkflow\DataGridBundle\Model\Collection\RepositorySource;
 use EveryWorkflow\DataGridBundle\Model\DataGridConfig;
 use EveryWorkflow\PageBundle\DataGrid\PageDataGrid;
 use EveryWorkflow\PageBundle\Repository\PageRepository;
-use Symfony\Component\DependencyInjection\Loader\Configurator\DefaultsConfigurator;
 
 return function (ContainerConfigurator $configurator) {
     /** @var DefaultsConfigurator $services */

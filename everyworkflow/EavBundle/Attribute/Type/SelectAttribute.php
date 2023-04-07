@@ -32,7 +32,7 @@ class SelectAttribute extends BaseAttribute implements SelectAttributeInterface
     }
 
     /**
-     * @param OptionInterface[] | \MongoDB\Model\BSONArray $options
+     * @param OptionInterface[]|\MongoDB\Model\BSONArray $options
      */
     public function setOptions(array|\MongoDB\Model\BSONArray $options): self
     {
@@ -42,7 +42,7 @@ class SelectAttribute extends BaseAttribute implements SelectAttributeInterface
             foreach ($options as $option) {
                 if ($option instanceof \MongoDB\Model\BSONDocument) {
                     $this->options[] = $option->getArrayCopy();
-                } else if (is_array($option)) {
+                } elseif (is_array($option)) {
                     $this->options[] = $option;
                 }
             }
@@ -69,6 +69,7 @@ class SelectAttribute extends BaseAttribute implements SelectAttributeInterface
                 $data['options'][] = $option;
             }
         }
+
         return $data;
     }
 }

@@ -16,15 +16,13 @@ use Symfony\Component\HttpFoundation\Request;
 
 class GetUserController extends AbstractController
 {
-    protected UserRepositoryInterface $userRepository;
-
-    public function __construct(UserRepositoryInterface $userRepository)
-    {
-        $this->userRepository = $userRepository;
+    public function __construct(
+        protected UserRepositoryInterface $userRepository
+    ) {
     }
 
     #[EwRoute(
-        path: "user/{uuid}",
+        path: 'user/{uuid}',
         name: 'user.view',
         methods: 'GET',
         permissions: 'user.view',
@@ -34,15 +32,15 @@ class GetUserController extends AbstractController
                     'name' => 'uuid',
                     'in' => 'path',
                     'default' => 'create',
-                ]
-            ]
+                ],
+            ],
         ]
     )]
     public function __invoke(Request $request, string $uuid = 'create'): JsonResponse
     {
         $data = [];
 
-        if ($uuid !== 'create') {
+        if ('create' !== $uuid) {
             $item = $this->userRepository->findById($uuid);
             if ($item) {
                 $data['item'] = $item->toArray();

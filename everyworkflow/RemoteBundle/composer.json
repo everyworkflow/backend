@@ -10,8 +10,8 @@
         }
     ],
     "require": {
-        "guzzlehttp/guzzle": "^7.3",
-        "everyworkflow/core-bundle": "dev-main"
+        "guzzlehttp/guzzle": "^7.5",
+        "everyworkflow/core-bundle": "*"
     },
     "autoload": {
         "psr-4": {
@@ -26,6 +26,5 @@
         "psr-4": {
             "EveryWorkflow\\RemoteBundle\\Tests\\": "Tests/"
         }
-    },
-    "minimum-stability": "dev"
+    }
 }

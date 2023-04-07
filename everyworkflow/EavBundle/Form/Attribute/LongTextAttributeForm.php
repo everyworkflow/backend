@@ -49,16 +49,18 @@ class LongTextAttributeForm extends AttributeForm implements LongTextAttributeFo
                     'name' => 'row_count',
                     'field_type' => 'text_field',
                     'input_type' => 'number',
-                    'default' => '5'
+                    'default' => '5',
                 ]),
             ]),
         ];
+
         return array_merge(parent::getSections(), $sections);
     }
 
     public function toArray(): array
     {
         $this->dataObject->setDataIfNot(self::KEY_IS_SIDE_FORM_ANCHOR_ENABLE, true);
+
         return parent::toArray();
     }
 }

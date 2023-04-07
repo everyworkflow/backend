@@ -16,15 +16,13 @@ use Symfony\Component\HttpFoundation\Request;
 
 class ListEntityController extends AbstractController
 {
-    protected DataGridInterface $dataGrid;
-
-    public function __construct(DataGridInterface $dataGrid)
-    {
-        $this->dataGrid = $dataGrid;
+    public function __construct(
+        protected DataGridInterface $dataGrid
+    ) {
     }
 
     #[EwRoute(
-        path: "eav/entity",
+        path: 'eav/entity',
         name: 'eav.entity',
         priority: 10,
         methods: 'GET',

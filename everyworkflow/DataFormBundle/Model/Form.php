@@ -19,23 +19,17 @@ class Form implements FormInterface
     protected array $fields = [];
     protected array $sections = [];
 
-    protected DataObjectInterface $dataObject;
-    protected FormSectionFactoryInterface $formSectionFactory;
-    protected FormFieldFactoryInterface $formFieldFactory;
-
     public function __construct(
-        DataObjectInterface $dataObject,
-        FormSectionFactoryInterface $formSectionFactory,
-        FormFieldFactoryInterface $formFieldFactory
+        protected DataObjectInterface $dataObject,
+        protected FormSectionFactoryInterface $formSectionFactory,
+        protected FormFieldFactoryInterface $formFieldFactory
     ) {
-        $this->dataObject = $dataObject;
-        $this->formSectionFactory = $formSectionFactory;
-        $this->formFieldFactory = $formFieldFactory;
     }
 
     public function setFormUpdatePath(string $formUpdatePath): self
     {
         $this->dataObject->setData(self::KEY_FORM_UPDATE_PATH, $formUpdatePath);
+
         return $this;
     }
 
@@ -47,6 +41,7 @@ class Form implements FormInterface
     public function setIsSideFormAnchorEnable(bool $isSideFormAnchorEnable): self
     {
         $this->dataObject->setData(self::KEY_IS_SIDE_FORM_ANCHOR_ENABLE, $isSideFormAnchorEnable);
+
         return $this;
     }
 
@@ -58,6 +53,7 @@ class Form implements FormInterface
     public function setSideFormAnchorPosition(string $sideFormAnchorPosition): self
     {
         $this->dataObject->setData(self::KEY_SIDE_FORM_ANCHOR_POSITION, $sideFormAnchorPosition);
+
         return $this;
     }
 
@@ -158,6 +154,7 @@ class Form implements FormInterface
     public function resetData(array $data): self
     {
         $this->dataObject->resetData($data);
+
         return $this;
     }
 
@@ -169,16 +166,22 @@ class Form implements FormInterface
         foreach ($this->getFields() as $field) {
             if ($field instanceof BaseFieldInterface) {
                 $fields[] = $field->toArray();
-            } else if (is_array($field)) {
+            } elseif (is_array($field)) {
                 $fields[] = $field;
             }
         }
         uasort($fields, function ($a, $b) {
             $aSortOrder = $a['sort_order'] ?? null;
             $bSortOrder = $b['sort_order'] ?? null;
-            if ($aSortOrder === null && $bSortOrder !== null) return 1;
-            if ($aSortOrder > $bSortOrder) return 1;
-            if ($aSortOrder < $bSortOrder) return -1;
+            if (null === $aSortOrder && null !== $bSortOrder) {
+                return 1;
+            }
+            if ($aSortOrder > $bSortOrder) {
+                return 1;
+            }
+            if ($aSortOrder < $bSortOrder) {
+                return -1;
+            }
         });
         $data[self::KEY_FIELDS] = array_values($fields);
 
@@ -186,7 +189,7 @@ class Form implements FormInterface
         foreach ($this->getSections() as $section) {
             if ($section instanceof BaseSectionInterface) {
                 $sections[] = $section->toArray();
-            } else if (is_array($section)) {
+            } elseif (is_array($section)) {
                 $sections[] = $section;
             }
         }
@@ -194,9 +197,15 @@ class Form implements FormInterface
         uasort($sections, function ($a, $b) {
             $aSortOrder = $a['sort_order'] ?? null;
             $bSortOrder = $b['sort_order'] ?? null;
-            if ($aSortOrder === null && $bSortOrder !== null) return 1;
-            if ($aSortOrder > $bSortOrder) return 1;
-            if ($aSortOrder < $bSortOrder) return -1;
+            if (null === $aSortOrder && null !== $bSortOrder) {
+                return 1;
+            }
+            if ($aSortOrder > $bSortOrder) {
+                return 1;
+            }
+            if ($aSortOrder < $bSortOrder) {
+                return -1;
+            }
         });
         $data[self::KEY_SECTIONS] = array_values($sections);
 

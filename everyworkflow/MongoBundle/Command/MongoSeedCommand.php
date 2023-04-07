@@ -15,57 +15,46 @@ use EveryWorkflow\MongoBundle\Factory\DocumentFactoryInterface;
 use EveryWorkflow\MongoBundle\Model\SeederListInterface;
 use EveryWorkflow\MongoBundle\Repository\SeederRepositoryInterface;
 use EveryWorkflow\MongoBundle\Support\SeederInterface;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
+#[AsCommand(name: 'mongo:seed')]
 class MongoSeedCommand extends Command
 {
-    protected static $defaultName = 'mongo:seed';
-
-    protected SeederListInterface $seederList;
-    protected DocumentFactoryInterface $documentFactory;
-    protected SeederRepositoryInterface $seederRepository;
-    protected SystemDateTimeInterface $systemDateTime;
+    public const KEY_CLASS_NAME = 'className';
 
     public function __construct(
-        SeederListInterface $seederList,
-        DocumentFactoryInterface $documentFactory,
-        SeederRepositoryInterface $seederRepository,
-        SystemDateTimeInterface $systemDateTime,
+        protected SeederListInterface $seederList,
+        protected DocumentFactoryInterface $documentFactory,
+        protected SeederRepositoryInterface $seederRepository,
+        protected SystemDateTimeInterface $systemDateTime,
         string $name = null
     ) {
         parent::__construct($name);
-        $this->seederList = $seederList;
-        $this->documentFactory = $documentFactory;
-        $this->seederRepository = $seederRepository;
-        $this->systemDateTime = $systemDateTime;
     }
 
-    /**
-     * @return void
-     */
-    protected function configure()
+    protected function configure(): void
     {
-        $this->setDescription('Seed mongo seeders')
-            ->setHelp('This command will seed mongo seeders');
+        $this->setDescription('Seed mongo seeder')
+            ->setHelp('This command will seed mongo seeder')
+            ->addArgument(self::KEY_CLASS_NAME, InputArgument::REQUIRED, 'Seeder className');
     }
 
-    /**
-     * @param InputInterface $input
-     * @param OutputInterface $output
-     * @return int
-     */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $inputOutput = new SymfonyStyle($input, $output);
+        $className = $input->getArgument(self::KEY_CLASS_NAME);
 
-        $inputOutput->title('EveryWorkflow Data Seed');
+        $inputOutput->title('EveryWorkflow Mongo Data Seed');
 
         $sortedSeeders = $this->seederList->getSortedList();
         if (!count($sortedSeeders)) {
-            $inputOutput->warning('No seeders found!');
+            $inputOutput->warning('No seeder found!');
+
             return Command::FAILURE;
         }
 
@@ -77,7 +66,7 @@ class MongoSeedCommand extends Command
             $class = get_class($seeder);
 
             /* If new seeder then run ->seed() and store log */
-            if (!isset($seederClasses[$class])) {
+            if ($class === $className && !isset($seederClasses[$class])) {
                 try {
                     $newSeeders[] = $this->seedSeeder($inputOutput, $seeder);
                 } catch (\Exception $e) {
@@ -96,6 +85,7 @@ class MongoSeedCommand extends Command
             }
 
             $inputOutput->newLine();
+
             return Command::SUCCESS;
         }
 
@@ -105,9 +95,6 @@ class MongoSeedCommand extends Command
     }
 
     /**
-     * @param SymfonyStyle $inputOutput
-     * @param SeederInterface $seeder
-     * @return SeederDocumentInterface
      * @throws \Exception
      */
     protected function seedSeeder(

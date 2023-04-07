@@ -10,6 +10,7 @@ namespace EveryWorkflow\DeveloperBundle\Command;
 
 use EveryWorkflow\DeveloperBundle\Factory\StubFactoryInterface;
 use EveryWorkflow\DeveloperBundle\Model\StubGeneratorInterface;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -17,12 +18,11 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\Question;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
+#[AsCommand(name: 'generate:mongo:document')]
 class GenerateMongoDocumentCommand extends Command
 {
     public const KEY_DOCUMENT_NAME = 'document_name';
     public const KEY_BUNDLE = 'bundle';
-
-    protected static $defaultName = 'generate:mogo-document';
 
     protected string $appNamespace = '';
 
@@ -44,11 +44,9 @@ class GenerateMongoDocumentCommand extends Command
     }
 
     /**
-     * @return void
-     *
      * @throws \Exception
      */
-    protected function configure()
+    protected function configure(): void
     {
         $this->setDescription('Generates mongo document & repository pair')
             ->setHelp('Eg: bin/console generate:mogo-document User UserBundle')
@@ -57,11 +55,9 @@ class GenerateMongoDocumentCommand extends Command
     }
 
     /**
-     * @return int
-     *
      * @throws \Exception
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $inputOutput = new SymfonyStyle($input, $output);
 

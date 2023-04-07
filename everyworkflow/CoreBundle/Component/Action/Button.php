@@ -12,16 +12,15 @@ use EveryWorkflow\CoreBundle\Model\DataObjectInterface;
 
 class Button implements ButtonInterface
 {
-    protected DataObjectInterface $dataObject;
-
-    public function __construct(DataObjectInterface $dataObject)
-    {
-        $this->dataObject = $dataObject;
+    public function __construct(
+        protected DataObjectInterface $dataObject
+    ) {
     }
 
     public function setButtonLabel(string $buttonLabel): self
     {
         $this->dataObject->setData(self::KEY_BUTTON_LABEL, $buttonLabel);
+
         return $this;
     }
 
@@ -33,6 +32,7 @@ class Button implements ButtonInterface
     public function setButtonPath(string $buttonPath): self
     {
         $this->dataObject->setData(self::KEY_BUTTON_PATH, $buttonPath);
+
         return $this;
     }
 
@@ -44,6 +44,7 @@ class Button implements ButtonInterface
     public function setButtonType(string $buttonType): self
     {
         $this->dataObject->setData(self::KEY_BUTTON_TYPE, $buttonType);
+
         return $this;
     }
 
@@ -55,6 +56,7 @@ class Button implements ButtonInterface
     public function setButtonSize(string $buttonSize): self
     {
         $this->dataObject->setData(self::KEY_BUTTON_SIZE, $buttonSize);
+
         return $this;
     }
 
@@ -66,6 +68,7 @@ class Button implements ButtonInterface
     public function setButtonShape(string $buttonShape): self
     {
         $this->dataObject->setData(self::KEY_BUTTON_SHAPE, $buttonShape);
+
         return $this;
     }
 
@@ -77,6 +80,7 @@ class Button implements ButtonInterface
     public function setButtonTarget(string $buttonTarget): self
     {
         $this->dataObject->setData(self::KEY_BUTTON_TARGET, $buttonTarget);
+
         return $this;
     }
 
@@ -88,6 +92,7 @@ class Button implements ButtonInterface
     public function setIsGhost(bool $isGhost): self
     {
         $this->dataObject->setData(self::KEY_IS_GHOST, $isGhost);
+
         return $this;
     }
 
@@ -99,6 +104,7 @@ class Button implements ButtonInterface
     public function setIsDanger(bool $isDanger): self
     {
         $this->dataObject->setData(self::KEY_IS_DANGER, $isDanger);
+
         return $this;
     }
 
@@ -110,6 +116,7 @@ class Button implements ButtonInterface
     public function setIsBlock(bool $isBlock): self
     {
         $this->dataObject->setData(self::KEY_IS_BLOCK, $isBlock);
+
         return $this;
     }
 
@@ -121,6 +128,7 @@ class Button implements ButtonInterface
     public function setClassName(string $className): self
     {
         $this->dataObject->setData(self::KEY_CLASS_NAME, $className);
+
         return $this;
     }
 
@@ -132,6 +140,7 @@ class Button implements ButtonInterface
     public function setStyle(string $style): self
     {
         $this->dataObject->setData(self::KEY_STYLE, $style);
+
         return $this;
     }
 

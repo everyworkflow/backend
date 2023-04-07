@@ -8,7 +8,6 @@ declare(strict_types=1);
 
 namespace EveryWorkflow\SalesOrderBundle\DataGrid;
 
-use EveryWorkflow\SalesOrderBundle\Repository\SalesOrderRepositoryInterface;
 use EveryWorkflow\CoreBundle\Model\DataObjectFactoryInterface;
 use EveryWorkflow\CoreBundle\Model\DataObjectInterface;
 use EveryWorkflow\DataFormBundle\Model\FormInterface;
@@ -19,26 +18,20 @@ use EveryWorkflow\DataGridBundle\Model\Collection\ArraySourceInterface;
 use EveryWorkflow\DataGridBundle\Model\DataGrid;
 use EveryWorkflow\DataGridBundle\Model\DataGridConfigInterface;
 use EveryWorkflow\DataGridBundle\RowAction\ButtonRowAction;
+use EveryWorkflow\SalesOrderBundle\Repository\SalesOrderRepositoryInterface;
 
 class SalesOrderDataGrid extends DataGrid implements SalesOrderDataGridInterface
 {
-    protected DataObjectFactoryInterface $dataObjectFactory;
-    protected SalesOrderRepositoryInterface $salesOrderRepository;
-    protected ActionFactoryInterface $actionFactory;
-
     public function __construct(
         DataObjectInterface $dataObject,
         DataGridConfigInterface $dataGridConfig,
         FormInterface $form,
         ArraySourceInterface $source,
-        DataObjectFactoryInterface $dataObjectFactory,
-        SalesOrderRepositoryInterface $salesOrderRepository,
-        ActionFactoryInterface $actionFactory,
+        protected DataObjectFactoryInterface $dataObjectFactory,
+        protected SalesOrderRepositoryInterface $salesOrderRepository,
+        protected ActionFactoryInterface $actionFactory,
     ) {
         parent::__construct($dataObject, $dataGridConfig, $form, $source);
-        $this->dataObjectFactory = $dataObjectFactory;
-        $this->salesOrderRepository = $salesOrderRepository;
-        $this->actionFactory = $actionFactory;
     }
 
     public function getConfig(): DataGridConfigInterface

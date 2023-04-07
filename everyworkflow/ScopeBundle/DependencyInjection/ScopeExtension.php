@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright EveryWorkflow. All rights reserved.
  */
@@ -30,7 +31,7 @@ class ScopeExtension extends Extension implements PrependExtensionInterface
     public function prepend(ContainerBuilder $container): void
     {
         $bundles = $container->getParameter('kernel.bundles');
-        $ymlLoader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
+        $ymlLoader = new YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         if (isset($bundles['EveryWorkflowAuthBundle'])) {
             $ymlLoader->load('auth.yaml');
         }

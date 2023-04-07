@@ -16,15 +16,13 @@ use Symfony\Component\HttpFoundation\Request;
 
 class SubmitScopeController extends AbstractController
 {
-    protected ScopeRepositoryInterface $scopeRepository;
-
-    public function __construct(ScopeRepositoryInterface $scopeRepository)
-    {
-        $this->scopeRepository = $scopeRepository;
+    public function __construct(
+        protected ScopeRepositoryInterface $scopeRepository
+    ) {
     }
 
     #[EwRoute(
-        path: "scope/{code}",
+        path: 'scope/{code}',
         name: 'scope.save',
         methods: 'POST',
         permissions: 'scope.save',
@@ -34,7 +32,7 @@ class SubmitScopeController extends AbstractController
                     'name' => 'code',
                     'in' => 'path',
                     'default' => 'create',
-                ]
+                ],
             ],
             'requestBody' => [
                 'content' => [
@@ -53,11 +51,11 @@ class SubmitScopeController extends AbstractController
                                     'type' => 'string',
                                     'required' => true,
                                 ],
-                            ]
-                        ]
-                    ]
-                ]
-            ]
+                            ],
+                        ],
+                    ],
+                ],
+            ],
         ]
     )]
     public function __invoke(Request $request, ?string $code = 'default'): JsonResponse

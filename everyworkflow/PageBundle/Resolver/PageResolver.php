@@ -14,20 +14,15 @@ use Symfony\Component\HttpFoundation\Request;
 
 class PageResolver implements PageResolverInterface
 {
-    /**
-     * @var PageEntityRepositoryInterface
-     */
-    protected PageRepositoryInterface $pageRepository;
-
     public function __construct(
-        PageRepositoryInterface $pageRepository
+        protected PageRepositoryInterface $pageRepository
     ) {
-        $this->pageRepository = $pageRepository;
     }
 
     public function resolve($url, Request $request): JsonResponse
     {
         $pageDocument = $this->pageRepository->findOne(['url_path' => $url]);
+
         return new JsonResponse($pageDocument->toArray());
     }
 }

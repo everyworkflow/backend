@@ -16,12 +16,14 @@ use EveryWorkflow\MongoBundle\Document\HelperTrait\StatusHelperTrait;
 
 class RoleDocument extends BaseDocument implements RoleDocumentInterface
 {
-    use CreatedUpdatedHelperTrait, StatusHelperTrait;
+    use CreatedUpdatedHelperTrait;
+    use StatusHelperTrait;
 
     #[StringValidation(required: true, minLength: 2, maxLength: 20)]
     public function setCode(string $code): self
     {
         $this->setData(self::KEY_CODE, $code);
+
         return $this;
     }
 
@@ -34,6 +36,7 @@ class RoleDocument extends BaseDocument implements RoleDocumentInterface
     public function setName(string $name): self
     {
         $this->setData(self::KEY_NAME, $name);
+
         return $this;
     }
 
@@ -46,6 +49,7 @@ class RoleDocument extends BaseDocument implements RoleDocumentInterface
     public function setPermissions(string $permissions): self
     {
         $this->setData(self::KEY_PERMISSIONS, $permissions);
+
         return $this;
     }
 
@@ -54,9 +58,10 @@ class RoleDocument extends BaseDocument implements RoleDocumentInterface
         $permissions = $this->getData(self::KEY_PERMISSIONS);
         if ($permissions instanceof \MongoDB\Model\BSONArray) {
             return $permissions->getArrayCopy();
-        } else if (is_array($permissions)) {
+        } elseif (is_array($permissions)) {
             return $permissions;
         }
+
         return [];
     }
 }

@@ -16,15 +16,13 @@ use Symfony\Component\HttpFoundation\Request;
 
 class ListCustomerController extends AbstractController
 {
-    protected CustomerDataGridInterface $customerDataGrid;
-
-    public function __construct(CustomerDataGridInterface $customerDataGrid)
-    {
-        $this->customerDataGrid = $customerDataGrid;
+    public function __construct(
+        protected CustomerDataGridInterface $customerDataGrid
+    ) {
     }
 
     #[EwRoute(
-        path: "customer",
+        path: 'customer',
         name: 'customer',
         priority: 10,
         methods: 'GET',
@@ -34,6 +32,7 @@ class ListCustomerController extends AbstractController
     public function __invoke(Request $request): JsonResponse
     {
         $dataGrid = $this->customerDataGrid->setFromRequest($request);
+
         return new JsonResponse($dataGrid->toArray());
     }
 }

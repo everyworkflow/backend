@@ -22,23 +22,16 @@ use EveryWorkflow\PageBundle\Repository\PageRepositoryInterface;
 
 class PageDataGrid extends DataGrid implements PageDataGridInterface
 {
-    protected DataObjectFactoryInterface $dataObjectFactory;
-    protected PageRepositoryInterface $pageRepository;
-    protected ActionFactoryInterface $actionFactory;
-
     public function __construct(
         DataObjectInterface $dataObject,
         DataGridConfigInterface $dataGridConfig,
         FormInterface $form,
         ArraySourceInterface $source,
-        DataObjectFactoryInterface $dataObjectFactory,
-        PageRepositoryInterface $pageRepository,
-        ActionFactoryInterface $actionFactory,
+        protected DataObjectFactoryInterface $dataObjectFactory,
+        protected PageRepositoryInterface $pageRepository,
+        protected ActionFactoryInterface $actionFactory,
     ) {
         parent::__construct($dataObject, $dataGridConfig, $form, $source);
-        $this->dataObjectFactory = $dataObjectFactory;
-        $this->pageRepository = $pageRepository;
-        $this->actionFactory = $actionFactory;
     }
 
     public function getConfig(): DataGridConfigInterface

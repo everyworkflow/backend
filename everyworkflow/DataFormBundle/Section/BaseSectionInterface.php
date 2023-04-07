@@ -14,7 +14,7 @@ interface BaseSectionInterface extends FormInterface
 {
     public const KEY_SORT_ORDER = 'sort_order';
     public const KEY_CODE = 'code';
-    
+
     public function getSectionType(): string;
 
     public function getCode(): ?string;

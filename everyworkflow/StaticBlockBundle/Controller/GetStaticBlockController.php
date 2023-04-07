@@ -17,19 +17,14 @@ use Symfony\Component\HttpFoundation\Request;
 
 class GetStaticBlockController extends AbstractController
 {
-    protected StaticBlockFormInterface $staticBlockForm;
-    protected StaticBlockRepositoryInterface $staticBlockRepository;
-
     public function __construct(
-        StaticBlockFormInterface $staticBlockForm,
-        StaticBlockRepositoryInterface $staticBlockRepository
+        protected StaticBlockFormInterface $staticBlockForm,
+        protected StaticBlockRepositoryInterface $staticBlockRepository
     ) {
-        $this->staticBlockForm = $staticBlockForm;
-        $this->staticBlockRepository = $staticBlockRepository;
     }
 
     #[EwRoute(
-        path: "cms/static-block/{uuid}",
+        path: 'cms/static-block/{uuid}',
         name: 'cms.static_block.view',
         methods: 'GET',
         permissions: 'cms.static_block.view',
@@ -39,8 +34,8 @@ class GetStaticBlockController extends AbstractController
                     'name' => 'uuid',
                     'in' => 'path',
                     'default' => 'create',
-                ]
-            ]
+                ],
+            ],
         ]
     )]
     public function __invoke(Request $request, string $uuid = 'create'): JsonResponse

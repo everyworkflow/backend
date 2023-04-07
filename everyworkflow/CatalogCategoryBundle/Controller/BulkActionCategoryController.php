@@ -16,15 +16,13 @@ use Symfony\Component\HttpFoundation\Request;
 
 class BulkActionCategoryController extends AbstractController
 {
-    protected CatalogCategoryRepositoryInterface $catalogCategoryRepository;
-
-    public function __construct(CatalogCategoryRepositoryInterface $catalogCategoryRepository)
-    {
-        $this->catalogCategoryRepository = $catalogCategoryRepository;
+    public function __construct(
+        protected CatalogCategoryRepositoryInterface $catalogCategoryRepository
+    ) {
     }
 
     #[EwRoute(
-        path: "catalog/category/bulk-action/{action}",
+        path: 'catalog/category/bulk-action/{action}',
         name: 'catalog.category.bulk_action',
         methods: 'POST',
         permissions: 'catalog.category.save',
@@ -33,7 +31,7 @@ class BulkActionCategoryController extends AbstractController
                 [
                     'name' => 'action',
                     'in' => 'path',
-                ]
+                ],
             ],
             'requestBody' => [
                 'content' => [
@@ -44,36 +42,37 @@ class BulkActionCategoryController extends AbstractController
                                     'type' => 'array',
                                     'items' => [
                                         'type' => 'string',
-                                    ]
+                                    ],
                                 ],
-                            ]
-                        ]
-                    ]
-                ]
-            ]
+                            ],
+                        ],
+                    ],
+                ],
+            ],
         ]
     )]
     public function __invoke(Request $request, $action): JsonResponse
     {
         $submitData = json_decode($request->getContent(), true, 512, JSON_THROW_ON_ERROR);
 
-        if (!isset($submitData['rows']) || !is_array($submitData['rows']) || count($submitData['rows']) === 0) {
+        if (!isset($submitData['rows']) || !is_array($submitData['rows']) || 0 === count($submitData['rows'])) {
             return new JsonResponse(['detail' => 'Action invalid.'], 400);
         }
 
         switch ($action) {
-            case 'enable': {
-                    $result = $this->catalogCategoryRepository->bulkUpdateByIds($submitData['rows'], ['status' => 'enable']);
-                    return new JsonResponse([
-                        'detail' => 'Total ' . $result->getModifiedCount() . ' selected data updated.',
-                    ]);
-                }
-            case 'disable': {
-                    $result = $this->catalogCategoryRepository->bulkUpdateByIds($submitData['rows'], ['status' => 'disable']);
-                    return new JsonResponse([
-                        'detail' => 'Total ' . $result->getModifiedCount() . ' selected data updated.',
-                    ]);
-                }
+            case 'enable':
+                $result = $this->catalogCategoryRepository->bulkUpdateByIds($submitData['rows'], ['status' => 'enable']);
+
+                return new JsonResponse([
+                    'detail' => 'Total '.$result->getModifiedCount().' selected data updated.',
+                ]);
+
+            case 'disable':
+                $result = $this->catalogCategoryRepository->bulkUpdateByIds($submitData['rows'], ['status' => 'disable']);
+
+                return new JsonResponse([
+                    'detail' => 'Total '.$result->getModifiedCount().' selected data updated.',
+                ]);
         }
 
         return new JsonResponse(['title' => 'Action invalid.'], 400);

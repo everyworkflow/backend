@@ -17,18 +17,11 @@ use EveryWorkflow\MongoBundle\Support\MigrationInterface;
 
 class Mongo_2021_01_04_00_00_00_Customer_Migration implements MigrationInterface
 {
-    protected EntityRepositoryInterface $entityRepository;
-    protected AttributeRepositoryInterface $attributeRepository;
-    protected CustomerRepositoryInterface $customerRepository;
-
     public function __construct(
-        EntityRepositoryInterface $entityRepository,
-        AttributeRepositoryInterface $attributeRepository,
-        CustomerRepositoryInterface $customerRepository
+        protected EntityRepositoryInterface $entityRepository,
+        protected AttributeRepositoryInterface $attributeRepository,
+        protected CustomerRepositoryInterface $customerRepository
     ) {
-        $this->entityRepository = $entityRepository;
-        $this->attributeRepository = $attributeRepository;
-        $this->customerRepository = $customerRepository;
     }
 
     public function migrate(): bool

@@ -26,7 +26,6 @@ interface TreeSelectFieldInterface extends BaseFieldInterface
 
     /**
      * @param OptionInterface[] $options
-     * @return self
      */
     public function setOptions(array $options): self;
 }

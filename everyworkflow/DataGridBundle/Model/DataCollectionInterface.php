@@ -30,6 +30,7 @@ interface DataCollectionInterface extends ArrayableInterface
 
     /**
      * @param ArrayableInterface[] $results
+     *
      * @return $this
      */
     public function setResults(array $results): self;

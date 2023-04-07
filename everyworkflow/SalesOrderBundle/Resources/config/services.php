@@ -6,11 +6,10 @@
 
 namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-use EveryWorkflow\SalesOrderBundle\DataGrid\SalesOrderDataGrid;
-use EveryWorkflow\SalesOrderBundle\Repository\SalesOrderRepository;
 use EveryWorkflow\DataGridBundle\Model\Collection\RepositorySource;
 use EveryWorkflow\DataGridBundle\Model\DataGridConfig;
-use Symfony\Component\DependencyInjection\Loader\Configurator\DefaultsConfigurator;
+use EveryWorkflow\SalesOrderBundle\DataGrid\SalesOrderDataGrid;
+use EveryWorkflow\SalesOrderBundle\Repository\SalesOrderRepository;
 
 return function (ContainerConfigurator $configurator) {
     /** @var DefaultsConfigurator $services */

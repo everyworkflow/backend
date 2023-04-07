@@ -20,6 +20,7 @@ trait ParentWithChildBlockTrait
     public function addBlock(string $id, AbstractBlockInterface $block): self
     {
         $this->blocks[$id] = $block;
+
         return $this;
     }
 
@@ -28,6 +29,7 @@ trait ParentWithChildBlockTrait
         if (isset($this->blocks[$id])) {
             unset($this->blocks[$id]);
         }
+
         return $this;
     }
 
@@ -39,6 +41,7 @@ trait ParentWithChildBlockTrait
     public function setBlocks(array $blocks): self
     {
         $this->blocks = $blocks;
+
         return $this;
     }
 }

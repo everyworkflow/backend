@@ -10,7 +10,7 @@
         }
     ],
     "require": {
-        "everyworkflow/eav-bundle": "dev-main"
+        "everyworkflow/eav-bundle": "*"
     },
     "autoload": {
         "psr-4": {
@@ -25,6 +25,5 @@
         "psr-4": {
             "EveryWorkflow\\CustomerBundle\\Tests\\": "Tests/"
         }
-    },
-    "minimum-stability": "dev"
+    }
 }

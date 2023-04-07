@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright EveryWorkflow. All rights reserved.
  */
@@ -15,6 +16,7 @@ trait ClearableTrait
     public function setAllowClear(bool $allowClear): self
     {
         $this->dataObject->setData(self::KEY_ALLOW_CLEAR, $allowClear);
+
         return $this;
     }
 }

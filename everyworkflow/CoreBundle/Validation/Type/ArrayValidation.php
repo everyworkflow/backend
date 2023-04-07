@@ -11,6 +11,7 @@ namespace EveryWorkflow\CoreBundle\Validation\Type;
 use EveryWorkflow\CoreBundle\Factory\ValidationTypeFactoryInterface;
 use Symfony\Contracts\Service\Attribute\Required;
 
+#[\Attribute(\Attribute::TARGET_METHOD)]
 class ArrayValidation extends AbstractValidation
 {
     protected ValidationTypeFactoryInterface $validationTypeFactory;
@@ -27,15 +28,15 @@ class ArrayValidation extends AbstractValidation
     {
         $rules = $this->configuration->getRules();
 
-        if ($this->getProperty() === '') {
+        if ('' === $this->getProperty()) {
             return $rules;
         }
 
         $indexes = explode('.', $this->getProperty());
-        if (count($indexes) === 1 && isset($rules[$indexes[0]]['rules'])) {
+        if (1 === count($indexes) && isset($rules[$indexes[0]]['rules'])) {
             return $rules[$indexes[0]]['rules'];
         }
-        
+
         if (count($indexes) > 1) {
             $currentRules = ['rules' => $rules];
             foreach ($indexes as $index) {
@@ -43,6 +44,7 @@ class ArrayValidation extends AbstractValidation
                     $currentRules = $currentRules['rules'][$index];
                 }
             }
+
             return $currentRules['rules'];
         }
 
@@ -93,7 +95,7 @@ class ArrayValidation extends AbstractValidation
 
         foreach ($data as $key => $value) {
             $validation = $this->validationTypeFactory->create(
-                $this->getProperty() === '' ? $key : $this->getProperty() . '.' . $key,
+                '' === $this->getProperty() ? $key : $this->getProperty().'.'.$key,
                 $this->getConfiguration(),
                 $this->getRules()
             );
@@ -114,7 +116,7 @@ class ArrayValidation extends AbstractValidation
 
         foreach ($data as $key => $value) {
             $singleResult = $this->validateSingleProperty($key, $value);
-            if ($singleResult === false) {
+            if (false === $singleResult) {
                 $result = false;
             }
         }
@@ -123,7 +125,7 @@ class ArrayValidation extends AbstractValidation
             $remaining = array_diff(array_keys($this->getRules()), array_keys($data));
             foreach ($remaining as $key) {
                 $singleResult = $this->validateSingleProperty($key, '');
-                if ($singleResult === false) {
+                if (false === $singleResult) {
                     $result = false;
                 }
             }
@@ -138,7 +140,7 @@ class ArrayValidation extends AbstractValidation
 
         if (isset($this->getRules()[$key])) {
             $validation = $this->validationTypeFactory->create(
-                $this->getProperty() === '' ? $key : $this->getProperty() . '.' . $key,
+                '' === $this->getProperty() ? $key : $this->getProperty().'.'.$key,
                 $this->getConfiguration(),
                 $this->getRules()[$key]
             );

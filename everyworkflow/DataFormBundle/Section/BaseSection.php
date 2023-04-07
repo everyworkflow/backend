@@ -27,6 +27,7 @@ class BaseSection extends Form implements BaseSectionInterface
     public function setCode(string $code): self
     {
         $this->dataObject->setData(self::KEY_CODE, $code);
+
         return $this;
     }
 
@@ -38,12 +39,14 @@ class BaseSection extends Form implements BaseSectionInterface
     public function setSortOrder(int $sortOrder): self
     {
         $this->dataObject->setData(self::KEY_SORT_ORDER, $sortOrder);
+
         return $this;
     }
 
     public function resetData($data): self
     {
         $this->dataObject->resetData($data);
+
         return $this;
     }
 
@@ -51,6 +54,7 @@ class BaseSection extends Form implements BaseSectionInterface
     {
         $data = parent::toArray();
         $data['section_type'] = $this->getSectionType();
+
         return $data;
     }
 }

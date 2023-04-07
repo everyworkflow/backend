@@ -16,14 +16,13 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 class CmsExtension extends Extension
 {
     /**
-     * @param array $configs
-     * @param ContainerBuilder $container
      * @throws \Exception
+     *
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
     public function load(array $configs, ContainerBuilder $container): void
     {
-        $loader = new PhpFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
+        $loader = new PhpFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.php');
     }
 }

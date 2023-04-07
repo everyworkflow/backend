@@ -10,8 +10,8 @@
         }
     ],
     "require": {
-        "everyworkflow/core-bundle": "dev-main",
-        "everyworkflow/data-form-bundle": "dev-main"
+        "everyworkflow/core-bundle": "*",
+        "everyworkflow/data-form-bundle": "*"
     },
     "autoload": {
         "psr-4": {
@@ -26,6 +26,5 @@
         "psr-4": {
             "EveryWorkflow\\PageBuilderBundle\\Tests\\": "Tests/"
         }
-    },
-    "minimum-stability": "dev"
+    }
 }

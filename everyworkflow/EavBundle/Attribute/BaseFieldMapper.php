@@ -15,11 +15,9 @@ class BaseFieldMapper implements BaseFieldMapperInterface
 {
     protected string $fieldType = 'text_field';
 
-    protected FormFieldFactoryInterface $formFieldFactory;
-
-    public function __construct(FormFieldFactoryInterface $formFieldFactory)
-    {
-        $this->formFieldFactory = $formFieldFactory;
+    public function __construct(
+        protected FormFieldFactoryInterface $formFieldFactory
+    ) {
     }
 
     public function map(BaseAttributeInterface $attribute): BaseFieldInterface

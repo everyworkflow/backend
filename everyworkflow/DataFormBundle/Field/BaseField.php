@@ -14,11 +14,9 @@ class BaseField implements BaseFieldInterface
 {
     protected string $fieldType = 'base_field';
 
-    protected DataObjectInterface $dataObject;
-
-    public function __construct(DataObjectInterface $dataObject)
-    {
-        $this->dataObject = $dataObject;
+    public function __construct(
+        protected DataObjectInterface $dataObject
+    ) {
     }
 
     public function getFieldType(): string
@@ -34,6 +32,7 @@ class BaseField implements BaseFieldInterface
     public function setId(string $id): self
     {
         $this->dataObject->setData(self::KEY_ID, $id);
+
         return $this;
     }
 
@@ -45,6 +44,7 @@ class BaseField implements BaseFieldInterface
     public function setLabel(string $label): self
     {
         $this->dataObject->setData(self::KEY_LABEL, $label);
+
         return $this;
     }
 
@@ -56,6 +56,7 @@ class BaseField implements BaseFieldInterface
     public function setName(string $name): self
     {
         $this->dataObject->setData(self::KEY_NAME, $name);
+
         return $this;
     }
 
@@ -67,6 +68,7 @@ class BaseField implements BaseFieldInterface
     public function setValue(mixed $value): self
     {
         $this->dataObject->setData(self::KEY_VALUE, $value);
+
         return $this;
     }
 
@@ -78,6 +80,7 @@ class BaseField implements BaseFieldInterface
     public function setSortOrder(int $sortOrder): self
     {
         $this->dataObject->setData(self::KEY_SORT_ORDER, $sortOrder);
+
         return $this;
     }
 
@@ -89,6 +92,7 @@ class BaseField implements BaseFieldInterface
     public function setHelpText(string $helpText): self
     {
         $this->dataObject->setData(self::KEY_HELP_TEXT, $helpText);
+
         return $this;
     }
 
@@ -100,6 +104,7 @@ class BaseField implements BaseFieldInterface
     public function setDefaultValue(mixed $defaultValue): self
     {
         $this->dataObject->setData(self::KEY_DEFAULT_VALUE, $defaultValue);
+
         return $this;
     }
 
@@ -111,6 +116,7 @@ class BaseField implements BaseFieldInterface
     public function setIsRequired(bool $isRequired): self
     {
         $this->dataObject->setData(self::KEY_IS_REQUIRED, $isRequired);
+
         return $this;
     }
 
@@ -122,6 +128,7 @@ class BaseField implements BaseFieldInterface
     public function setIsDisabled(bool $isDisabled): self
     {
         $this->dataObject->setData(self::KEY_IS_DISABLED, $isDisabled);
+
         return $this;
     }
 
@@ -133,12 +140,14 @@ class BaseField implements BaseFieldInterface
     public function setIsReadonly(bool $isReadonly): self
     {
         $this->dataObject->setData(self::KEY_IS_READONLY, $isReadonly);
+
         return $this;
     }
 
     public function resetData($data): self
     {
         $this->dataObject->resetData($data);
+
         return $this;
     }
 
@@ -150,7 +159,7 @@ class BaseField implements BaseFieldInterface
         $data = $this->dataObject->toArray();
         $data['field_type'] = $this->getFieldType();
 
-        /* Taking name as default _id of field  */
+        /* Taking name as default _id of field */
         if (!isset($data['_id']) && isset($data['name'])) {
             $data['_id'] = $data['name'];
         }

@@ -9,6 +9,10 @@
             "email": "everyworkflow@gmail.com"
         }
     ],
+    "require": {
+        "everyworkflow/mongo-bundle": "*",
+        "everyworkflow/data-form-bundle": "*"
+    },
     "autoload": {
         "psr-4": {
             "EveryWorkflow\\SettingBundle\\": "./"
@@ -22,6 +26,5 @@
         "psr-4": {
             "EveryWorkflow\\SettingBundle\\Tests\\": "Tests/"
         }
-    },
-    "minimum-stability": "dev"
+    }
 }

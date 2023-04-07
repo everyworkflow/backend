@@ -15,21 +15,19 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 
 class SwaggerV3JsonController extends AbstractController
 {
-    protected SwaggerGeneratorInterface $swaggerGenerator;
-
     public function __construct(
-        SwaggerGeneratorInterface $swaggerGenerator
+        protected SwaggerGeneratorInterface $swaggerGenerator
     ) {
-        $this->swaggerGenerator = $swaggerGenerator;
     }
 
-    #[EwRoute(path: "swagger/v3.json", name: 'swagger.v3.json', methods: 'GET')]
+    #[EwRoute(path: 'swagger/v3.json', name: 'swagger.v3.json', methods: 'GET')]
     public function __invoke(): JsonResponse
     {
-        if ($this->getParameter('kernel.environment') === 'prod') {
+        if ('prod' === $this->getParameter('kernel.environment')) {
             throw $this->createNotFoundException('Only available in dev environment');
         }
         $swaggerData = $this->swaggerGenerator->generate();
+
         return new JsonResponse($swaggerData->toArray());
     }
 }

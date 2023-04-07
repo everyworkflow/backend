@@ -12,9 +12,7 @@ use EveryWorkflow\MongoBundle\Document\BaseDocumentInterface;
 use EveryWorkflow\MongoBundle\Document\HelperTrait\CreatedUpdatedHelperTraitInterface;
 use EveryWorkflow\MongoBundle\Document\HelperTrait\StatusHelperTraitInterface;
 
-interface StaticBlockDocumentInterface extends BaseDocumentInterface,
-    CreatedUpdatedHelperTraitInterface,
-    StatusHelperTraitInterface
+interface StaticBlockDocumentInterface extends BaseDocumentInterface, CreatedUpdatedHelperTraitInterface, StatusHelperTraitInterface
 {
     public const KEY_BLOCK_TITLE = 'block_title';
     public const KEY_BLOCK_KEY = 'block_key';

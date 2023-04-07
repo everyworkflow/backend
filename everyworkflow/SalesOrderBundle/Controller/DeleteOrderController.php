@@ -15,15 +15,13 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 
 class DeleteOrderController extends AbstractController
 {
-    protected SalesOrderRepositoryInterface $salesOrderRepository;
-
-    public function __construct(SalesOrderRepositoryInterface $salesOrderRepository)
-    {
-        $this->salesOrderRepository = $salesOrderRepository;
+    public function __construct(
+        protected SalesOrderRepositoryInterface $salesOrderRepository
+    ) {
     }
 
     #[EwRoute(
-        path: "sales/order/{uuid}",
+        path: 'sales/order/{uuid}',
         name: 'sales.order.delete',
         methods: 'DELETE',
         permissions: 'sales.order.delete',
@@ -32,15 +30,16 @@ class DeleteOrderController extends AbstractController
                 [
                     'name' => 'uuid',
                     'in' => 'path',
-                ]
-            ]
+                ],
+            ],
         ]
     )]
     public function __invoke(string $uuid): JsonResponse
     {
         try {
             $this->salesOrderRepository->deleteOneByFilter(['_id' => new \MongoDB\BSON\ObjectId($uuid)]);
-            return new JsonResponse(['detail' => 'ID: ' . $uuid . ' deleted successfully.']);
+
+            return new JsonResponse(['detail' => 'ID: '.$uuid.' deleted successfully.']);
         } catch (\Exception $e) {
             return new JsonResponse(['detail' => $e->getMessage()], 500);
         }

@@ -14,14 +14,14 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class KernelExceptionListener
 {
-    public function onKernelException(ExceptionEvent $event)
+    public function onKernelException(ExceptionEvent $event): void
     {
         if (in_array('application/json', $event->getRequest()?->getAcceptableContentTypes() ?? [])) {
             $this->throwForApi($event);
         }
     }
 
-    protected function throwForApi(ExceptionEvent $event)
+    protected function throwForApi(ExceptionEvent $event): void
     {
         $exception = $event->getThrowable();
 
@@ -42,7 +42,7 @@ class KernelExceptionListener
                     'errors' => [],
                 ], Response::HTTP_BAD_REQUEST));
             }
-        } else if ($exception instanceof HttpException) {
+        } elseif ($exception instanceof HttpException) {
             $event->setResponse(new JsonResponse([
                 'title' => 'An error occurred',
                 'status' => $exception->getStatusCode(),

@@ -10,7 +10,7 @@
         }
     ],
     "require": {
-        "everyworkflow/core-bundle": "dev-main"
+        "everyworkflow/core-bundle": "*"
     },
     "autoload": {
         "psr-4": {
@@ -25,6 +25,5 @@
         "psr-4": {
             "EveryWorkflow\\DataFormBundle\\Tests\\": "Tests/"
         }
-    },
-    "minimum-stability": "dev"
+    }
 }

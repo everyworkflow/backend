@@ -24,20 +24,20 @@ interface ColSectionInterface extends BaseSectionInterface
     public function setOffset(string|int $offset): self;
 
     public function getOffset(): string|int|null;
-    
+
     public function setOrder(string|int $order): self;
-    
+
     public function getOrder(): string|int|null;
 
     public function setPull(string|int $pull): self;
 
     public function getPull(): string|int|null;
-    
+
     public function setPush(string|int $push): self;
-    
+
     public function getPush(): string|int|null;
-    
+
     public function setSpan(string|int $span): self;
-    
+
     public function getSpan(): string|int|null;
 }

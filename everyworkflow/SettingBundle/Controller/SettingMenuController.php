@@ -15,16 +15,13 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 
 class SettingMenuController extends AbstractController
 {
-    protected SettingConfigProviderInterface $settingConfigProvider;
-
     public function __construct(
-        SettingConfigProviderInterface $settingConfigProvider
+        protected SettingConfigProviderInterface $settingConfigProvider
     ) {
-        $this->settingConfigProvider = $settingConfigProvider;
     }
 
     #[EwRoute(
-        path: "setting/menu",
+        path: 'setting/menu',
         name: 'setting.menu',
         methods: 'GET',
         priority: 10,
@@ -50,7 +47,7 @@ class SettingMenuController extends AbstractController
         }
 
         foreach ($items as $key => $item) {
-            if (isset($item['status']) && $item['status'] === 'disable') {
+            if (isset($item['status']) && 'disable' === $item['status']) {
                 continue;
             }
             $menuItemData = [
@@ -61,7 +58,7 @@ class SettingMenuController extends AbstractController
                 $menuItemData['parent'] = $parent;
             }
             if (isset($item['form_class'])) {
-                $menuItemData['item_path'] = '/setting/' . str_replace('.', '-', $key);
+                $menuItemData['item_path'] = '/setting/'.str_replace('.', '-', $key);
             }
             $menuItemData['item_type'] = $item['menu_type'] ?? null;
             $menuItemData['item_icon'] = $item['icon'] ?? null;
@@ -76,9 +73,15 @@ class SettingMenuController extends AbstractController
         uasort($menuTree, function ($a, $b) {
             $aSortOrder = $a['sort_order'] ?? null;
             $bSortOrder = $b['sort_order'] ?? null;
-            if ($aSortOrder === null && $bSortOrder !== null) return 1;
-            if ($aSortOrder > $bSortOrder) return 1;
-            if ($aSortOrder < $bSortOrder) return -1;
+            if (null === $aSortOrder && null !== $bSortOrder) {
+                return 1;
+            }
+            if ($aSortOrder > $bSortOrder) {
+                return 1;
+            }
+            if ($aSortOrder < $bSortOrder) {
+                return -1;
+            }
         });
 
         return array_values($menuTree);

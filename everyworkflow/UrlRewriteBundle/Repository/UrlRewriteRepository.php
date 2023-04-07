@@ -51,6 +51,7 @@ class UrlRewriteRepository extends BaseDocumentRepository implements UrlRewriteR
         foreach ($mongoData as $mongoItem) {
             $items[] = $this->create($mongoItem->getArrayCopy());
         }
+
         return $items;
     }
 
@@ -58,8 +59,9 @@ class UrlRewriteRepository extends BaseDocumentRepository implements UrlRewriteR
     {
         $mongoItem = $this->getCollection()->findOne($filter, $options);
         if (!$mongoItem) {
-            throw new \Exception('Document not found under ' . $this->collectionName);
+            throw new \Exception('Document not found under '.$this->collectionName);
         }
+
         return $this->create($mongoItem->getArrayCopy());
     }
 }

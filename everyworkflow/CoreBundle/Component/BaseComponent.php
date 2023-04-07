@@ -12,14 +12,9 @@ use EveryWorkflow\CoreBundle\Model\DataObjectInterface;
 
 class BaseComponent implements BaseComponentInterface
 {
-    /**
-     * @var DataObjectInterface
-     */
-    protected DataObjectInterface $dataObject;
-
-    public function __construct(DataObjectInterface $dataObject)
-    {
-        $this->dataObject = $dataObject;
+    public function __construct(
+        protected DataObjectInterface $dataObject
+    ) {
     }
 
     public function toArray(): array

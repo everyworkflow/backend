@@ -14,15 +14,10 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class FormSectionFactory implements FormSectionFactoryInterface
 {
-    protected ContainerInterface $container;
-    protected DataFormConfigProviderInterface $dataFormConfigProvider;
-
     public function __construct(
-        ContainerInterface $container,
-        DataFormConfigProviderInterface $dataFormConfigProvider
+        protected ContainerInterface $container,
+        protected DataFormConfigProviderInterface $dataFormConfigProvider
     ) {
-        $this->container = $container;
-        $this->dataFormConfigProvider = $dataFormConfigProvider;
     }
 
     public function createFromClassName(string $className, array $data = []): ?BaseSectionInterface
@@ -35,9 +30,11 @@ class FormSectionFactory implements FormSectionFactoryInterface
                     $section->setFields($fields);
                     unset($data['fields']);
                 }
+
                 return $section->resetData($data);
             }
         }
+
         return null;
     }
 
@@ -47,6 +44,7 @@ class FormSectionFactory implements FormSectionFactoryInterface
         if (isset($sections[$sectionType])) {
             return $this->createFromClassName($sections[$sectionType], $data);
         }
+
         return $this->create($data);
     }
 
@@ -57,6 +55,7 @@ class FormSectionFactory implements FormSectionFactoryInterface
             return $this->createFromClassName($sections[$data['section_type']], $data);
         }
         $sectionType = $this->dataFormConfigProvider->get('default.section');
+
         return $this->createFromClassName($sections[$sectionType], $data);
     }
 }

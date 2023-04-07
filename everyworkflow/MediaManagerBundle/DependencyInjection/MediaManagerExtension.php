@@ -41,6 +41,9 @@ class MediaManagerExtension extends Extension implements PrependExtensionInterfa
         if (isset($bundles['EveryWorkflowDataFormBundle'])) {
             $ymlLoader->load('data_form.yaml');
         }
+        if (isset($bundles['EveryWorkflowEavBundle'])) {
+            $ymlLoader->load('eav.yaml');
+        }
         if (isset($bundles['EveryWorkflowAdminPanelBundle'])) {
             $ymlLoader->load('admin_panel.yaml');
         }

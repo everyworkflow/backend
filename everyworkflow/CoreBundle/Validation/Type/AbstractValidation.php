@@ -63,7 +63,7 @@ abstract class AbstractValidation extends DataObject
     {
         $propertyName = $this->getData(self::KEY_PROPERTY_NAME);
         if (null === $propertyName) {
-            $propertyName = 'The ' . $this->getProperty();
+            $propertyName = 'The '.$this->getProperty();
         }
 
         return $propertyName;
@@ -101,7 +101,7 @@ abstract class AbstractValidation extends DataObject
         return $this;
     }
 
-    protected function validateRequired($value): ?bool
+    protected function validateRequired(mixed $value): ?bool
     {
         if ($this->isRequired() && empty($value)) {
             $this->errorBag->addError(
@@ -124,8 +124,9 @@ abstract class AbstractValidation extends DataObject
     public function setValidData(mixed $value): self
     {
         $indexes = explode('.', $this->getProperty());
-        if (count($indexes) === 1) {
+        if (1 === count($indexes)) {
             $this->validDataBag->setData($this->getProperty(), $value);
+
             return $this;
         }
 
@@ -153,8 +154,9 @@ abstract class AbstractValidation extends DataObject
 
     public function validate(mixed $value): bool
     {
-        if ($this->getProperty() === null) {
+        if (null === $this->getProperty()) {
             $this->errorBag->addError('_error', 'Property is not set.');
+
             return false;
         }
 

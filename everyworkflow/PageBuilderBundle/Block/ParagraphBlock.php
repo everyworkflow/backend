@@ -20,6 +20,7 @@ class ParagraphBlock extends AbstractBlock implements ParagraphBlockInterface
     public function setContent(string $content): self
     {
         $this->dataObject->setData(self::KEY_CONTENT, $content);
+
         return $this;
     }
 }

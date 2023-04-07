@@ -21,22 +21,15 @@ use EveryWorkflow\EavBundle\Repository\EntityRepositoryInterface;
 
 class AttributeForm extends Form implements AttributeFormInterface
 {
-    protected EntityRepositoryInterface $entityRepository;
-    protected EavConfigProviderInterface $eavConfigProvider;
-    protected FieldOptionFactoryInterface $fieldOptionFactory;
-
     public function __construct(
         DataObjectInterface $dataObject,
         FormSectionFactoryInterface $formSectionFactory,
         FormFieldFactoryInterface $formFieldFactory,
-        EntityRepositoryInterface $entityRepository,
-        EavConfigProviderInterface $eavConfigProvider,
-        FieldOptionFactoryInterface $fieldOptionFactory
+        protected EntityRepositoryInterface $entityRepository,
+        protected EavConfigProviderInterface $eavConfigProvider,
+        protected FieldOptionFactoryInterface $fieldOptionFactory
     ) {
         parent::__construct($dataObject, $formSectionFactory, $formFieldFactory);
-        $this->entityRepository = $entityRepository;
-        $this->eavConfigProvider = $eavConfigProvider;
-        $this->fieldOptionFactory = $fieldOptionFactory;
     }
 
     /**
@@ -89,6 +82,7 @@ class AttributeForm extends Form implements AttributeFormInterface
                 ]),
             ]),
         ];
+
         return array_merge(parent::getSections(), $sections);
     }
 
@@ -132,8 +126,8 @@ class AttributeForm extends Form implements AttributeFormInterface
             $options[] = $option;
             $fieldActions[$attCode] = [
                 [
-                    'action_type' => 'update_form'
-                ]
+                    'action_type' => 'update_form',
+                ],
             ];
         }
 
@@ -220,6 +214,7 @@ class AttributeForm extends Form implements AttributeFormInterface
     public function toArray(): array
     {
         $this->dataObject->setDataIfNot(self::KEY_FORM_UPDATE_PATH, '/eav/attribute/additional-form');
+
         return parent::toArray();
     }
 }

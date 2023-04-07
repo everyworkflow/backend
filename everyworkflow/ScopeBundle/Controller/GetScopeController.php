@@ -17,19 +17,14 @@ use Symfony\Component\HttpFoundation\Request;
 
 class GetScopeController extends AbstractController
 {
-    protected ScopeRepositoryInterface $scopeRepository;
-    protected ScopeFormInterface $scopeForm;
-
     public function __construct(
-        ScopeRepositoryInterface $scopeRepository,
-        ScopeFormInterface $scopeForm
+        protected ScopeRepositoryInterface $scopeRepository,
+        protected ScopeFormInterface $scopeForm
     ) {
-        $this->scopeRepository = $scopeRepository;
-        $this->scopeForm = $scopeForm;
     }
 
     #[EwRoute(
-        path: "scope/{code}",
+        path: 'scope/{code}',
         name: 'scope.view',
         methods: 'GET',
         permissions: 'scope.view',
@@ -39,27 +34,27 @@ class GetScopeController extends AbstractController
                     'name' => 'code',
                     'in' => 'path',
                     'default' => 'create',
-                ]
-            ]
+                ],
+            ],
         ]
     )]
     public function __invoke(Request $request, string $code = 'default'): JsonResponse
     {
         $data = [];
 
-        if ($code !== 'default') {
+        if ('default' !== $code) {
             $item = $this->scopeRepository->findByCode($code);
             if ($item) {
                 $data['item'] = $item->toArray();
             }
         }
 
-        if ($request->get('for') === 'data-form') {
+        if ('data-form' === $request->get('for')) {
             $data['data_form'] = $this->scopeForm->toArray();
             foreach ($data['data_form']['fields'] as &$field) {
                 if ('parent' === $field['name']) {
                     $skipVals = [];
-                    if ($code !== 'default') {
+                    if ('default' !== $code) {
                         $skipVals[] = $code;
                     }
                     $field['options'] = $this->cleanUpViewingScope($field['options'], $skipVals);
@@ -82,6 +77,7 @@ class GetScopeController extends AbstractController
                 $options[$key]['children'] = $this->cleanUpViewingScope($option['children'], $skipVals);
             }
         }
+
         return array_values($options);
     }
 }

@@ -15,15 +15,13 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 
 class DeleteScopeController extends AbstractController
 {
-    protected ScopeRepositoryInterface $scopeRepository;
-
-    public function __construct(ScopeRepositoryInterface $scopeRepository)
-    {
-        $this->scopeRepository = $scopeRepository;
+    public function __construct(
+        protected ScopeRepositoryInterface $scopeRepository
+    ) {
     }
 
     #[EwRoute(
-        path: "scope/{code}",
+        path: 'scope/{code}',
         name: 'scope.delete',
         methods: 'DELETE',
         permissions: 'scope.delete',
@@ -32,15 +30,16 @@ class DeleteScopeController extends AbstractController
                 [
                     'name' => 'code',
                     'in' => 'path',
-                ]
-            ]
+                ],
+            ],
         ]
     )]
     public function __invoke(string $code): JsonResponse
     {
         try {
             $this->scopeRepository->deleteOneByFilter(['code' => $code]);
-            return new JsonResponse(['detail' => 'Scope with code: ' . $code . ' deleted successfully.']);
+
+            return new JsonResponse(['detail' => 'Scope with code: '.$code.' deleted successfully.']);
         } catch (\Exception $e) {
             return new JsonResponse(['detail' => $e->getMessage()], 500);
         }

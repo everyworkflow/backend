@@ -15,18 +15,11 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class BlockFormFactory implements BlockFormFactoryInterface
 {
-    protected ContainerInterface $container;
-    protected PageBuilderConfigProviderInterface $pageBuilderConfigProvider;
-    protected FormFactoryInterface $formFactory;
-
     public function __construct(
-        ContainerInterface $container,
-        PageBuilderConfigProviderInterface $pageBuilderConfigProvider,
-        FormFactoryInterface $formFactory
+        protected ContainerInterface $container,
+        protected PageBuilderConfigProviderInterface $pageBuilderConfigProvider,
+        protected FormFactoryInterface $formFactory
     ) {
-        $this->container = $container;
-        $this->pageBuilderConfigProvider = $pageBuilderConfigProvider;
-        $this->formFactory = $formFactory;
     }
 
     public function createFormForBlockType(string $blockType): FormInterface
@@ -38,6 +31,7 @@ class BlockFormFactory implements BlockFormFactoryInterface
                 return $blockForm;
             }
         }
+
         return $this->formFactory->create();
     }
 }

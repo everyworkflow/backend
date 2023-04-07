@@ -10,8 +10,8 @@
         }
     ],
     "require": {
-        "everyworkflow/base-bundle": "dev-main",
-        "everyworkflow/media-manager-bundle": "dev-main"
+        "everyworkflow/base-bundle": "*",
+        "everyworkflow/media-manager-bundle": "*"
     },
     "autoload": {
         "psr-4": {
@@ -26,6 +26,5 @@
         "psr-4": {
             "EveryWorkflow\\DamBundle\\Tests\\": "Tests/"
         }
-    },
-    "minimum-stability": "dev"
+    }
 }

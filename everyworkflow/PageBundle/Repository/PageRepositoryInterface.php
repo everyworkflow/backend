@@ -10,7 +10,6 @@ namespace EveryWorkflow\PageBundle\Repository;
 
 use EveryWorkflow\EavBundle\Repository\BaseEntityRepositoryInterface;
 use EveryWorkflow\PageBundle\Entity\PageEntityInterface;
-use MongoDB\UpdateResult;
 
 interface PageRepositoryInterface extends BaseEntityRepositoryInterface
 {

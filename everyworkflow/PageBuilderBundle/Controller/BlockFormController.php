@@ -15,15 +15,13 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 
 class BlockFormController extends AbstractController
 {
-    protected BlockFormFactoryInterface $blockFormFactory;
-
-    public function __construct(BlockFormFactoryInterface $blockFormFactory)
-    {
-        $this->blockFormFactory = $blockFormFactory;
+    public function __construct(
+        protected BlockFormFactoryInterface $blockFormFactory
+    ) {
     }
 
     #[EwRoute(
-        path: "page-builder/block-form/{blockType}",
+        path: 'page-builder/block-form/{blockType}',
         name: 'page_builder.block_form.block_type',
         methods: 'GET',
         swagger: [
@@ -31,11 +29,11 @@ class BlockFormController extends AbstractController
                 [
                     'name' => 'blockType',
                     'in' => 'path',
-                ]
-            ]
+                ],
+            ],
         ]
     )]
-    public function __invoke($blockType): JsonResponse
+    public function __invoke(string $blockType): JsonResponse
     {
         $form = $this->blockFormFactory->createFormForBlockType($blockType);
         $data = [
@@ -43,6 +41,7 @@ class BlockFormController extends AbstractController
             'block_type' => $blockType,
             'data_form' => $form->toArray(),
         ];
+
         return new JsonResponse($data);
     }
 }

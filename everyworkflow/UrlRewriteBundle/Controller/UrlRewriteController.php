@@ -14,17 +14,13 @@ use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
 
 class UrlRewriteController extends AbstractController
 {
-    protected RouteResolverInterface $routeResolver;
-    protected LoggerInterface $logger;
-
-    public function __construct(RouteResolverInterface $routeResolver, LoggerInterface $logger)
-    {
-        $this->routeResolver = $routeResolver;
-        $this->logger = $logger;
+    public function __construct(
+        protected RouteResolverInterface $routeResolver,
+        protected LoggerInterface $logger
+    ) {
     }
 
     #[EwRoute(
@@ -41,6 +37,7 @@ class UrlRewriteController extends AbstractController
         } catch (\Exception $e) {
             $this->logger->alert($e->getMessage());
         }
+
         return new Response();
     }
 }

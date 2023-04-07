@@ -10,12 +10,9 @@ namespace EveryWorkflow\CoreBundle\Model;
 
 class SystemDateTime implements SystemDateTimeInterface
 {
-    protected CoreConfigProviderInterface $coreConfigProvider;
-
     public function __construct(
-        CoreConfigProviderInterface $coreConfigProvider
+        protected CoreConfigProviderInterface $coreConfigProvider
     ) {
-        $this->coreConfigProvider = $coreConfigProvider;
     }
 
     public function getTimeZone(): string
@@ -45,7 +42,7 @@ class SystemDateTime implements SystemDateTimeInterface
 
     public function utcNowFormat(string $dateTime = 'now', ?string $format = null): string
     {
-        if ($format === null) {
+        if (null === $format) {
             $format = $this->getDateTimeFormat();
         }
 
@@ -54,16 +51,16 @@ class SystemDateTime implements SystemDateTimeInterface
 
     public function now(string $dateTime = 'now', ?string $timeZone = null): \DateTime
     {
-        if ($timeZone === null) {
+        if (null === $timeZone) {
             $timeZone = $this->getTimeZone();
         }
-        
+
         return new \DateTime($dateTime, new \DateTimeZone($this->getTimeZone()));
     }
 
     public function nowFormat(string $dateTime = 'now', ?string $timeZone = null, ?string $format = null): string
     {
-        if ($format === null) {
+        if (null === $format) {
             $format = $this->getDateTimeFormat();
         }
 

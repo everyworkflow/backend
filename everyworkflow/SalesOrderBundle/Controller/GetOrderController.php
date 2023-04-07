@@ -16,15 +16,13 @@ use Symfony\Component\HttpFoundation\Request;
 
 class GetOrderController extends AbstractController
 {
-    protected SalesOrderRepositoryInterface $salesOrderRepository;
-
-    public function __construct(SalesOrderRepositoryInterface $salesOrderRepository)
-    {
-        $this->salesOrderRepository = $salesOrderRepository;
+    public function __construct(
+        protected SalesOrderRepositoryInterface $salesOrderRepository
+    ) {
     }
 
     #[EwRoute(
-        path: "sales/order/{uuid}",
+        path: 'sales/order/{uuid}',
         name: 'sales.order.view',
         methods: 'GET',
         permissions: 'sales.order.view',
@@ -34,22 +32,22 @@ class GetOrderController extends AbstractController
                     'name' => 'uuid',
                     'in' => 'path',
                     'default' => 'create',
-                ]
-            ]
+                ],
+            ],
         ]
     )]
     public function __invoke(Request $request, string $uuid = 'create'): JsonResponse
     {
         $data = [];
 
-        if ($uuid !== 'create') {
+        if ('create' !== $uuid) {
             $item = $this->salesOrderRepository->findById($uuid);
             if ($item) {
                 $data['item'] = $item->toArray();
             }
         }
 
-        if ($request->get('for') === 'data-form') {
+        if ('data-form' === $request->get('for')) {
             $data['data_form'] = $this->salesOrderRepository->getForm()->toArray();
         }
 

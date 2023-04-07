@@ -14,11 +14,9 @@ use Psr\Cache\InvalidArgumentException;
 
 class EWFCache implements CacheInterface
 {
-    protected CacheItemPoolInterface $cacheItemPool;
-
-    public function __construct(CacheItemPoolInterface $cacheItemPool)
-    {
-        $this->cacheItemPool = $cacheItemPool;
+    public function __construct(
+        protected CacheItemPoolInterface $cacheItemPool
+    ) {
     }
 
     public function getCachePool(): CacheItemPoolInterface

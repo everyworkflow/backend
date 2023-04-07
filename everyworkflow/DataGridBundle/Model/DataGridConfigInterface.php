@@ -10,7 +10,6 @@ namespace EveryWorkflow\DataGridBundle\Model;
 
 use EveryWorkflow\CoreBundle\Support\ArrayableInterface;
 use EveryWorkflow\DataGridBundle\Factory\ActionFactoryInterface;
-use EveryWorkflow\DataGridBundle\Model\ActionInterface;
 
 interface DataGridConfigInterface extends ArrayableInterface
 {
@@ -51,7 +50,6 @@ interface DataGridConfigInterface extends ArrayableInterface
 
     /**
      * @param ActionInterface[] $actions
-     * @return self
      */
     public function setHeaderActions(array $actions): self;
 
@@ -62,7 +60,6 @@ interface DataGridConfigInterface extends ArrayableInterface
 
     /**
      * @param ActionInterface[] $actions
-     * @return self
      */
     public function setRowActions(array $actions): self;
 
@@ -73,7 +70,6 @@ interface DataGridConfigInterface extends ArrayableInterface
 
     /**
      * @param ActionInterface[] $actions
-     * @return self
      */
     public function setBulkActions(array $actions): self;
 
@@ -96,7 +92,6 @@ interface DataGridConfigInterface extends ArrayableInterface
 
     /**
      * @param string[] $activeColumns
-     * @return self
      */
     public function setActiveColumns(array $activeColumns): self;
 
@@ -107,7 +102,6 @@ interface DataGridConfigInterface extends ArrayableInterface
 
     /**
      * @param string[] $sortableColumns
-     * @return self
      */
     public function setSortableColumns(array $sortableColumns): self;
 
@@ -118,7 +112,6 @@ interface DataGridConfigInterface extends ArrayableInterface
 
     /**
      * @param string[] $filterableColumns
-     * @return self
      */
     public function setFilterableColumns(array $filterableColumns): self;
 

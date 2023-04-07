@@ -38,10 +38,11 @@ class ErrorBag extends DataObject implements ErrorBagInterface
     public function addError(string $property, string $message): self
     {
         $indexes = explode('.', $property);
-        if (count($indexes) === 1) {
+        if (1 === count($indexes)) {
             $errors = $this->getErrors($property);
             $errors['errors'][] = $message;
             $this->setErrors($property, $errors);
+
             return $this;
         }
 

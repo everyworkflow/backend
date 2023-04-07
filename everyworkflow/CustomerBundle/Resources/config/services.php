@@ -10,7 +10,6 @@ use EveryWorkflow\CustomerBundle\DataGrid\CustomerDataGrid;
 use EveryWorkflow\CustomerBundle\Repository\CustomerRepository;
 use EveryWorkflow\DataGridBundle\Model\Collection\RepositorySource;
 use EveryWorkflow\DataGridBundle\Model\DataGridConfig;
-use Symfony\Component\DependencyInjection\Loader\Configurator\DefaultsConfigurator;
 
 return function (ContainerConfigurator $configurator) {
     /** @var DefaultsConfigurator $services */

@@ -6,30 +6,22 @@ declare(strict_types=1);
 
 namespace {{ file_namespace }};
 
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
+#[AsCommand(name: 'everyworkflow:test')]
 class {{ file_name }} extends Command
 {
-    protected static $defaultName = 'everyworkflow:test';
-
-    /**
-     * @return void
-     */
-    protected function configure()
+    protected function configure(): void
     {
         $this->setDescription('Test command just generated')
             ->setHelp('This is just a help text');
     }
 
-    /**
-     * @return int
-     * @param InputInterface $input
-     * @param OutputInterface $output
-     */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $inputOutput = new SymfonyStyle($input, $output);
 

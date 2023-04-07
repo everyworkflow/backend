@@ -12,11 +12,9 @@ use EveryWorkflow\CoreBundle\Model\DataObjectInterface;
 
 class Stub implements StubInterface
 {
-    protected DataObjectInterface $dataObject;
-
-    public function __construct(DataObjectInterface $dataObject)
-    {
-        $this->dataObject = $dataObject;
+    public function __construct(
+        protected DataObjectInterface $dataObject
+    ) {
     }
 
     public function setStubPath(string $stubPath): self
@@ -120,32 +118,20 @@ class Stub implements StubInterface
         return $this->dataObject->toArray();
     }
 
-    /**
-     * @param string $key
-     * @param mixed $val
-     * @return Stub
-     */
     public function setData(string $key, mixed $val): self
     {
         $this->dataObject->setData($key, $val);
+
         return $this;
     }
 
-    /**
-     * @param string $key
-     * @param mixed $val
-     * @return self
-     */
     public function setDataIfNot(string $key, mixed $val): self
     {
         $this->dataObject->setDataIfNot($key, $val);
+
         return $this;
     }
 
-    /**
-     * @param string $key
-     * @return mixed
-     */
     public function getData(string $key): mixed
     {
         return $this->dataObject->getData($key);
@@ -154,6 +140,7 @@ class Stub implements StubInterface
     public function resetData(array $data): self
     {
         $this->dataObject->resetData($data);
+
         return $this;
     }
 }

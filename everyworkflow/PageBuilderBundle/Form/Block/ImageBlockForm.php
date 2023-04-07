@@ -19,6 +19,32 @@ class ImageBlockForm extends AbstractBlockForm implements ImageBlockFormInterfac
                 'field_type' => 'media_image_selector_field',
             ]),
             $this->formFieldFactory->create([
+                'label' => 'Use image dark',
+                'name' => 'use_image_dark',
+                'field_type' => 'switch_field',
+                'default_value' => 0,
+                'is_actionable' => true,
+                'field_actions' => [
+                    [
+                        [
+                            'action_type' => 'hide_field',
+                            'field_names' => ['image_dark']
+                        ]
+                    ],
+                    [
+                        [
+                            'action_type' => 'show_field',
+                            'field_names' => ['image_dark']
+                        ]
+                    ],
+                ],
+            ]),
+            $this->formFieldFactory->create([
+                'label' => 'Image dark',
+                'name' => 'image_dark',
+                'field_type' => 'media_image_selector_field',
+            ]),
+            $this->formFieldFactory->create([
                 'label' => 'Preview',
                 'name' => 'preview',
                 'field_type' => 'switch_field',

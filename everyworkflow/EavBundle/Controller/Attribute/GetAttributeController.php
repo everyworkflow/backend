@@ -17,20 +17,14 @@ use Symfony\Component\HttpFoundation\Request;
 
 class GetAttributeController extends AbstractController
 {
-    protected AttributeRepositoryInterface $attributeRepository;
-
-    protected AttributeFormInterface $attributeForm;
-
     public function __construct(
-        AttributeRepositoryInterface $attributeRepository,
-        AttributeFormInterface $attributeForm
+        protected AttributeRepositoryInterface $attributeRepository,
+        protected AttributeFormInterface $attributeForm
     ) {
-        $this->attributeRepository = $attributeRepository;
-        $this->attributeForm = $attributeForm;
     }
 
     #[EwRoute(
-        path: "eav/attribute/{code}",
+        path: 'eav/attribute/{code}',
         name: 'eav.attribute.view',
         methods: 'GET',
         permissions: 'eav.attribute.view',
@@ -40,8 +34,8 @@ class GetAttributeController extends AbstractController
                     'name' => 'code',
                     'in' => 'path',
                     'default' => 'create',
-                ]
-            ]
+                ],
+            ],
         ]
     )]
     public function __invoke(Request $request, string $code = 'create'): JsonResponse
@@ -53,7 +47,7 @@ class GetAttributeController extends AbstractController
             $data['item'] = $entity->toArray();
         }
 
-        if ($request->get('for') === 'data-form') {
+        if ('data-form' === $request->get('for')) {
             $data['data_form'] = $this->attributeForm->toArray();
         }
 

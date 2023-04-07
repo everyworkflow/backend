@@ -14,20 +14,12 @@ use EveryWorkflow\EavBundle\Attribute\BaseAttributeInterface;
 class Entity implements EntityInterface
 {
     /**
-     * @var DataObjectInterface
+     * @param BaseAttributeInterface[] $attributes
      */
-    protected DataObjectInterface $dataObject;
-    /**
-     * @var BaseAttributeInterface[]
-     */
-    protected array $attributes;
-
     public function __construct(
-        DataObjectInterface $dataObject,
-        array $attributes = []
+        protected DataObjectInterface $dataObject,
+        protected array $attributes = []
     ) {
-        $this->dataObject = $dataObject;
-        $this->attributes = $attributes;
     }
 
     public function getId(): ?string
@@ -73,7 +65,6 @@ class Entity implements EntityInterface
 
     /**
      * @param BaseAttributeInterface[]
-     * @return Entity
      */
     public function setAttributes(array $attributes): self
     {

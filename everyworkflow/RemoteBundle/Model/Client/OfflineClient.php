@@ -17,27 +17,22 @@ use Symfony\Component\HttpKernel\KernelInterface;
 
 class OfflineClient extends RemoteClient implements OfflineClientInterface
 {
-    protected Filesystem $filesystem;
-    protected KernelInterface $kernel;
-
     public function __construct(
         ArrayFormatterInterface $formatter,
         LoggerInterface $ewRemoteLogger,
-        Filesystem $filesystem,
-        KernelInterface $kernel
+        protected Filesystem $filesystem,
+        protected KernelInterface $kernel
     ) {
         parent::__construct($formatter, $ewRemoteLogger);
-        $this->filesystem = $filesystem;
-        $this->kernel = $kernel;
     }
 
     public function send(RemoteRequestInterface $request): RemoteResponseInterface
     {
         /* Dump request to request_id for future processing */
         $exportFileName = $this->getExportFileName($request);
-        $content = 'Request: ' . $request->getRequestKey() . PHP_EOL;
-        $content .= strtoupper($request->getMethod()) . ': ' . $request->getUri() . PHP_EOL;
-        $content .= json_encode($request->toArray(), 1) . PHP_EOL;
+        $content = 'Request: '.$request->getRequestKey().PHP_EOL;
+        $content .= strtoupper($request->getMethod()).': '.$request->getUri().PHP_EOL;
+        $content .= json_encode($request->toArray(), 1).PHP_EOL;
         $this->filesystem->dumpFile($exportFileName, $content);
 
         return parent::send($request)->setStatusCode(200);
@@ -45,6 +40,6 @@ class OfflineClient extends RemoteClient implements OfflineClientInterface
 
     protected function getExportFileName(RemoteRequestInterface $request): string
     {
-        return $this->kernel->getLogDir() . '/ew_remote/' . $request->getRequestKey() . '.txt';
+        return $this->kernel->getLogDir().'/ew_remote/'.$request->getRequestKey().'.txt';
     }
 }

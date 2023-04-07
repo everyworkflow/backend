@@ -12,9 +12,5 @@ use EveryWorkflow\CoreBundle\Model\BaseConfigProviderInterface;
 
 interface SettingConfigProviderInterface extends BaseConfigProviderInterface
 {
-    /**
-     * @param string|null $code
-     * @return mixed
-     */
     public function getMenu(?string $code = null): mixed;
 }

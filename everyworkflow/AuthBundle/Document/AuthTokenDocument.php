@@ -14,5 +14,6 @@ use EveryWorkflow\MongoBundle\Document\HelperTrait\StatusHelperTrait;
 
 class AuthTokenDocument extends BaseDocument implements AuthTokenDocumentInterface
 {
-    use CreatedUpdatedHelperTrait, StatusHelperTrait;
+    use CreatedUpdatedHelperTrait;
+    use StatusHelperTrait;
 }

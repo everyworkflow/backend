@@ -24,6 +24,7 @@ class EntityForm extends Form implements EntityFormInterface
                 'title' => 'General',
             ])->setFields($this->getGeneralFields()),
         ];
+
         return array_merge($sections, parent::getSections());
     }
 
@@ -66,7 +67,7 @@ class EntityForm extends Form implements EntityFormInterface
                 'label' => 'Sort order',
                 'name' => 'sort_order',
                 'field_type' => 'text_field',
-                'input_type' => 'number'
+                'input_type' => 'number',
             ]),
             $this->formFieldFactory->create([
                 'label' => 'Created at',

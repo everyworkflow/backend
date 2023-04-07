@@ -1,0 +1,28 @@
+{
+    "name": "everyworkflow/cron-bundle",
+    "description": "",
+    "type": "package",
+    "authors": [
+        {
+            "name": "EveryWorkflow",
+            "email": "everyworkflow@gmail.com"
+        }
+    ],
+    "require": {
+        "dragonmantank/cron-expression": "^3.3"
+    },
+    "autoload": {
+        "psr-4": {
+            "EveryWorkflow\\CronBundle\\": "./"
+        },
+        "exclude-from-classmap": [
+            "Resources",
+            "Tests"
+        ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "EveryWorkflow\\CronBundle\\Tests\\": "Tests/"
+        }
+    }
+}

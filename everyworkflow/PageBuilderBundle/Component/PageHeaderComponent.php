@@ -13,27 +13,11 @@ use Symfony\Component\Asset\Package;
 
 class PageHeaderComponent implements ComponentInterface
 {
-    /**
-     * @var Package
-     */
-    protected Package $package;
-    /**
-     * @var MainMenuComponent
-     */
-    protected MainMenuComponent $mainMenuComponent;
-    /**
-     * @var ImageComponentFactory
-     */
-    protected ImageComponentFactory $imageComponentFactory;
-
     public function __construct(
-        Package $package,
-        MainMenuComponent $mainMenuComponent,
-        ImageComponentFactory $imageComponentFactory
+        protected Package $package,
+        protected MainMenuComponent $mainMenuComponent,
+        protected ImageComponentFactory $imageComponentFactory
     ) {
-        $this->package = $package;
-        $this->mainMenuComponent = $mainMenuComponent;
-        $this->imageComponentFactory = $imageComponentFactory;
     }
 
     public function getData(): ?array

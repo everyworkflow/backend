@@ -16,15 +16,13 @@ use Symfony\Component\HttpFoundation\Request;
 
 class ListProductController extends AbstractController
 {
-    protected CatalogProductDataGridInterface $catalogProductDataGrid;
-
-    public function __construct(CatalogProductDataGridInterface $catalogProductDataGrid)
-    {
-        $this->catalogProductDataGrid = $catalogProductDataGrid;
+    public function __construct(
+        protected CatalogProductDataGridInterface $catalogProductDataGrid
+    ) {
     }
 
     #[EwRoute(
-        path: "catalog/product",
+        path: 'catalog/product',
         name: 'catalog.product',
         priority: 10,
         methods: 'GET',
@@ -34,6 +32,7 @@ class ListProductController extends AbstractController
     public function __invoke(Request $request): JsonResponse
     {
         $dataGrid = $this->catalogProductDataGrid->setFromRequest($request);
+
         return new JsonResponse($dataGrid->toArray());
     }
 }

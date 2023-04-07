@@ -7,7 +7,6 @@
 namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
 use EveryWorkflow\SwaggerBundle\Model\SwaggerGenerator;
-use Symfony\Component\DependencyInjection\Loader\Configurator\DefaultsConfigurator;
 
 return function (ContainerConfigurator $configurator) {
     /** @var DefaultsConfigurator $services */

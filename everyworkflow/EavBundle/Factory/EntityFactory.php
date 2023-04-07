@@ -20,14 +20,10 @@ class EntityFactory implements EntityFactoryInterface
         $this->dataObjectFactory = $dataObjectFactory;
     }
 
-    /**
-     * @param string $className
-     * @param array $data
-     * @return BaseEntityInterface
-     */
     public function create(string $className, array $data = []): BaseEntityInterface
     {
         $dataObj = $this->dataObjectFactory->create($data);
+
         return new $className($dataObj);
     }
 }

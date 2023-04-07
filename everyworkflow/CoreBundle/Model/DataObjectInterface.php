@@ -12,25 +12,14 @@ use EveryWorkflow\CoreBundle\Support\ArrayableInterface;
 
 interface DataObjectInterface extends ArrayableInterface
 {
-    /**
-     * @param string $key
-     * @param mixed $val
-     * @return self
-     */
-    public function setData(string $key, mixed $val): self;
+    public function setData(string $key, mixed $val): DataObjectInterface;
+
+    public function setDataIfNot(string $key, mixed $val): DataObjectInterface;
+
+    public function getData(string $key): mixed;
 
     /**
-     * @param string $key
-     * @param mixed $val
-     * @return self
+     * @param array<int,mixed> $data
      */
-    public function setDataIfNot(string $key, mixed $val): self;
-
-    /**
-     * @param string $key
-     * @return mixed
-     */
-    public function getData(string $key) : mixed;
-
-    public function resetData(array $data): self;
+    public function resetData(array $data): DataObjectInterface;
 }

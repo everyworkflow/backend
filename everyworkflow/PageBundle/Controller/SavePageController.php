@@ -17,15 +17,13 @@ use Symfony\Component\HttpFoundation\Request;
 
 class SavePageController extends AbstractController
 {
-    protected PageRepositoryInterface $pageRepository;
-
-    public function __construct(PageRepositoryInterface $pageRepository)
-    {
-        $this->pageRepository = $pageRepository;
+    public function __construct(
+        protected PageRepositoryInterface $pageRepository
+    ) {
     }
 
     #[EwRoute(
-        path: "cms/page/{uuid}",
+        path: 'cms/page/{uuid}',
         name: 'cms.page.save',
         methods: 'POST',
         permissions: 'cms.page.save',
@@ -35,7 +33,7 @@ class SavePageController extends AbstractController
                     'name' => 'uuid',
                     'in' => 'path',
                     'default' => 'create',
-                ]
+                ],
             ],
             'requestBody' => [
                 'content' => [
@@ -67,17 +65,17 @@ class SavePageController extends AbstractController
                                 'meta_keyword' => [
                                     'type' => 'string',
                                 ],
-                            ]
-                        ]
-                    ]
-                ]
-            ]
+                            ],
+                        ],
+                    ],
+                ],
+            ],
         ]
     )]
     public function __invoke(Request $request, string $uuid = 'create'): JsonResponse
     {
         $submitData = json_decode($request->getContent(), true, 512, JSON_THROW_ON_ERROR);
-        if ($uuid === 'create') {
+        if ('create' === $uuid) {
             /** @var PageEntityInterface $item */
             $item = $this->pageRepository->create($submitData);
         } else {

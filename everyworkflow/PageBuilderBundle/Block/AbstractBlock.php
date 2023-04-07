@@ -14,11 +14,9 @@ class AbstractBlock implements AbstractBlockInterface
 {
     protected string $blockType = 'abstract_block';
 
-    protected DataObjectInterface $dataObject;
-
-    public function __construct(DataObjectInterface $dataObject)
-    {
-        $this->dataObject = $dataObject;
+    public function __construct(
+        protected DataObjectInterface $dataObject
+    ) {
     }
 
     public function getBlockType(): string
@@ -34,6 +32,7 @@ class AbstractBlock implements AbstractBlockInterface
     public function setStyle(array $style): self
     {
         $this->dataObject->setData(self::KEY_STYLE, $style);
+
         return $this;
     }
 
@@ -41,6 +40,7 @@ class AbstractBlock implements AbstractBlockInterface
     {
         $data = $this->dataObject->toArray();
         $data[self::KEY_BLOCK_TYPE] = $this->getBlockType();
+
         return $data;
     }
 }

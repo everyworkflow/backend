@@ -7,11 +7,10 @@
 namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
 use EveryWorkflow\AuthBundle\Controller\Role\ListRoleController;
-use EveryWorkflow\AuthBundle\EventListener\JWTCreatedListener;
 use EveryWorkflow\AuthBundle\EventListener\ControllerPermissionListener;
+use EveryWorkflow\AuthBundle\EventListener\JWTCreatedListener;
 use EveryWorkflow\AuthBundle\Form\RoleForm;
 use EveryWorkflow\AuthBundle\GridConfig\RoleGridConfig;
-use EveryWorkflow\AuthBundle\Model\AuthConfigProvider;
 use EveryWorkflow\AuthBundle\Repository\RoleRepository;
 use EveryWorkflow\AuthBundle\Security\Guard\AuthAuthenticator;
 use EveryWorkflow\DataGridBundle\Model\Collection\RepositorySource;

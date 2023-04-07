@@ -10,7 +10,6 @@ use EveryWorkflow\CatalogCategoryBundle\DataGrid\CatalogCategoryDataGrid;
 use EveryWorkflow\CatalogCategoryBundle\Repository\CatalogCategoryRepository;
 use EveryWorkflow\DataGridBundle\Model\Collection\RepositorySource;
 use EveryWorkflow\DataGridBundle\Model\DataGridConfig;
-use Symfony\Component\DependencyInjection\Loader\Configurator\DefaultsConfigurator;
 
 return function (ContainerConfigurator $configurator) {
     /** @var DefaultsConfigurator $services */
@@ -23,6 +22,12 @@ return function (ContainerConfigurator $configurator) {
     $services
         ->load('EveryWorkflow\\CatalogCategoryBundle\\', '../../*')
         ->exclude('../../{DependencyInjection,Resources,Support,Tests}');
+
+    $services->set(
+        \EveryWorkflow\CatalogCategoryBundle\Repository\CatalogCategoryRepositoryInterface::class,
+        \EveryWorkflow\CatalogCategoryBundle\Repository\CatalogCategoryRepository::class
+    )
+        ->arg('$entityAttributeForm', service(\EveryWorkflow\CatalogCategoryBundle\Form\CategoryAttributeForm::class));
 
     $services->set('ew_catalog_category_grid_config', DataGridConfig::class);
     $services->set('ew_catalog_category_grid_source', RepositorySource::class)

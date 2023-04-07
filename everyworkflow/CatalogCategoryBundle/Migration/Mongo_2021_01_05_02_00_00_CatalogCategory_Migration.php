@@ -52,6 +52,14 @@ class Mongo_2021_01_05_02_00_00_CatalogCategory_Migration implements MigrationIn
                 'is_required' => true,
             ],
             [
+                'code' => 'code',
+                'name' => 'Code',
+                'type' => 'text_attribute',
+                'is_used_in_grid' => true,
+                'is_used_in_form' => true,
+                'is_required' => true,
+            ],
+            [
                 'code' => 'path',
                 'name' => 'Path',
                 'type' => 'text_attribute',
@@ -68,13 +76,6 @@ class Mongo_2021_01_05_02_00_00_CatalogCategory_Migration implements MigrationIn
             $attribute = $this->attributeRepository->create($item);
             $this->attributeRepository->saveOne($attribute);
         }
-
-        $indexKeys = [];
-        foreach ($this->catalogCategoryRepository->getIndexKeys() as $key) {
-            $indexKeys[$key] = 1;
-        }
-        $this->catalogCategoryRepository->getCollection()
-            ->createIndex($indexKeys, ['unique' => true]);
 
         return self::SUCCESS;
     }

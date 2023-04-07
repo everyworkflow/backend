@@ -6,22 +6,29 @@
 
 namespace EveryWorkflow\DataGridBundle\Tests\Unit;
 
+use EveryWorkflow\CoreBundle\Model\DataObjectFactory;
 use EveryWorkflow\CoreBundle\Model\DataObjectInterface;
+use EveryWorkflow\DataFormBundle\Factory\FormFactory;
 use EveryWorkflow\DataGridBundle\Factory\ActionFactory;
 use EveryWorkflow\DataGridBundle\Factory\DataGridFactory;
 use EveryWorkflow\DataGridBundle\Model\DataGridConfigInterface;
-use EveryWorkflow\DataGridBundle\Tests\BaseGridTestCase;
 use Symfony\Component\HttpFoundation\Request;
 
-class ArrayDataGridTest extends BaseGridTestCase
+class ArrayDataGridTest extends AbstractDataGrid
 {
-    public function test_array_data_grid(): void
+    public function testArrayDataGrid(): void
     {
+        self::bootKernel();
         $container = self::getContainer();
-        $dataObjectFactory = $this->getDataObjectFactory();
-        $formFactory = $this->getFormFactory($container);
-        $actionFactory = new ActionFactory($dataObjectFactory);
-        $dataGridFactory = new DataGridFactory($formFactory, $dataObjectFactory, $actionFactory);
+
+        /** @var DataObjectFactory $dataObjectFactory */
+        $dataObjectFactory = $container->get(DataObjectFactory::class);
+        /** @var FormFactory $formFactory */
+        $formFactory = $container->get(FormFactory::class);
+        /** @var ActionFactory $actionFactory */
+        $actionFactory = $container->get(ActionFactory::class);
+        /** @var DataGridFactory $dataGridFactory */
+        $dataGridFactory = $container->get(DataGridFactory::class);
 
         $dataGridConfig = $dataGridFactory->createConfig([
             DataGridConfigInterface::KEY_ACTIVE_COLUMNS => ['first_name', 'last_name'],
@@ -59,25 +66,25 @@ class ArrayDataGridTest extends BaseGridTestCase
             null,
             $form
         );
-        
+
         $gridData = $dataGrid->setFromRequest(new Request(['for' => 'data-grid']))->toArray();
 
-        self::assertArrayHasKey(
+        $this->assertArrayHasKey(
             'data_collection',
             $gridData,
             'Data must contain >> data_collection << array key.'
         );
-        self::assertArrayHasKey(
+        $this->assertArrayHasKey(
             'meta',
             $gridData['data_collection'],
             'Data must contain >> data_collection[meta] << array key.'
         );
-        self::assertArrayHasKey(
+        $this->assertArrayHasKey(
             'results',
             $gridData['data_collection'],
             'Data must contain >> data_collection[results] << array key.'
         );
-        self::assertCount(
+        $this->assertCount(
             count($results),
             $gridData['data_collection']['results'],
             'Count of data_collection results must be same.'
@@ -85,51 +92,51 @@ class ArrayDataGridTest extends BaseGridTestCase
 
         /** @var DataObjectInterface $firstItem */
         $firstItem = $results[0];
-        self::assertEquals($firstItem->getData('id'), $gridData['data_collection']['results'][0]['id']);
-        self::assertEquals($firstItem->getData('name'), $gridData['data_collection']['results'][0]['name']);
-        self::assertEquals($firstItem->getData('gender'), $gridData['data_collection']['results'][0]['gender']);
+        $this->assertEquals($firstItem->getData('id'), $gridData['data_collection']['results'][0]['id']);
+        $this->assertEquals($firstItem->getData('name'), $gridData['data_collection']['results'][0]['name']);
+        $this->assertEquals($firstItem->getData('gender'), $gridData['data_collection']['results'][0]['gender']);
 
-        self::assertArrayHasKey(
+        $this->assertArrayHasKey(
             'data_grid_config',
             $gridData,
             'Data must contain >> data_grid_config << array key.'
         );
-        self::assertArrayHasKey(
+        $this->assertArrayHasKey(
             'active_columns',
             $gridData['data_grid_config'],
             'Data must contain >> data_grid_config[active_columns] << array key.'
         );
-        self::assertCount(
+        $this->assertCount(
             count($dataGridConfig->getActiveColumns()),
             $gridData['data_grid_config']['active_columns'],
             'Count of data_grid_config active_columns must be same.'
         );
-        self::assertArrayHasKey(
+        $this->assertArrayHasKey(
             'sortable_columns',
             $gridData['data_grid_config'],
             'Data must contain >> data_grid_config[sortable_columns] << array key.'
         );
-        self::assertCount(
+        $this->assertCount(
             count($dataGridConfig->getSortableColumns()),
             $gridData['data_grid_config']['sortable_columns'],
             'Count of data_grid_config sortable_columns must be same.'
         );
-        self::assertArrayHasKey(
+        $this->assertArrayHasKey(
             'filterable_columns',
             $gridData['data_grid_config'],
             'Data must contain >> data_grid_config[filterable_columns] << array key.'
         );
-        self::assertCount(
+        $this->assertCount(
             count($dataGridConfig->getFilterableColumns()),
             $gridData['data_grid_config']['filterable_columns'],
             'Count of data_grid_config filterable_columns must be same.'
         );
-        self::assertArrayHasKey(
+        $this->assertArrayHasKey(
             'data_form',
             $gridData,
             'Data must contain >> data_form << array key.'
         );
-        self::assertCount(
+        $this->assertCount(
             count($form->getFields()),
             $gridData['data_form']['fields'],
             'Count of form field and grid data form field must be same.'

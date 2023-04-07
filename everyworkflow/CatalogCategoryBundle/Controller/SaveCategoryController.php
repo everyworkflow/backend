@@ -17,15 +17,13 @@ use Symfony\Component\HttpFoundation\Request;
 
 class SaveCategoryController extends AbstractController
 {
-    protected CatalogCategoryRepositoryInterface $catalogCategoryRepository;
-
-    public function __construct(CatalogCategoryRepositoryInterface $catalogCategoryRepository)
-    {
-        $this->catalogCategoryRepository = $catalogCategoryRepository;
+    public function __construct(
+        protected CatalogCategoryRepositoryInterface $catalogCategoryRepository
+    ) {
     }
 
     #[EwRoute(
-        path: "catalog/category/{uuid}",
+        path: 'catalog/category/{uuid}',
         name: 'catalog.category.save',
         methods: 'POST',
         permissions: 'catalog.category.save',
@@ -35,7 +33,7 @@ class SaveCategoryController extends AbstractController
                     'name' => 'uuid',
                     'in' => 'path',
                     'default' => 'create',
-                ]
+                ],
             ],
             'requestBody' => [
                 'content' => [
@@ -49,12 +47,12 @@ class SaveCategoryController extends AbstractController
                                 'path' => [
                                     'type' => 'string',
                                     'required' => true,
-                                ]
-                            ]
-                        ]
-                    ]
-                ]
-            ]
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+            ],
         ]
     )]
     public function __invoke(Request $request, string $uuid = 'create'): JsonResponse

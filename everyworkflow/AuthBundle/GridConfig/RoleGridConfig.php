@@ -24,11 +24,13 @@ class RoleGridConfig extends DataGridConfig implements RoleGridConfigInterface
         'name',
         'status',
         'created_at',
-        'updated_at'
+        'updated_at',
     ];
-    
-    public function __construct(DataObjectInterface $dataObject, ActionFactoryInterface $actionFactory)
-    {
+
+    public function __construct(
+        DataObjectInterface $dataObject,
+        ActionFactoryInterface $actionFactory
+    ) {
         parent::__construct($dataObject, $actionFactory);
         $this->dataObject->setDataIfNot(self::KEY_IS_FILTER_ENABLED, true);
         $this->dataObject->setDataIfNot(self::KEY_IS_COLUMN_SETTING_ENABLED, true);
@@ -80,7 +82,6 @@ class RoleGridConfig extends DataGridConfig implements RoleGridConfigInterface
         ], parent::getBulkActions());
     }
 
-
     public function getBulkActions(): array
     {
         $bulkActions = [
@@ -97,6 +98,7 @@ class RoleGridConfig extends DataGridConfig implements RoleGridConfigInterface
                 'path_type' => ButtonBulkAction::PATH_TYPE_POST_CALL,
             ]),
         ];
+
         return array_merge($bulkActions, parent::getBulkActions());
     }
 }

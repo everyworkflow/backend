@@ -11,18 +11,18 @@ namespace EveryWorkflow\DeveloperBundle\Command;
 use Doctrine\Inflector\InflectorFactory;
 use EveryWorkflow\DeveloperBundle\Factory\StubFactoryInterface;
 use EveryWorkflow\DeveloperBundle\Model\StubGeneratorInterface;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
+#[AsCommand(name: 'generate:bundle')]
 class GenerateBundleCommand extends Command
 {
     public const KEY_FILE = 'file';
     public const KEY_BUNDLE = 'bundle';
-
-    protected static $defaultName = 'generate:bundle';
 
     protected string $appNamespace;
 
@@ -42,11 +42,9 @@ class GenerateBundleCommand extends Command
     }
 
     /**
-     * @return void
-     *
      * @throws \Exception
      */
-    protected function configure()
+    protected function configure(): void
     {
         $this->setDescription('Generates command class')
             ->setHelp('Eg: bin/console generate:bundle EveryWorkflow UserBundle' . PHP_EOL
@@ -55,11 +53,9 @@ class GenerateBundleCommand extends Command
     }
 
     /**
-     * @return int
-     *
      * @throws \Exception
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $inputOutput = new SymfonyStyle($input, $output);
 
@@ -74,7 +70,7 @@ class GenerateBundleCommand extends Command
 
         $bundleGeneralName = str_replace('Bundle', '', $bundleName);
         $bundleAliasName = $bundleGeneralName;
-        if ($this->appNamespace !== 'EveryWorkflow') {
+        if ('EveryWorkflow' !== $this->appNamespace) {
             $bundleAliasName = $this->appNamespace . $bundleAliasName;
         }
         $inflector = InflectorFactory::create()->build();

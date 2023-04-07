@@ -13,11 +13,9 @@ use EveryWorkflow\CoreBundle\Model\DataObjectFactoryInterface;
 
 class ComponentFactory implements ComponentFactoryInterface
 {
-    protected DataObjectFactoryInterface $dataObjectFactory;
-
-    public function __construct(DataObjectFactoryInterface $dataObjectFactory)
-    {
-        $this->dataObjectFactory = $dataObjectFactory;
+    public function __construct(
+        protected DataObjectFactoryInterface $dataObjectFactory
+    ) {
     }
 
     public function create(string $className, array $data = []): BaseComponentInterface

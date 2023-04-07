@@ -12,11 +12,9 @@ use EveryWorkflow\CoreBundle\Model\DataObject;
 
 class Option implements OptionInterface
 {
-    protected DataObject $dataObject;
-
-    public function __construct(DataObject $dataObject)
-    {
-        $this->dataObject = $dataObject;
+    public function __construct(
+        protected DataObject $dataObject
+    ) {
         $this->dataObject->setDataIfNot(self::KEY_SORT_ORDER, 0);
     }
 
@@ -35,6 +33,7 @@ class Option implements OptionInterface
     public function setValue(string $val): self
     {
         $this->dataObject->setData(self::KEY_VALUE, $val);
+
         return $this;
     }
 
@@ -46,6 +45,7 @@ class Option implements OptionInterface
     public function setSortOrder(int $sortOrder): self
     {
         $this->dataObject->setData(self::KEY_SORT_ORDER, $sortOrder);
+
         return $this;
     }
 

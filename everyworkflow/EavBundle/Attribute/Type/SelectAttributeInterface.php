@@ -14,7 +14,7 @@ use EveryWorkflow\EavBundle\Attribute\Type\Select\OptionInterface;
 interface SelectAttributeInterface extends BaseAttributeInterface
 {
     /**
-     * @param OptionInterface[] | \MongoDB\Model\BSONArray $options
+     * @param OptionInterface[]|\MongoDB\Model\BSONArray $options
      */
     public function setOptions(array|\MongoDB\Model\BSONArray $options): self;
 

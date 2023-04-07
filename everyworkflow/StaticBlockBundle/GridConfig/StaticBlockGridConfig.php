@@ -89,6 +89,7 @@ class StaticBlockGridConfig extends DataGridConfig implements StaticBlockGridCon
                 'path_type' => ButtonBulkAction::PATH_TYPE_POST_CALL,
             ]),
         ];
+
         return array_merge($bulkActions, parent::getBulkActions());
     }
 }

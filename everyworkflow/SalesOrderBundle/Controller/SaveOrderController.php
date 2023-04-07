@@ -19,15 +19,13 @@ use Symfony\Component\HttpFoundation\Request;
 
 class SaveOrderController extends AbstractController
 {
-    protected SalesOrderRepositoryInterface $salesOrderRepository;
-
-    public function __construct(SalesOrderRepositoryInterface $salesOrderRepository)
-    {
-        $this->salesOrderRepository = $salesOrderRepository;
+    public function __construct(
+        protected SalesOrderRepositoryInterface $salesOrderRepository
+    ) {
     }
 
     #[EwRoute(
-        path: "sales/order/{uuid}",
+        path: 'sales/order/{uuid}',
         name: 'sales.order.save',
         methods: 'POST',
         permissions: 'sales.order.save',
@@ -37,17 +35,17 @@ class SaveOrderController extends AbstractController
                     'name' => 'uuid',
                     'in' => 'path',
                     'default' => 'create',
-                ]
+                ],
             ],
             'requestBody' => [
                 'content' => [
                     'application/json' => [
                         'schema' => [
-                            'properties' => []
-                        ]
-                    ]
-                ]
-            ]
+                            'properties' => [],
+                        ],
+                    ],
+                ],
+            ],
         ]
     )]
     public function __invoke(Request $request, string $uuid = 'create'): JsonResponse

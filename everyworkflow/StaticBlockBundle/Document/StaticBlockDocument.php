@@ -8,10 +8,10 @@ declare(strict_types=1);
 
 namespace EveryWorkflow\StaticBlockBundle\Document;
 
+use EveryWorkflow\CoreBundle\Validation\Type\StringValidation;
 use EveryWorkflow\MongoBundle\Document\BaseDocument;
 use EveryWorkflow\MongoBundle\Document\HelperTrait\CreatedUpdatedHelperTrait;
 use EveryWorkflow\MongoBundle\Document\HelperTrait\StatusHelperTrait;
-use EveryWorkflow\CoreBundle\Validation\Type\StringValidation;
 
 class StaticBlockDocument extends BaseDocument implements StaticBlockDocumentInterface
 {
@@ -22,6 +22,7 @@ class StaticBlockDocument extends BaseDocument implements StaticBlockDocumentInt
     public function setBlockTitle(string $blockTitle): self
     {
         $this->dataObject->setData(self::KEY_BLOCK_TITLE, $blockTitle);
+
         return $this;
     }
 
@@ -34,6 +35,7 @@ class StaticBlockDocument extends BaseDocument implements StaticBlockDocumentInt
     public function setBlockKey(string $blockKey): self
     {
         $this->dataObject->setData(self::KEY_BLOCK_KEY, $blockKey);
+
         return $this;
     }
 
@@ -45,6 +47,7 @@ class StaticBlockDocument extends BaseDocument implements StaticBlockDocumentInt
     public function setPageBuilderData(array $pageBuilderData): self
     {
         $this->dataObject->setData(self::KEY_PAGE_BUILDER_DATA, $pageBuilderData);
+
         return $this;
     }
 

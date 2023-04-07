@@ -19,18 +19,21 @@ class ImageComponent implements ComponentInterface
     public function setUrl(string $url): self
     {
         $this->data[self::KEY_URL] = $url;
+
         return $this;
     }
 
     public function setAlt(string $altText): self
     {
         $this->data[self::KEY_ALT] = $altText;
+
         return $this;
     }
 
     public function setCssClass(string $class): self
     {
         $this->data[self::KEY_CSS_CLASS] = $class;
+
         return $this;
     }
 

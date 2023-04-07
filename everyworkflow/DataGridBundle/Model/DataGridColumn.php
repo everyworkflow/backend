@@ -12,14 +12,9 @@ use EveryWorkflow\CoreBundle\Model\DataObjectInterface;
 
 class DataGridColumn implements DataGridColumnInterface
 {
-    /**
-     * @var DataObjectInterface
-     */
-    protected DataObjectInterface $dataObject;
-
-    public function __construct(DataObjectInterface $dataObject)
-    {
-        $this->dataObject = $dataObject;
+    public function __construct(
+        protected DataObjectInterface $dataObject
+    ) {
     }
 
     public function getName(): ?string
@@ -30,6 +25,7 @@ class DataGridColumn implements DataGridColumnInterface
     public function setName(string $name): self
     {
         $this->dataObject->setData(self::KEY_NAME, $name);
+
         return $this;
     }
 
@@ -41,6 +37,7 @@ class DataGridColumn implements DataGridColumnInterface
     public function setSortOrder(int $sortOrder): self
     {
         $this->dataObject->setData(self::KEY_SORT_ORDER, $sortOrder);
+
         return $this;
     }
 
@@ -52,6 +49,7 @@ class DataGridColumn implements DataGridColumnInterface
     public function setIsActive(bool $isActive): self
     {
         $this->dataObject->setData(self::KEY_IS_ACTIVE, $isActive);
+
         return $this;
     }
 
@@ -63,6 +61,7 @@ class DataGridColumn implements DataGridColumnInterface
     public function setIsSortable(bool $isSortable): self
     {
         $this->dataObject->setData(self::KEY_IS_SORTABLE, $isSortable);
+
         return $this;
     }
 
@@ -74,6 +73,7 @@ class DataGridColumn implements DataGridColumnInterface
     public function setIsFilterable(bool $isFilterable): self
     {
         $this->dataObject->setData(self::KEY_IS_FILTERABLE, $isFilterable);
+
         return $this;
     }
 

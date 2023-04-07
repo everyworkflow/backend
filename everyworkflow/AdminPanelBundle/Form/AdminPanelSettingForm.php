@@ -23,6 +23,7 @@ class AdminPanelSettingForm extends Form implements AdminPanelSettingFormInterfa
                 'title' => 'General',
             ])->setFields($this->getGeneralFields()),
         ];
+
         return array_merge($sections, parent::getSections());
     }
 

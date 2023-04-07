@@ -16,12 +16,14 @@ use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 class FormFieldTest extends KernelTestCase
 {
-    public function test_default_text_form_field(): void
+    public function testDefaultTextFormField(): void
     {
         self::bootKernel();
         $container = self::getContainer();
 
+        /** @var DataFormConfigProvider $dataFormConfigProvider */
         $dataFormConfigProvider = $container->get(DataFormConfigProvider::class);
+        /** @var FormFieldFactory $formFieldFactory */
         $formFieldFactory = $container->get(FormFieldFactory::class);
 
         /** @var TextField $firstNameField */
@@ -50,12 +52,14 @@ class FormFieldTest extends KernelTestCase
         $this->assertArrayHasKey('field_type', $lastNameFieldData);
     }
 
-    public function test_select_field(): void
+    public function testSelectField(): void
     {
         self::bootKernel();
         $container = self::getContainer();
 
+        /** @var FormFieldFactory $formFieldFactory */
         $formFieldFactory = $container->get(FormFieldFactory::class);
+        /** @var FieldOptionFactory $fieldOptionFactory */
         $fieldOptionFactory = $container->get(FieldOptionFactory::class);
 
         /** @var SelectField $selectField */

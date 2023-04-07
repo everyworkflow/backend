@@ -13,14 +13,9 @@ use EveryWorkflow\PageBuilderBundle\Component\LinkComponentFactory;
 
 class MainMenuComponent implements ComponentInterface
 {
-    /**
-     * @var LinkComponentFactory
-     */
-    protected LinkComponentFactory $linkComponentFactory;
-
-    public function __construct(LinkComponentFactory $linkComponentFactory)
-    {
-        $this->linkComponentFactory = $linkComponentFactory;
+    public function __construct(
+        protected LinkComponentFactory $linkComponentFactory
+    ) {
     }
 
     public function getData(): ?array
@@ -37,6 +32,7 @@ class MainMenuComponent implements ComponentInterface
         $data['items'][] = $this->linkComponentFactory->create()->setLabel('About')->setUrl('/about')->getData();
         $data['items'][] = $this->linkComponentFactory->create()->setLabel('Contact')->setUrl('/contact')->getData();
         $data['items'][] = $this->linkComponentFactory->create()->setLabel('Tests')->setUrl('/test')->getData();
+
         return $data;
     }
 }

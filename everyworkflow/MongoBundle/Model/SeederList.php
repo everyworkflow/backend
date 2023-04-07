@@ -13,13 +13,12 @@ use EveryWorkflow\MongoBundle\Support\SeederInterface;
 class SeederList implements SeederListInterface
 {
     /**
-     * All the seed types, injected via service.
+     * All the seeder types, injected via service
+     * @param $seeders SeederInterface[]
      */
-    protected iterable $seeders;
-
-    public function __construct(iterable $seeders)
-    {
-        $this->seeders = $seeders;
+    public function __construct(
+        protected iterable $seeders = []
+    ) {
     }
 
     /**

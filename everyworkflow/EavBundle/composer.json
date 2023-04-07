@@ -10,10 +10,10 @@
         }
     ],
     "require": {
-        "nesbot/carbon": "^2.55",
-        "everyworkflow/mongo-bundle": "dev-main",
-        "everyworkflow/data-form-bundle": "dev-main",
-        "everyworkflow/data-grid-bundle": "dev-main"
+        "nesbot/carbon": "^2.66",
+        "everyworkflow/mongo-bundle": "*",
+        "everyworkflow/data-form-bundle": "*",
+        "everyworkflow/data-grid-bundle": "*"
     },
     "autoload": {
         "psr-4": {
@@ -28,6 +28,5 @@
         "psr-4": {
             "EveryWorkflow\\EavBundle\\Tests\\": "Tests/"
         }
-    },
-    "minimum-stability": "dev"
+    }
 }

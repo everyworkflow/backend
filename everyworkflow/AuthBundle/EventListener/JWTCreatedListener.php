@@ -11,7 +11,7 @@ use Lexik\Bundle\JWTAuthenticationBundle\Event\JWTCreatedEvent;
 
 class JWTCreatedListener
 {
-    public function onJWTCreated(JWTCreatedEvent $event)
+    public function onJWTCreated(JWTCreatedEvent $event): void
     {
         $payload = $event->getData();
         $user = $event->getUser();

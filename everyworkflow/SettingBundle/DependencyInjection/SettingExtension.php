@@ -20,7 +20,7 @@ class SettingExtension extends ConfigurableExtension implements PrependExtension
 {
     protected function loadInternal(array $mergedConfig, ContainerBuilder $container): void
     {
-        $loader = new PhpFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
+        $loader = new PhpFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.php');
 
         $definition = $container->getDefinition(SettingConfigProvider::class);
@@ -30,7 +30,7 @@ class SettingExtension extends ConfigurableExtension implements PrependExtension
     public function prepend(ContainerBuilder $container): void
     {
         $bundles = $container->getParameter('kernel.bundles');
-        $ymlLoader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
+        $ymlLoader = new YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         if (isset($bundles['EveryWorkflowAuthBundle'])) {
             $ymlLoader->load('auth.yaml');
         }

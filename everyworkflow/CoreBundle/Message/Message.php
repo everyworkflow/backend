@@ -85,8 +85,6 @@ class Message implements MessageInterface
     }
 
     /**
-     * @param $type
-     * @param $messages
      * @param null $identifier
      *
      * @return void

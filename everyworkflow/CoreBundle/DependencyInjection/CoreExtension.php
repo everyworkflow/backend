@@ -33,7 +33,7 @@ class CoreExtension extends ConfigurableExtension implements PrependExtensionInt
 
     public function prepend(ContainerBuilder $container): void
     {
-        $ymlLoader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
+        $ymlLoader = new YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $ymlLoader->load('core.yaml');
     }
 }

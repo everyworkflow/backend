@@ -24,6 +24,7 @@ class EntityRepositorySource extends RepositorySource implements EntityRepositor
     public function setEntityRepository(BaseEntityRepositoryInterface $baseEntityRepository): self
     {
         $this->baseEntityRepository = $baseEntityRepository;
+
         return $this;
     }
 
@@ -32,6 +33,7 @@ class EntityRepositorySource extends RepositorySource implements EntityRepositor
         if ($this->baseEntityRepository) {
             return $this->baseEntityRepository;
         }
+
         return parent::getRepository();
     }
 }

@@ -13,9 +13,9 @@ use Doctrine\Inflector\InflectorFactory;
 class RepositoryAttribute
 {
     protected string $documentClass;
-    protected string|array $primaryKeys;
+    protected string|array $primaryKey;
     protected ?string $collectionName;
-    protected string|array|null $indexKeys = [];
+    protected string|array|null $indexKey = [];
     protected ?string $eventPrefix;
 
     public function __construct(

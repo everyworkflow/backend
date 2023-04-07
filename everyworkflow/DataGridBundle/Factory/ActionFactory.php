@@ -13,14 +13,9 @@ use EveryWorkflow\DataGridBundle\Model\ActionInterface;
 
 class ActionFactory implements ActionFactoryInterface
 {
-    /**
-     * @var DataObjectFactoryInterface
-     */
-    protected DataObjectFactoryInterface $dataObjectFactory;
-
-    public function __construct(DataObjectFactoryInterface $dataObjectFactory)
-    {
-        $this->dataObjectFactory = $dataObjectFactory;
+    public function __construct(
+        protected DataObjectFactoryInterface $dataObjectFactory
+    ) {
     }
 
     public function create(string $className, array $data = []): ActionInterface

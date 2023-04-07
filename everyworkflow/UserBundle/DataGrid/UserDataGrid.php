@@ -21,20 +21,15 @@ use EveryWorkflow\UserBundle\Repository\UserRepositoryInterface;
 
 class UserDataGrid extends DataGrid implements UserDataGridInterface
 {
-    protected UserRepositoryInterface $userRepository;
-    protected ActionFactoryInterface $actionFactory;
-
     public function __construct(
-        DataObjectInterface     $dataObject,
+        DataObjectInterface $dataObject,
         DataGridConfigInterface $dataGridConfig,
-        FormInterface           $form,
-        ArraySourceInterface    $source,
-        UserRepositoryInterface $userRepository,
-        ActionFactoryInterface  $actionFactory
+        FormInterface $form,
+        ArraySourceInterface $source,
+        protected UserRepositoryInterface $userRepository,
+        protected ActionFactoryInterface $actionFactory
     ) {
         parent::__construct($dataObject, $dataGridConfig, $form, $source);
-        $this->userRepository = $userRepository;
-        $this->actionFactory = $actionFactory;
     }
 
     public function getConfig(): DataGridConfigInterface

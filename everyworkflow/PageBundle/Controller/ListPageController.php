@@ -16,16 +16,13 @@ use Symfony\Component\HttpFoundation\Request;
 
 class ListPageController extends AbstractController
 {
-    protected PageDataGridInterface $pageDataGrid;
-
     public function __construct(
-        PageDataGridInterface $pageDataGrid
+        protected PageDataGridInterface $pageDataGrid
     ) {
-        $this->pageDataGrid = $pageDataGrid;
     }
 
     #[EwRoute(
-        path: "cms/page",
+        path: 'cms/page',
         name: 'cms.page',
         priority: 10,
         methods: 'GET',

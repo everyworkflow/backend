@@ -17,27 +17,11 @@ use EveryWorkflow\UserBundle\Repository\UserRepositoryInterface;
 
 class Mongo_2021_01_01_02_00_00_User_Entity_Migration implements MigrationInterface
 {
-    /**
-     * @var EntityRepositoryInterface
-     */
-    protected EntityRepositoryInterface $entityRepository;
-    /**
-     * @var AttributeRepositoryInterface
-     */
-    protected AttributeRepositoryInterface $attributeRepository;
-    /**
-     * @var UserRepositoryInterface
-     */
-    protected UserRepositoryInterface $userRepository;
-
     public function __construct(
-        EntityRepositoryInterface $entityRepository,
-        AttributeRepositoryInterface $attributeRepository,
-        UserRepositoryInterface $userRepository
+        protected EntityRepositoryInterface $entityRepository,
+        protected AttributeRepositoryInterface $attributeRepository,
+        protected UserRepositoryInterface $userRepository
     ) {
-        $this->entityRepository = $entityRepository;
-        $this->attributeRepository = $attributeRepository;
-        $this->userRepository = $userRepository;
     }
 
     public function migrate(): bool
@@ -108,26 +92,20 @@ class Mongo_2021_01_01_02_00_00_User_Entity_Migration implements MigrationInterf
         $sortOrder = 5;
         foreach ($attributeData as $item) {
             $item['sort_order'] = $sortOrder++;
+            $item['status'] = 'enable';
             $attribute = $this->attributeRepository->create($item);
             $this->attributeRepository->saveOne($attribute);
         }
-
-        $indexKeys = [];
-        foreach ($this->userRepository->getIndexKeys() as $key) {
-            $indexKeys[$key] = 1;
-        }
-
-        $this->userRepository->getCollection()
-            ->createIndex($indexKeys, ['unique' => true]);
 
         return self::SUCCESS;
     }
 
     public function rollback(): bool
     {
-        // $this->attributeRepository->deleteByFilter(['entity_code' => $this->userRepository->getEntityCode()]);
-        // $this->entityRepository->deleteByCode($this->userRepository->getEntityCode());
-        // $this->userRepository->getCollection()->drop();
+        $this->attributeRepository->deleteByFilter(['entity_code' => $this->userRepository->getEntityCode()]);
+        $this->entityRepository->deleteByCode($this->userRepository->getEntityCode());
+        $this->userRepository->getCollection()->drop();
+
         return self::SUCCESS;
     }
 }

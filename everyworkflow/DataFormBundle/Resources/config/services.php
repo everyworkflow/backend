@@ -12,7 +12,6 @@ use EveryWorkflow\DataFormBundle\Field\TextField;
 use EveryWorkflow\DataFormBundle\Field\TextFieldInterface;
 use EveryWorkflow\DataFormBundle\Model\Form;
 use EveryWorkflow\DataFormBundle\Model\FormInterface;
-use Symfony\Component\DependencyInjection\Loader\Configurator\DefaultsConfigurator;
 
 return function (ContainerConfigurator $configurator) {
     /** @var DefaultsConfigurator $services */
@@ -21,6 +20,10 @@ return function (ContainerConfigurator $configurator) {
         ->defaults()
         ->autowire()
         ->autoconfigure();
+
+    if (isset($_SERVER['APP_ENV']) && 'test' === $_SERVER['APP_ENV']) {
+        $services->public();
+    }
 
     $services
         ->load('EveryWorkflow\\DataFormBundle\\', '../../*')

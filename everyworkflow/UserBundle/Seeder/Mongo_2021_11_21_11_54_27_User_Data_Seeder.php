@@ -15,15 +15,10 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class Mongo_2021_11_21_11_54_27_User_Data_Seeder implements SeederInterface
 {
-    protected UserRepositoryInterface $userRepository;
-    protected UserPasswordHasherInterface $passwordHasher;
-
     public function __construct(
-        UserRepositoryInterface $userRepository,
-        UserPasswordHasherInterface $passwordHasher
+        protected UserRepositoryInterface $userRepository,
+        protected UserPasswordHasherInterface $passwordHasher
     ) {
-        $this->userRepository = $userRepository;
-        $this->passwordHasher = $passwordHasher;
     }
 
     public function seed(): bool

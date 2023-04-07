@@ -14,12 +14,9 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class FormFactory implements FormFactoryInterface
 {
-    protected ContainerInterface $container;
-
     public function __construct(
-        ContainerInterface $container
+        protected ContainerInterface $container
     ) {
-        $this->container = $container;
     }
 
     public function create(array $data = []): ?FormInterface

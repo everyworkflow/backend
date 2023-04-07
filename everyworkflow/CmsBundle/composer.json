@@ -10,14 +10,14 @@
         }
     ],
     "require": {
-        "everyworkflow/base-bundle": "dev-main",
-        "everyworkflow/dam-bundle": "dev-main",
-        "everyworkflow/page-builder-bundle": "dev-main",
-        "everyworkflow/page-bundle": "dev-main",
-        "everyworkflow/url-rewrite-bundle": "dev-main",
-        "everyworkflow/static-block-bundle": "dev-main",
-        "everyworkflow/menu-bundle": "dev-main",
-        "everyworkflow/front-panel-bundle": "dev-main"
+        "everyworkflow/base-bundle": "*",
+        "everyworkflow/dam-bundle": "*",
+        "everyworkflow/page-builder-bundle": "*",
+        "everyworkflow/page-bundle": "*",
+        "everyworkflow/url-rewrite-bundle": "*",
+        "everyworkflow/static-block-bundle": "*",
+        "everyworkflow/menu-bundle": "*",
+        "everyworkflow/front-panel-bundle": "*"
     },
     "autoload": {
         "psr-4": {
@@ -32,6 +32,5 @@
         "psr-4": {
             "EveryWorkflow\\CmsBundle\\Tests\\": "Tests/"
         }
-    },
-    "minimum-stability": "dev"
+    }
 }

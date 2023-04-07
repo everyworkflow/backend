@@ -6,15 +6,20 @@
 
 namespace EveryWorkflow\DataGridBundle\Tests\Unit;
 
+use EveryWorkflow\CoreBundle\Model\DataObjectFactory;
 use EveryWorkflow\DataGridBundle\Factory\DataCollectionFactory;
-use EveryWorkflow\DataGridBundle\Tests\BaseGridTestCase;
 
-class DataCollectionTest extends BaseGridTestCase
+class DataCollectionTest extends AbstractDataGrid
 {
-    public function test_data_collection(): void
+    public function testDataCollection(): void
     {
-        $dataObjectFactory = $this->getDataObjectFactory();
-        $collectionFactory = new DataCollectionFactory($dataObjectFactory);
+        self::bootKernel();
+        $container = self::getContainer();
+
+        /** @var DataObjectFactory $dataObjectFactory */
+        $dataObjectFactory = $container->get(DataObjectFactory::class);
+        /** @var DataCollectionFactory $collectionFactory */
+        $collectionFactory = $container->get(DataCollectionFactory::class);
         $collection = $collectionFactory->create();
 
         $results = [
@@ -50,9 +55,9 @@ class DataCollectionTest extends BaseGridTestCase
 
         $collectionData = $collection->toArray();
 
-        self::assertArrayHasKey('results', $collectionData, 'DataCollection must have >> results << array key.');
-        self::assertArrayHasKey('meta', $collectionData, 'DataCollection must have >> meta << array key.');
-        self::assertCount(count($results), $collectionData['results']);
-        self::assertEquals(count($results), $collectionData['meta']['per_page']);
+        $this->assertArrayHasKey('results', $collectionData, 'DataCollection must have >> results << array key.');
+        $this->assertArrayHasKey('meta', $collectionData, 'DataCollection must have >> meta << array key.');
+        $this->assertCount(count($results), $collectionData['results']);
+        $this->assertEquals(count($results), $collectionData['meta']['per_page']);
     }
 }

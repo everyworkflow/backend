@@ -8,12 +8,10 @@ declare(strict_types=1);
 
 namespace EveryWorkflow\EavBundle\Factory;
 
-use Carbon\Carbon;
 use EveryWorkflow\CoreBundle\Helper\Trait\GenerateSetMethodNameTrait;
 use EveryWorkflow\CoreBundle\Model\DataObjectFactoryInterface;
 use EveryWorkflow\EavBundle\Attribute\BaseAttributeInterface;
 use EveryWorkflow\EavBundle\Model\EavConfigProviderInterface;
-use EveryWorkflow\MongoBundle\Document\HelperTrait\CreatedUpdatedHelperTraitInterface;
 use EveryWorkflow\MongoBundle\Factory\DocumentFactory;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -21,24 +19,19 @@ class AttributeFactory extends DocumentFactory implements AttributeFactoryInterf
 {
     use GenerateSetMethodNameTrait;
 
-    protected ContainerInterface $container;
-    protected EavConfigProviderInterface $eavConfigProvider;
-
     public function __construct(
         DataObjectFactoryInterface $dataObjectFactory,
-        ContainerInterface         $container,
-        EavConfigProviderInterface $eavConfigProvider
+        protected ContainerInterface $container,
+        protected EavConfigProviderInterface $eavConfigProvider
     ) {
         parent::__construct($dataObjectFactory);
-        $this->container = $container;
-        $this->eavConfigProvider = $eavConfigProvider;
     }
 
     protected function fillFieldWithData(mixed $field, array $data): ?BaseAttributeInterface
     {
         if ($field instanceof BaseAttributeInterface) {
             $field->resetData($data);
-            
+
             return $field;
         }
 

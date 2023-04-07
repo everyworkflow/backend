@@ -10,18 +10,18 @@ namespace EveryWorkflow\DeveloperBundle\Command;
 
 use EveryWorkflow\DeveloperBundle\Factory\StubFactoryInterface;
 use EveryWorkflow\DeveloperBundle\Model\StubGeneratorInterface;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
+#[AsCommand(name: 'generate:command')]
 class GenerateCommandCommand extends Command
 {
     public const KEY_FILE = 'file';
     public const KEY_BUNDLE = 'bundle';
-
-    protected static $defaultName = 'generate:command';
 
     protected StubFactoryInterface $stubFactory;
     protected StubGeneratorInterface $stubGenerator;
@@ -37,11 +37,9 @@ class GenerateCommandCommand extends Command
     }
 
     /**
-     * @return void
-     *
      * @throws \Exception
      */
-    protected function configure()
+    protected function configure(): void
     {
         $this->setDescription('Generates command class')
             ->setHelp('Eg: bin/console generate:command CreateUserCommand UserBundle' . PHP_EOL
@@ -51,11 +49,9 @@ class GenerateCommandCommand extends Command
     }
 
     /**
-     * @return int
-     *
      * @throws \Exception
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $inputOutput = new SymfonyStyle($input, $output);
 

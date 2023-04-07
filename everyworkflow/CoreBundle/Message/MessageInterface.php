@@ -11,27 +11,27 @@ namespace EveryWorkflow\CoreBundle\Message;
 interface MessageInterface
 {
     /**
-     * Default identifier
+     * Default identifier.
      */
     public const DEFAULT_IDENTIFIER = 'default_message_identifier';
 
     /**
-     * Error type
+     * Error type.
      */
     public const TYPE_ERROR = 'error';
 
     /**
-     * Warning type
+     * Warning type.
      */
     public const TYPE_WARNING = 'warning';
 
     /**
-     * Notice type
+     * Notice type.
      */
     public const TYPE_NOTICE = 'notice';
 
     /**
-     * Success type
+     * Success type.
      */
     public const TYPE_SUCCESS = 'success';
 

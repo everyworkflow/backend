@@ -1,0 +1,28 @@
+{
+    "name": "everyworkflow/catalog-search-bundle",
+    "description": "",
+    "type": "package",
+    "authors": [
+        {
+            "name": "EveryWorkflow",
+            "email": "everyworkflow@gmail.com"
+        }
+    ],
+    "require": {
+        "everyworkflow/indexer-bundle": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "EveryWorkflow\\CatalogSearchBundle\\": "./"
+        },
+        "exclude-from-classmap": [
+            "Resources",
+            "Tests"
+        ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "EveryWorkflow\\CatalogSearchBundle\\Tests\\": "Tests/"
+        }
+    }
+}

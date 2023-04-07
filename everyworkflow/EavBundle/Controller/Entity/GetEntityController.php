@@ -17,19 +17,14 @@ use Symfony\Component\HttpFoundation\Request;
 
 class GetEntityController extends AbstractController
 {
-    protected EntityFormInterface $entityForm;
-    protected EntityRepositoryInterface $entityRepository;
-
     public function __construct(
-        EntityFormInterface $entityForm,
-        EntityRepositoryInterface $entityRepository
+        protected EntityFormInterface $entityForm,
+        protected EntityRepositoryInterface $entityRepository
     ) {
-        $this->entityForm = $entityForm;
-        $this->entityRepository = $entityRepository;
     }
 
     #[EwRoute(
-        path: "eav/entity/{code}",
+        path: 'eav/entity/{code}',
         name: 'eav.entity.view',
         methods: 'GET',
         permissions: 'eav.entity.view',
@@ -39,8 +34,8 @@ class GetEntityController extends AbstractController
                     'name' => 'code',
                     'in' => 'path',
                     'default' => 'create',
-                ]
-            ]
+                ],
+            ],
         ]
     )]
     public function __invoke(Request $request, string $code = 'create'): JsonResponse
@@ -56,7 +51,7 @@ class GetEntityController extends AbstractController
             }
         }
 
-        if ($request->get('for') === 'data-form') {
+        if ('data-form' === $request->get('for')) {
             $data['data_form'] = $this->entityForm->toArray();
         }
 

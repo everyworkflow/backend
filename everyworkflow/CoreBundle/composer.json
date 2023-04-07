@@ -10,12 +10,12 @@
         }
     ],
     "require": {
-        "php": "^8.1",
-        "doctrine/annotations": "^1.13",
+        "php": ">=8.1",
+        "doctrine/annotations": "^2.0",
         "doctrine/inflector": "^2.0",
-        "symfony/cache": "6.0.x",
-        "symfony/uid": "6.0.x",
-        "nelmio/cors-bundle": "^2.2"
+        "symfony/cache": "6.2.*",
+        "symfony/uid": "6.2.*",
+        "nelmio/cors-bundle": "^2.3"
     },
     "autoload": {
         "psr-4": {
@@ -30,6 +30,5 @@
         "psr-4": {
             "EveryWorkflow\\CoreBundle\\Tests\\": "Tests/"
         }
-    },
-    "minimum-stability": "dev"
+    }
 }

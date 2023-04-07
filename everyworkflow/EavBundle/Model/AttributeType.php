@@ -10,11 +10,9 @@ namespace EveryWorkflow\EavBundle\Model;
 
 class AttributeType implements AttributeTypeInterface
 {
-    public EavConfigProviderInterface $eavConfigProvider;
-
-    public function __construct(EavConfigProviderInterface $eavConfigProvider)
-    {
-        $this->eavConfigProvider = $eavConfigProvider;
+    public function __construct(
+        protected EavConfigProviderInterface $eavConfigProvider
+    ) {
     }
 
     public function getTypes(): array

@@ -16,15 +16,13 @@ use Symfony\Component\HttpFoundation\Request;
 
 class SaveEntityController extends AbstractController
 {
-    protected EntityRepositoryInterface $entityRepository;
-
-    public function __construct(EntityRepositoryInterface $entityRepository)
-    {
-        $this->entityRepository = $entityRepository;
+    public function __construct(
+        protected EntityRepositoryInterface $entityRepository
+    ) {
     }
 
     #[EwRoute(
-        path: "eav/entity/{code}",
+        path: 'eav/entity/{code}',
         name: 'eav.entity.save',
         methods: 'POST',
         permissions: 'eav.entity.save',
@@ -34,7 +32,7 @@ class SaveEntityController extends AbstractController
                     'name' => 'code',
                     'in' => 'path',
                     'default' => 'create',
-                ]
+                ],
             ],
             'requestBody' => [
                 'content' => [
@@ -56,12 +54,12 @@ class SaveEntityController extends AbstractController
                                 'status' => [
                                     'type' => 'string',
                                     'required' => true,
-                                ]
-                            ]
-                        ]
-                    ]
-                ]
-            ]
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+            ],
         ]
     )]
     public function __invoke(Request $request, string $code = 'create'): JsonResponse
@@ -77,7 +75,7 @@ class SaveEntityController extends AbstractController
                     ]);
                     if ($entityByCode) {
                         return new JsonResponse([
-                            'message' => "Entity with code '${submitData['code']}' already exists."
+                            'message' => 'Entity with code ' . $submitData['code'] . ' already exists.',
                         ], JsonResponse::HTTP_BAD_REQUEST);
                     }
                 } catch (\Exception $e) {
@@ -93,7 +91,6 @@ class SaveEntityController extends AbstractController
         }
 
         $item = $this->entityRepository->saveOne($item);
-
 
         return new JsonResponse([
             'detail' => 'Successfully saved changes.',

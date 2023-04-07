@@ -15,8 +15,9 @@ class AuthConfigProvider extends BaseConfigProvider implements AuthConfigProvide
     public function getPermissions(?string $path = null): mixed
     {
         if ($path) {
-            $path = '.' . $path;
+            $path = '.'.$path;
         }
-        return $this->get('permissions' . $path);
+
+        return $this->get('permissions'.$path);
     }
 }

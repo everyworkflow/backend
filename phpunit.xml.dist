@@ -21,7 +21,7 @@
         <testsuite name="Project Test Suite">
             <directory>tests</directory>
         </testsuite>
-        <testsuite name="EveryWorkflow Test Suite">
+	<testsuite name="EveryWorkflow Test Suite">
             <directory>vendor/everyworkflow/*-bundle/Tests</directory>
         </testsuite>
     </testsuites>

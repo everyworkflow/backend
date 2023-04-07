@@ -8,21 +8,17 @@ namespace EveryWorkflow\AuthBundle\EventListener;
 
 use EveryWorkflow\AuthBundle\Security\AuthUserInterface;
 use EveryWorkflow\CoreBundle\Annotation\EwRoute;
-use ReflectionClass;
 use Symfony\Component\HttpKernel\Event\ControllerEvent;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 class ControllerPermissionListener
 {
-    protected AuthUserInterface $authUser;
-
     public function __construct(
-        AuthUserInterface $authUser
+        protected AuthUserInterface $authUser
     ) {
-        $this->authUser = $authUser;
     }
 
-    public function onKernelController(ControllerEvent $event)
+    public function onKernelController(ControllerEvent $event): void
     {
         $controller = $event->getController();
 
@@ -39,13 +35,13 @@ class ControllerPermissionListener
             if (
                 isset($attributeData['name'], $attributeData['permissions'])
                 && $attributeData['name'] === $requestedRouteName
-                && $attributeData['permissions'] !== null
+                && null !== $attributeData['permissions']
             ) {
                 if (is_array($attributeData['permissions'])) {
                     foreach ($attributeData['permissions'] as $permission) {
                         $this->checkPermissionAndThrowIfNeeded($permission);
                     }
-                } else if (is_string($attributeData['permissions'])) {
+                } elseif (is_string($attributeData['permissions'])) {
                     $this->checkPermissionAndThrowIfNeeded($attributeData['permissions']);
                 }
 
@@ -58,10 +54,10 @@ class ControllerPermissionListener
     {
         $data = [];
 
-        $reflectionClass = new ReflectionClass($className);
+        $reflectionClass = new \ReflectionClass($className);
         foreach ($reflectionClass->getMethods() as $method) {
             foreach ($method->getAttributes() as $attribute) {
-                if ($attribute->getName() === EwRoute::class) {
+                if (EwRoute::class === $attribute->getName()) {
                     $attrArgs = $attribute->getArguments();
                     $data[$method->getName()] = $attrArgs;
                 }

@@ -22,15 +22,21 @@ use EveryWorkflow\EavBundle\Repository\AttributeRepository;
 use EveryWorkflow\EavBundle\Repository\EntityRepository;
 
 return function (ContainerConfigurator $configurator) {
-    // $configurator->import('eav.yaml', 'yaml');
-
     $services = $configurator->services()
         ->defaults()
         ->autowire()
         ->autoconfigure();
 
+    if (isset($_SERVER['APP_ENV']) && 'test' === $_SERVER['APP_ENV']) {
+        $services->public();
+    }
+
     $services->load('EveryWorkflow\\EavBundle\\', '../../*')
         ->exclude('../../{DependencyInjection,Resources,Tests}');
+
+    $services->set(\EveryWorkflow\EavBundle\Support\Attribute\EntityRepositoryAttribute::class)
+        ->autowire(false)
+        ->autoconfigure(false);
 
     $services->alias(BaseAttributeInterface::class, BaseAttribute::class);
 

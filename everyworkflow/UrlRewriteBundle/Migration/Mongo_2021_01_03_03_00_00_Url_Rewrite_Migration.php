@@ -13,23 +13,20 @@ use EveryWorkflow\UrlRewriteBundle\Repository\UrlRewriteRepositoryInterface;
 
 class Mongo_2021_01_03_03_00_00_Url_Rewrite_Migration implements MigrationInterface
 {
-    protected UrlRewriteRepositoryInterface $urlRewriteRepository;
-
     public function __construct(
-        UrlRewriteRepositoryInterface $urlRewriteRepository
+        protected UrlRewriteRepositoryInterface $urlRewriteRepository
     ) {
-        $this->urlRewriteRepository = $urlRewriteRepository;
     }
 
     public function migrate(): bool
     {
-        $this->urlRewriteRepository->getCollection()->createIndex(['url' => 1], ['unique' => true]);
         return self::SUCCESS;
     }
 
     public function rollback(): bool
     {
         $this->urlRewriteRepository->getCollection()->drop();
+
         return self::SUCCESS;
     }
 }

@@ -8,7 +8,6 @@ declare(strict_types=1);
 
 namespace EveryWorkflow\StaticBlockBundle\Form;
 
-use EveryWorkflow\DataFormBundle\Field\Select\Option;
 use EveryWorkflow\DataFormBundle\Model\Form;
 
 class StaticBlockForm extends Form implements StaticBlockFormInterface

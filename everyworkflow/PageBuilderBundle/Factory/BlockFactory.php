@@ -14,15 +14,10 @@ use EveryWorkflow\PageBuilderBundle\Model\PageBuilderConfigProviderInterface;
 
 class BlockFactory implements BlockFactoryInterface
 {
-    protected DataObjectFactoryInterface $dataObjectFactory;
-    protected PageBuilderConfigProviderInterface $pageBuilderConfigProvider;
-
     public function __construct(
-        DataObjectFactoryInterface $dataObjectFactory,
-        PageBuilderConfigProviderInterface $pageBuilderConfigProvider
+        protected DataObjectFactoryInterface $dataObjectFactory,
+        protected PageBuilderConfigProviderInterface $pageBuilderConfigProvider
     ) {
-        $this->dataObjectFactory = $dataObjectFactory;
-        $this->pageBuilderConfigProvider = $pageBuilderConfigProvider;
     }
 
     public function create(string $className, array $data): AbstractBlockInterface
@@ -35,8 +30,10 @@ class BlockFactory implements BlockFactoryInterface
         $blocks = $this->pageBuilderConfigProvider->get('blocks');
         if (isset($blocks[$blockType])) {
             $dataObject = $this->dataObjectFactory->create($data);
+
             return new $blocks[$blockType]($dataObject);
         }
+
         return $this->createBlock($data);
     }
 
@@ -47,6 +44,7 @@ class BlockFactory implements BlockFactoryInterface
             return new $blocks[$data['block_type']]($this->dataObjectFactory->create($data));
         }
         $blockType = $this->pageBuilderConfigProvider->get('default.block');
+
         return new $blocks[$blockType]($this->dataObjectFactory->create($data));
     }
 }

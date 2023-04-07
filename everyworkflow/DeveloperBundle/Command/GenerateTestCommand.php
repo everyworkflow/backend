@@ -10,18 +10,18 @@ namespace EveryWorkflow\DeveloperBundle\Command;
 
 use EveryWorkflow\DeveloperBundle\Factory\StubFactoryInterface;
 use EveryWorkflow\DeveloperBundle\Model\StubGeneratorInterface;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
+#[AsCommand(name: 'generate:test')]
 class GenerateTestCommand extends Command
 {
     public const KEY_FILE = 'file';
     public const KEY_BUNDLE = 'bundle';
-
-    protected static $defaultName = 'generate:test';
 
     protected StubFactoryInterface $stubFactory;
     protected StubGeneratorInterface $stubGenerator;
@@ -36,10 +36,7 @@ class GenerateTestCommand extends Command
         $this->stubFactory = $stubFactory;
     }
 
-    /**
-     * @return void
-     */
-    protected function configure()
+    protected function configure(): void
     {
         $this->setDescription('Generates test class')
             ->setHelp('Eg: bin/console generate:test ExampleTest ExampleBundle')
@@ -48,10 +45,9 @@ class GenerateTestCommand extends Command
     }
 
     /**
-     * @return int
      * @throws \Exception
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $inputOutput = new SymfonyStyle($input, $output);
 

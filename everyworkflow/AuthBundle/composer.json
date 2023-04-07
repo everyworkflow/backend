@@ -10,10 +10,10 @@
         }
     ],
     "require": {
-        "symfony/console": "6.0.*",
-        "lexik/jwt-authentication-bundle": "^2.14",
-        "symfony/security-bundle": "6.0.x",
-        "everyworkflow/mongo-bundle": "dev-main"
+        "symfony/console": "6.2.*",
+        "lexik/jwt-authentication-bundle": "^2.16",
+        "symfony/security-bundle": "6.2.*",
+        "everyworkflow/mongo-bundle": "*"
     },
     "autoload": {
         "psr-4": {
@@ -28,6 +28,5 @@
         "psr-4": {
             "EveryWorkflow\\AuthBundle\\Tests\\": "Tests/"
         }
-    },
-    "minimum-stability": "dev"
+    }
 }

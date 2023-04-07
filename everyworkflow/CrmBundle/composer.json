@@ -10,10 +10,10 @@
         }
     ],
     "require": {
-        "everyworkflow/base-bundle": "dev-main",
-        "everyworkflow/dam-bundle": "dev-main",
-        "everyworkflow/cms-bundle": "dev-main",
-        "everyworkflow/customer-bundle": "dev-main"
+        "everyworkflow/base-bundle": "*",
+        "everyworkflow/dam-bundle": "*",
+        "everyworkflow/cms-bundle": "*",
+        "everyworkflow/customer-bundle": "*"
     },
     "autoload": {
         "psr-4": {
@@ -28,6 +28,5 @@
         "psr-4": {
             "EveryWorkflow\\CrmBundle\\Tests\\": "Tests/"
         }
-    },
-    "minimum-stability": "dev"
+    }
 }

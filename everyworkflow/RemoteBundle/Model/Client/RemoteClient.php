@@ -16,21 +16,16 @@ use Psr\Log\LoggerInterface;
 
 class RemoteClient implements RemoteClientInterface
 {
-    protected ArrayFormatterInterface $formatter;
-    protected LoggerInterface $logger;
-
     public function __construct(
-        ArrayFormatterInterface $formatter,
-        LoggerInterface $ewRemoteLogger
+        protected ArrayFormatterInterface $formatter,
+        protected LoggerInterface $ewRemoteLogger
     ) {
-        $this->formatter = $formatter;
-        $this->logger = $ewRemoteLogger;
     }
 
     public function send(RemoteRequestInterface $request): RemoteResponseInterface
     {
         $this->logRequest($request);
-        
+
         $response = $this->formatter->handle($request->toArray());
 
         $this->logResponse($request, $response);
@@ -41,13 +36,13 @@ class RemoteClient implements RemoteClientInterface
     protected function logRequest(RemoteRequestInterface $request): void
     {
         $this->logger->info(
-            'Request: ' .
-                $request->getRequestKey() .
-                ' || ' .
-                strtoupper($request->getMethod()) .
-                ': ' .
-                $request->getUri() .
-                ' || ' .
+            'Request: '.
+                $request->getRequestKey().
+                ' || '.
+                strtoupper($request->getMethod()).
+                ': '.
+                $request->getUri().
+                ' || '.
                 json_encode($request->toArray(), 1)
         );
     }
@@ -55,13 +50,13 @@ class RemoteClient implements RemoteClientInterface
     protected function logResponse(RemoteRequestInterface $request, DataObjectInterface $response): void
     {
         $this->logger->info(
-            'Response: ' .
-                $request->getRequestKey() .
-                ' || ' .
-                strtoupper($request->getMethod()) .
-                ': ' .
-                $request->getUri() .
-                ' || ' .
+            'Response: '.
+                $request->getRequestKey().
+                ' || '.
+                strtoupper($request->getMethod()).
+                ': '.
+                $request->getUri().
+                ' || '.
                 json_encode($response->toArray(), 1)
         );
     }
