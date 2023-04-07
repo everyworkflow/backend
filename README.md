@@ -12,7 +12,7 @@ Version: Under Development `dev-main`
 - `git clone https://github.com/everyworkflow/platform.git project`
 - For docker setup use: `cp project/symfony-dev-docker/.env ./.env`
 - `cp project/symfony-dev-docker/docker-compose.yml ./docker-compose.yml`
-- Make sure docker is configured to use php8.0 and mongodb enabled
+- Make sure docker is configured to use php8.2 and mongodb enabled
 - `docker-compose build` to build containers
 - `docker-compose up -d` to spin up development containers
 - `docker-compose ps` to check status of development containers
@@ -28,6 +28,19 @@ Version: Under Development `dev-main`
 - `bin/console mongo:migrate` to migrate mongo migrations
 
 
+## Seeder
+
+```
+bin/console mongo:seed "EveryWorkflow\AdminPanelBundle\Seeder\Mongo_2023_01_01_00_00_00_Basic_Seeder"
+bin/console mongo:seed "EveryWorkflow\EcommerceBundle\Seeder\Mongo_2023_01_01_00_00_00_Ecommerce_Seeder"
+```
+
+```
+bin/console mongo:seeder:rollback "EveryWorkflow\AdminPanelBundle\Seeder\Mongo_2023_01_01_00_00_00_Basic_Seeder"
+bin/console mongo:seeder:rollback "EveryWorkflow\EcommerceBundle\Seeder\Mongo_2023_01_01_00_00_00_Ecommerce_Seeder"
+```
+
+
 ## Swagger UI
 
 - http://localhost:8080/swagger
@@ -39,15 +52,11 @@ Version: Under Development `dev-main`
 
 - `bin/console --env=test mongo:database:drop`
 - `bin/console --env=test mongo:migrate`
-- `vendor/bin/phpunit`
-
-#### Running frontend tests
-
-- `yarn test`
+- `bin/phpunit`
 
 #### Generating code coverage
 
-- `XDEBUG_MODE=coverage vendor/bin/phpunit --coverage-html public/test-html`
+- `XDEBUG_MODE=coverage bin/phpunit --coverage-html public/test-html`
 - Visit: http://localhost:8080/test-html/index.html
 
 
@@ -57,3 +66,4 @@ Version: Under Development `dev-main`
 - https://twig.symfony.com
 - https://docs.mongodb.com/php-library
 - https://carbon.nesbot.com
+
