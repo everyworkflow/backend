@@ -1,6 +1,6 @@
-# EveryWorkflow Platform
+# EveryWorkflow Server
 
-A symfony based every workflow platform
+A symfony based EveryWorkflow Server
 
 
 Version: Under Development `dev-main`
