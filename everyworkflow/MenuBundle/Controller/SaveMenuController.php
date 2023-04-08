@@ -45,7 +45,7 @@ class SaveMenuController extends AbstractController
     )]
     public function __invoke(Request $request, string $code = 'create'): JsonResponse
     {
-        $submitData = json_decode($request->getContent(), true, 512, JSON_THROW_ON_ERROR);
+        $submitData = $request->toArray();
         if ('create' === $code) {
             $item = $this->menuRepository->create($submitData);
         } else {

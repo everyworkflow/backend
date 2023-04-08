@@ -64,7 +64,7 @@ class SaveEntityController extends AbstractController
     )]
     public function __invoke(Request $request, string $code = 'create'): JsonResponse
     {
-        $submitData = json_decode($request->getContent(), true);
+        $submitData = $request->toArray();
 
         /* @var EntityDocumentInterface $entity */
         if ('create' === $code) {

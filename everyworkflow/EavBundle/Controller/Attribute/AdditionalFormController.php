@@ -35,7 +35,7 @@ class AdditionalFormController extends AbstractController
     )]
     public function __invoke(Request $request): JsonResponse
     {
-        $submitData = json_decode($request->getContent(), true);
+        $submitData = $request->toArray();
         $type = (string) $submitData['type'] ?? '';
 
         $attributeFormClass = $this->eavConfigProvider->get('attribute_forms.' . $type);

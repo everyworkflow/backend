@@ -89,7 +89,7 @@ class LoginController extends AbstractController
     )]
     public function login(Request $request): JsonResponse
     {
-        $data = json_decode($request->getContent(), true);
+        $data = $request->toArray();
 
         if (!isset($data['username']) || !isset($data['password'])) {
             return new JsonResponse([
@@ -184,7 +184,7 @@ class LoginController extends AbstractController
     )]
     public function session(Request $request): JsonResponse
     {
-        $data = json_decode($request->getContent(), true);
+        $data = $request->toArray();
 
         if (!isset($data['session_token'])) {
             return new JsonResponse([
@@ -279,7 +279,7 @@ class LoginController extends AbstractController
     )]
     public function refresh(Request $request): JsonResponse
     {
-        $data = json_decode($request->getContent(), true);
+        $data = $request->toArray();
 
         if (!isset($data['session_token']) || !isset($data['refresh_token'])) {
             return new JsonResponse([

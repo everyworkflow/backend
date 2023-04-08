@@ -59,7 +59,7 @@ class SaveStaticBlockController extends AbstractController
     )]
     public function __invoke(Request $request, string $uuid = 'create'): JsonResponse
     {
-        $submitData = json_decode($request->getContent(), true);
+        $submitData = $request->toArray();
 
         if ('create' === $uuid) {
             if (isset($submitData['section_key'])) {

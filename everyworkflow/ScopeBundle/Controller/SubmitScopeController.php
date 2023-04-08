@@ -60,7 +60,7 @@ class SubmitScopeController extends AbstractController
     )]
     public function __invoke(Request $request, ?string $code = 'default'): JsonResponse
     {
-        $submitData = json_decode($request->getContent(), true);
+        $submitData = $request->toArray();
         if ('default' === $code) {
             $item = $this->scopeRepository->create($submitData);
         } else {

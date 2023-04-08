@@ -30,7 +30,7 @@ class SaveSettingController extends AbstractController
     )]
     public function __invoke(Request $request, string $urlKey): JsonResponse
     {
-        $submitData = json_decode($request->getContent(), true);
+        $submitData = $request->toArray();
         $code = str_replace('-', '.', $urlKey);
 
         try {

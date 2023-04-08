@@ -53,7 +53,7 @@ class BulkActionOrderController extends AbstractController
     )]
     public function __invoke(Request $request, $action): JsonResponse
     {
-        $submitData = json_decode($request->getContent(), true, 512, JSON_THROW_ON_ERROR);
+        $submitData = $request->toArray();
 
         if (!isset($submitData['rows']) || !is_array($submitData['rows']) || 0 === count($submitData['rows'])) {
             return new JsonResponse(['detail' => 'Action invalid.'], 400);
