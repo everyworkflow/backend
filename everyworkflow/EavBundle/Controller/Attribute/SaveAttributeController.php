@@ -88,7 +88,8 @@ class SaveAttributeController extends AbstractController
     )]
     public function __invoke(Request $request, string $code = 'create'): JsonResponse
     {
-        $submitData = json_decode($request->getContent(), true);
+        $submitData = $request->toArray();
+
         if ('create' === $code) {
             $item = $this->attributeRepository->create($submitData);
         } else {

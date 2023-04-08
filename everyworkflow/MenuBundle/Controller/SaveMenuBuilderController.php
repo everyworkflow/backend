@@ -44,7 +44,7 @@ class SaveMenuBuilderController extends AbstractController
     )]
     public function __invoke(Request $request, string $code): JsonResponse
     {
-        $submitData = json_decode($request->getContent(), true, 512, JSON_THROW_ON_ERROR);
+        $submitData = $request->toArray();
         $item = $this->menuRepository->findOne(['code' => $code]);
         foreach ($submitData as $key => $val) {
             $item->setData($key, $val);

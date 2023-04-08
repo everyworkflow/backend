@@ -50,7 +50,7 @@ class SaveOrderController extends AbstractController
     )]
     public function __invoke(Request $request, string $uuid = 'create'): JsonResponse
     {
-        $submitData = json_decode($request->getContent(), true, 512, JSON_THROW_ON_ERROR);
+        $submitData = $request->toArray();
         if ('create' === $uuid) {
             /** @var SalesOrderEntityInterface $item */
             $item = $this->salesOrderRepository->create($submitData);
