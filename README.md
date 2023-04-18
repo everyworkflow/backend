@@ -37,8 +37,8 @@ bin/console mongo:seed "EveryWorkflow\EcommerceBundle\Seeder\Mongo_2023_01_01_00
 ```
 
 ```
-bin/console mongo:seeder:rollback "EveryWorkflow\AdminPanelBundle\Seeder\Mongo_2023_01_01_00_00_00_Basic_Seeder"
-bin/console mongo:seeder:rollback "EveryWorkflow\EcommerceBundle\Seeder\Mongo_2023_01_01_00_00_00_Ecommerce_Seeder"
+bin/console mongo:seed:rollback -c "EveryWorkflow\AdminPanelBundle\Seeder\Mongo_2023_01_01_00_00_00_Basic_Seeder"
+bin/console mongo:seed:rollback -c "EveryWorkflow\EcommerceBundle\Seeder\Mongo_2023_01_01_00_00_00_Ecommerce_Seeder"
 ```
 
 
