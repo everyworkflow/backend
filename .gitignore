@@ -1,5 +1,6 @@
 /.idea
 /.vscode
+/.phpactor.json
 
 /test-html
 /public/test-html

@@ -50,6 +50,7 @@ class Mongo_2021_01_05_02_00_00_CatalogCategory_Migration implements MigrationIn
                 'is_used_in_grid' => true,
                 'is_used_in_form' => true,
                 'is_required' => true,
+                'sort_order' => 10,
             ],
             [
                 'code' => 'code',
@@ -58,6 +59,7 @@ class Mongo_2021_01_05_02_00_00_CatalogCategory_Migration implements MigrationIn
                 'is_used_in_grid' => true,
                 'is_used_in_form' => true,
                 'is_required' => true,
+                'sort_order' => 15,
             ],
             [
                 'code' => 'path',
@@ -66,13 +68,13 @@ class Mongo_2021_01_05_02_00_00_CatalogCategory_Migration implements MigrationIn
                 'is_used_in_grid' => true,
                 'is_used_in_form' => true,
                 'is_required' => true,
+                'sort_order' => 20,
             ],
         ];
 
-        $sortOrder = 5;
         foreach ($attributeData as $item) {
+            $item['status'] = 'enable';
             $item['entity_code'] = $this->catalogCategoryRepository->getEntityCode();
-            $item['sort_order'] = $sortOrder++;
             $attribute = $this->attributeRepository->create($item);
             $this->attributeRepository->saveOne($attribute);
         }
