@@ -43,6 +43,7 @@ class Mongo_2021_01_01_02_00_00_User_Entity_Migration implements MigrationInterf
                 'is_used_in_grid' => true,
                 'is_used_in_form' => true,
                 'is_required' => true,
+                'sort_order' => 10,
             ],
             [
                 'code' => 'last_name',
@@ -52,6 +53,7 @@ class Mongo_2021_01_01_02_00_00_User_Entity_Migration implements MigrationInterf
                 'is_used_in_grid' => true,
                 'is_used_in_form' => true,
                 'is_required' => false,
+                'sort_order' => 12,
             ],
             [
                 'code' => 'email',
@@ -61,6 +63,25 @@ class Mongo_2021_01_01_02_00_00_User_Entity_Migration implements MigrationInterf
                 'is_used_in_grid' => true,
                 'is_used_in_form' => true,
                 'is_required' => true,
+                'sort_order' => 30,
+            ],
+            [
+                'code' => 'dob',
+                'name' => 'Date of birth',
+                'entity_code' => $this->userRepository->getEntityCode(),
+                'type' => 'date_attribute',
+                'is_used_in_form' => true,
+                'is_required' => false,
+                'sort_order' => 50,
+            ],
+            [
+                'code' => 'phone',
+                'name' => 'Phone',
+                'entity_code' => $this->userRepository->getEntityCode(),
+                'type' => 'text_attribute',
+                'is_used_in_form' => true,
+                'is_required' => false,
+                'sort_order' => 80,
             ],
             [
                 'code' => 'profile_image',
@@ -70,28 +91,11 @@ class Mongo_2021_01_01_02_00_00_User_Entity_Migration implements MigrationInterf
                 'is_used_in_grid' => true,
                 'is_used_in_form' => true,
                 'is_required' => false,
-            ],
-            [
-                'code' => 'dob',
-                'name' => 'Date of birth',
-                'entity_code' => $this->userRepository->getEntityCode(),
-                'type' => 'date_attribute',
-                'is_used_in_form' => true,
-                'is_required' => false,
-            ],
-            [
-                'code' => 'phone',
-                'name' => 'Phone',
-                'entity_code' => $this->userRepository->getEntityCode(),
-                'type' => 'text_attribute',
-                'is_used_in_form' => true,
-                'is_required' => false,
+                'sort_order' => 200,
             ],
         ];
 
-        $sortOrder = 5;
         foreach ($attributeData as $item) {
-            $item['sort_order'] = $sortOrder++;
             $item['status'] = 'enable';
             $attribute = $this->attributeRepository->create($item);
             $this->attributeRepository->saveOne($attribute);

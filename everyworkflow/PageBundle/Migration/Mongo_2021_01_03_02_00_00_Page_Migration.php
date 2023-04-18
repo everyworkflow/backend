@@ -44,6 +44,7 @@ class Mongo_2021_01_03_02_00_00_Page_Migration implements MigrationInterface
                 'is_used_in_grid' => true,
                 'is_used_in_form' => true,
                 'is_required' => true,
+                'sort_order' => 10,
             ],
             [
                 'code' => 'url_path',
@@ -53,6 +54,7 @@ class Mongo_2021_01_03_02_00_00_Page_Migration implements MigrationInterface
                 'is_used_in_grid' => true,
                 'is_used_in_form' => true,
                 'is_required' => true,
+                'sort_order' => 20,
             ],
             [
                 'code' => 'meta_title',
@@ -61,6 +63,7 @@ class Mongo_2021_01_03_02_00_00_Page_Migration implements MigrationInterface
                 'type' => 'text_attribute',
                 'is_used_in_form' => true,
                 'is_required' => false,
+                'sort_order' => 9000,
             ],
             [
                 'code' => 'meta_description',
@@ -69,6 +72,7 @@ class Mongo_2021_01_03_02_00_00_Page_Migration implements MigrationInterface
                 'type' => 'long_text_attribute',
                 'is_used_in_form' => true,
                 'is_required' => false,
+                'sort_order' => 9101,
             ],
             [
                 'code' => 'meta_keyword',
@@ -77,12 +81,12 @@ class Mongo_2021_01_03_02_00_00_Page_Migration implements MigrationInterface
                 'type' => 'long_text_attribute',
                 'is_used_in_form' => true,
                 'is_required' => false,
+                'sort_order' => 9102,
             ],
         ];
 
-        $sortOrder = 5;
         foreach ($attributeData as $item) {
-            $item['sort_order'] = $sortOrder++;
+            $item['status'] = 'enable';
             $attribute = $this->attributeRepository->create($item);
             $this->attributeRepository->saveOne($attribute);
         }

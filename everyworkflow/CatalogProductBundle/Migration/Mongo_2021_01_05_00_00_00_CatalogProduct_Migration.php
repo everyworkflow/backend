@@ -43,6 +43,7 @@ class Mongo_2021_01_05_00_00_00_CatalogProduct_Migration implements MigrationInt
                 'is_used_in_grid' => true,
                 'is_used_in_form' => true,
                 'is_required' => true,
+                'sort_order' => 1,
             ],
             [
                 'code' => 'name',
@@ -51,6 +52,7 @@ class Mongo_2021_01_05_00_00_00_CatalogProduct_Migration implements MigrationInt
                 'is_used_in_grid' => true,
                 'is_used_in_form' => true,
                 'is_required' => true,
+                'sort_order' => 10,
             ],
             [
                 'code' => 'price',
@@ -59,6 +61,7 @@ class Mongo_2021_01_05_00_00_00_CatalogProduct_Migration implements MigrationInt
                 'is_used_in_grid' => true,
                 'is_used_in_form' => true,
                 'is_required' => true,
+                'sort_order' => 50,
             ],
             [
                 'code' => 'special_price_from',
@@ -67,11 +70,13 @@ class Mongo_2021_01_05_00_00_00_CatalogProduct_Migration implements MigrationInt
                 'is_used_in_grid' => true,
                 'is_used_in_form' => true,
                 'is_required' => false,
+                'sort_order' => 51,
             ],
             [
                 'code' => 'special_price',
                 'name' => 'Special Price',
                 'type' => 'currency_attribute',
+                'sort_order' => 52,
                 'is_used_in_grid' => true,
                 'is_used_in_form' => true,
                 'is_required' => false,
@@ -83,6 +88,7 @@ class Mongo_2021_01_05_00_00_00_CatalogProduct_Migration implements MigrationInt
                 'is_used_in_grid' => true,
                 'is_used_in_form' => true,
                 'is_required' => false,
+                'sort_order' => 53,
             ],
             [
                 'code' => 'quantity',
@@ -91,6 +97,7 @@ class Mongo_2021_01_05_00_00_00_CatalogProduct_Migration implements MigrationInt
                 'is_used_in_grid' => true,
                 'is_used_in_form' => true,
                 'is_required' => true,
+                'sort_order' => 80,
             ],
             [
                 'code' => 'short_description',
@@ -100,6 +107,7 @@ class Mongo_2021_01_05_00_00_00_CatalogProduct_Migration implements MigrationInt
                 'is_used_in_form' => true,
                 'is_required' => false,
                 'row_count' => 8,
+                'sort_order' => 500,
             ],
             [
                 'code' => 'description',
@@ -109,6 +117,7 @@ class Mongo_2021_01_05_00_00_00_CatalogProduct_Migration implements MigrationInt
                 'is_used_in_form' => true,
                 'is_required' => false,
                 'field_type' => 'markdown_field',
+                'sort_order' => 1000,
             ],
             [
                 'code' => 'meta_title',
@@ -116,6 +125,7 @@ class Mongo_2021_01_05_00_00_00_CatalogProduct_Migration implements MigrationInt
                 'type' => 'text_attribute',
                 'is_used_in_grid' => false,
                 'is_used_in_form' => true,
+                'sort_order' => 9000,
             ],
             [
                 'code' => 'meta_keywords',
@@ -124,6 +134,7 @@ class Mongo_2021_01_05_00_00_00_CatalogProduct_Migration implements MigrationInt
                 'is_used_in_grid' => false,
                 'is_used_in_form' => true,
                 'is_required' => false,
+                'sort_order' => 9101,
             ],
             [
                 'code' => 'meta_description',
@@ -132,6 +143,7 @@ class Mongo_2021_01_05_00_00_00_CatalogProduct_Migration implements MigrationInt
                 'is_used_in_grid' => false,
                 'is_used_in_form' => true,
                 'is_required' => false,
+                'sort_order' => 9102,
             ],
             [
                 'code' => 'url_key',
@@ -140,13 +152,13 @@ class Mongo_2021_01_05_00_00_00_CatalogProduct_Migration implements MigrationInt
                 'is_used_in_grid' => true,
                 'is_used_in_form' => true,
                 'is_required' => true,
+                'sort_order' => 9103,
             ],
         ];
 
-        $sortOrder = 5;
         foreach ($attributeData as $item) {
+            $item['status'] = 'enable';
             $item['entity_code'] = $this->catalogProductRepository->getEntityCode();
-            $item['sort_order'] = $sortOrder++;
             $attribute = $this->attributeRepository->create($item);
             $this->attributeRepository->saveOne($attribute);
         }

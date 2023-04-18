@@ -71,6 +71,7 @@ class Mongo_2021_01_10_00_00_00_SalesOrder_Migration implements MigrationInterfa
 
         $sortOrder = 5;
         foreach ($attributeData as $item) {
+            $item['status'] = 'enable';
             $item['entity_code'] = $this->salesOrderRepository->getEntityCode();
             $item['sort_order'] = $sortOrder++;
             $attribute = $this->attributeRepository->create($item);

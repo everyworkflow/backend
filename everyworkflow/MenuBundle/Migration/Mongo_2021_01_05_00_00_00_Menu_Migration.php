@@ -63,6 +63,7 @@ class Mongo_2021_01_05_00_00_00_Menu_Migration implements MigrationInterface
 
         $sortOrder = 5;
         foreach ($attributeData as $item) {
+            $item['status'] = 'enable';
             $item['entity_code'] = $this->menuRepository->getEntityCode();
             $item['sort_order'] = $sortOrder++;
             $attribute = $this->attributeRepository->create($item);

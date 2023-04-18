@@ -13,12 +13,9 @@ use EveryWorkflow\MongoBundle\Support\SeederInterface;
 
 class Mongo_2022_01_02_09_17_40_Menu_Seeder implements SeederInterface
 {
-    protected MenuRepositoryInterface $menuRepository;
-
     public function __construct(
-        MenuRepositoryInterface $menuRepository
+        protected MenuRepositoryInterface $menuRepository
     ) {
-        $this->menuRepository = $menuRepository;
     }
 
     public function seed(): bool
@@ -102,8 +99,8 @@ class Mongo_2022_01_02_09_17_40_Menu_Seeder implements SeederInterface
           ]', true);
 
         $frontendMenu = $this->menuRepository->create([
-            'name' => 'Frontend menu',
-            'code' => 'frontend_menu',
+            'name' => 'Front panel menu',
+            'code' => 'front_panel_menu',
             'status' => 'enable',
             'menu_builder_data' => $menuBuilderData,
         ]);
@@ -114,7 +111,7 @@ class Mongo_2022_01_02_09_17_40_Menu_Seeder implements SeederInterface
 
     public function rollback(): bool
     {
-        $this->menuRepository->deleteByFilter(['code' => 'frontend_menu']);
+        $this->menuRepository->deleteByFilter(['code' => 'front_panel_menu']);
 
         return self::SUCCESS;
     }
