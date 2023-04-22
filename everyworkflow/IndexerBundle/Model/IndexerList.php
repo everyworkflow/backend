@@ -38,11 +38,13 @@ class IndexerList implements IndexerListInterface
         foreach ($this->indexers as $indexer) {
             $indexCode = $this->getIndexerCode($indexer);
             if (0 === $indexCodeCount) {
-                echo '- Invalid: ' . $indexCode . ' at ' . date('Y-m-d H:i:s') . PHP_EOL;
+                echo '- Invalid: ' . $indexCode . ' at ' . date('Y-m-d H:i:s');
+                echo PHP_EOL;
                 $indexer->invalid();
             } else {
                 if (in_array($indexCode, $indexCodes, true)) {
-                    echo '- Invalid: ' . $indexCode . ' at ' . date('Y-m-d H:i:s') . PHP_EOL;
+                    echo '- Invalid: ' . $indexCode . ' at ' . date('Y-m-d H:i:s');
+                    echo PHP_EOL;
                     $indexer->invalid();
                 }
             }
@@ -60,11 +62,7 @@ class IndexerList implements IndexerListInterface
         $indexCodeCount = count($indexCodes);
         foreach ($this->indexers as $indexer) {
             if (0 === $indexCodeCount) {
-                if ($isForced) {
-                    $this->indexOne($indexer, $isForced, true);
-                } else {
-                    $this->indexOne($indexer);
-                }
+                $this->indexOne($indexer, $isForced);
             } else {
                 $indexCode = $this->getIndexerCode($indexer);
                 if (in_array($indexCode, $indexCodes, true)) {
@@ -113,7 +111,8 @@ class IndexerList implements IndexerListInterface
             $indexer->setData('state', 'processing');
             $indexer->setData('error_message', '');
             $indexer = $this->indexerRepository->saveOne($indexer);
-            echo '-- Indexing: ' . $code . ' at ' . date('Y-m-d H:i:s') . PHP_EOL;
+            echo '- Indexing: ' . $code . ' at ' . date('Y-m-d H:i:s');
+            echo PHP_EOL;
             $indexer->setData('starting_at', date('Y-m-d H:i:s'));
 
             try {
@@ -122,7 +121,8 @@ class IndexerList implements IndexerListInterface
                     'indexer_' . $code . '_execute_before'
                 );
                 $item->index();
-                echo '-- Completed: ' . $code . ' at ' . date('Y-m-d H:i:s') . PHP_EOL;
+                echo '- Completed: ' . $code . ' at ' . date('Y-m-d H:i:s');
+                echo PHP_EOL;
                 $indexer->setData('completed_at', date('Y-m-d H:i:s'));
                 $this->eventDispatcher->dispatch(
                     $indexer,
@@ -131,7 +131,8 @@ class IndexerList implements IndexerListInterface
                 $indexer->setData('state', 'completed');
                 $indexer->setData('error_message', '');
             } catch (\Exception $e) {
-                echo '-- Error: ' . $code . ' at ' . date('Y-m-d H:i:s') . ' Message: ' . $e->getMessage() . PHP_EOL;
+                echo '- Error: ' . $code . ' at ' . date('Y-m-d H:i:s') . ' Message: ' . $e->getMessage();
+                echo PHP_EOL;
                 $indexer->setData('completed_at', date('Y-m-d H:i:s'));
                 $indexer->setData('state', 'error');
                 $indexer->setData('error_message', $e->getMessage());
@@ -160,8 +161,10 @@ class IndexerList implements IndexerListInterface
         foreach ($this->processList as $code => $process) {
             $process->wait();
             $indexer = $this->indexerRepository->findOne(['code' => $code]);
-            $logMsg = '- Index: ' . $code . PHP_EOL;
-            $logMsg .= (string) $process->getOutput() . PHP_EOL;
+            $logMsg = '# Index: ' . $code;
+            $logMsg .= PHP_EOL;
+            $logMsg .= (string) $process->getOutput();
+            $logMsg .= PHP_EOL;
             $indexer->setData('log', $logMsg);
             $indexer->setData('process_id', null);
             echo $logMsg;

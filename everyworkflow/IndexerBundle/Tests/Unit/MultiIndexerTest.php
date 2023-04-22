@@ -13,11 +13,11 @@ use EveryWorkflow\IndexerBundle\Repository\IndexerRepository;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 
-class IndexerTest extends KernelTestCase
+class MultiIndexerTest extends KernelTestCase
 {
-    public const TEST_INDEXER_CODE = 'test_index';
+    public const TEST_INDEXER_CODE = 'multi_test_index';
 
-    public function testSimpleIndex(): void
+    public function testMultiIndex(): void
     {
         self::bootKernel();
         $container = self::getContainer();
@@ -47,7 +47,7 @@ class IndexerTest extends KernelTestCase
         $this->assertNull($indexer, self::TEST_INDEXER_CODE . ' should not have been executed.');
 
         // Execute without code will trigger console command
-        // Lets execute cron with cron code
+        // Lets execute index with cron code
         echo PHP_EOL;
         $indexerList->index([self::TEST_INDEXER_CODE]);
 
@@ -58,5 +58,31 @@ class IndexerTest extends KernelTestCase
         }
 
         $this->assertEquals('completed', $indexer?->getData('state'), self::TEST_INDEXER_CODE . ' state should have been completed.');
+
+        // Lets set state is processing
+        $indexer->setData('state', 'processing');
+        $indexerRepository->updateOne($indexer);
+
+        // Lets execute index with cron code
+        $indexerList->index([self::TEST_INDEXER_CODE]);
+
+        try {
+            $indexer = $indexerRepository->findOne(['code' => self::TEST_INDEXER_CODE]);
+        } catch (\Exception $e) {
+            $indexer = null;
+        }
+
+        $this->assertEquals('processing', $indexer?->getData('state'), self::TEST_INDEXER_CODE . ' should have been skipped as it is processing.');
+
+        // Lets execute index with force and complete index
+        $indexerList->index([self::TEST_INDEXER_CODE], true);
+
+        try {
+            $indexer = $indexerRepository->findOne(['code' => self::TEST_INDEXER_CODE]);
+        } catch (\Exception $e) {
+            $indexer = null;
+        }
+
+        $this->assertEquals('completed', $indexer?->getData('state'), self::TEST_INDEXER_CODE . ' should have been completed.');
     }
 }
