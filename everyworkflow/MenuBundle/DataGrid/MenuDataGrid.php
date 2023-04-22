@@ -22,23 +22,16 @@ use EveryWorkflow\MenuBundle\Repository\MenuRepositoryInterface;
 
 class MenuDataGrid extends DataGrid implements MenuDataGridInterface
 {
-    protected DataObjectFactoryInterface $dataObjectFactory;
-    protected MenuRepositoryInterface $menuRepository;
-    protected ActionFactoryInterface $actionFactory;
-
     public function __construct(
+        protected DataObjectFactoryInterface $dataObjectFactory,
+        protected MenuRepositoryInterface $menuRepository,
+        protected ActionFactoryInterface $actionFactory,
         DataObjectInterface $dataObject,
         DataGridConfigInterface $dataGridConfig,
         FormInterface $form,
-        ArraySourceInterface $source,
-        DataObjectFactoryInterface $dataObjectFactory,
-        MenuRepositoryInterface $menuRepository,
-        ActionFactoryInterface $actionFactory,
+        ArraySourceInterface $source
     ) {
         parent::__construct($dataObject, $dataGridConfig, $form, $source);
-        $this->dataObjectFactory = $dataObjectFactory;
-        $this->menuRepository = $menuRepository;
-        $this->actionFactory = $actionFactory;
     }
 
     public function getConfig(): DataGridConfigInterface

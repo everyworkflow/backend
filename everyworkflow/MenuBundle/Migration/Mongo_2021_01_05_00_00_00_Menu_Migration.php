@@ -17,18 +17,11 @@ use EveryWorkflow\MongoBundle\Support\MigrationInterface;
 
 class Mongo_2021_01_05_00_00_00_Menu_Migration implements MigrationInterface
 {
-    protected EntityRepositoryInterface $entityRepository;
-    protected AttributeRepositoryInterface $attributeRepository;
-    protected MenuRepositoryInterface $menuRepository;
-
     public function __construct(
-        EntityRepositoryInterface $entityRepository,
-        AttributeRepositoryInterface $attributeRepository,
-        MenuRepositoryInterface $menuRepository
+        protected EntityRepositoryInterface $entityRepository,
+        protected AttributeRepositoryInterface $attributeRepository,
+        protected MenuRepositoryInterface $menuRepository
     ) {
-        $this->entityRepository = $entityRepository;
-        $this->attributeRepository = $attributeRepository;
-        $this->menuRepository = $menuRepository;
     }
 
     public function migrate(): bool
