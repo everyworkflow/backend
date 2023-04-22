@@ -23,6 +23,7 @@ Version: Under Development `dev-main`
 - `bin/console mongo:database:drop` to drop database
 - `bin/console mongo:migrate` to migrate mongo migrations
 - `bin/console mongo:sync` to sync mongo indexes
+- `mpp` to run `/root/manage-project-permission.sh`
 
 
 ## Seeder
