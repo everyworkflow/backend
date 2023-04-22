@@ -24,6 +24,7 @@ Version: Under Development `dev-main`
 
 - `docker-compose exec cli bash` to get inside cli container
 - `composer install` to install composer dependencies
+- `cp .env.sample .env`
 - `bin/console mongo:database:drop` to drop database
 - `bin/console mongo:migrate` to migrate mongo migrations
 - `bin/console mongo:sync` to sync mongo indexes
