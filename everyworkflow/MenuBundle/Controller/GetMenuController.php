@@ -16,11 +16,9 @@ use Symfony\Component\HttpFoundation\Request;
 
 class GetMenuController extends AbstractController
 {
-    protected MenuRepositoryInterface $menuRepository;
-
-    public function __construct(MenuRepositoryInterface $menuRepository)
-    {
-        $this->menuRepository = $menuRepository;
+    public function __construct(
+        protected MenuRepositoryInterface $menuRepository
+    ) {
     }
     
     #[EwRoute(

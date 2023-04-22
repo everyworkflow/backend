@@ -8,6 +8,9 @@ namespace EveryWorkflow\IndexerBundle\Support;
 
 interface IndexerInterface
 {
+    public const SUCCESS = true;
+    public const FAILURE = false;
+
     public function getCode(): string;
 
     public function getPriority(): int;
@@ -20,11 +23,11 @@ interface IndexerInterface
     /**
      * Execute indexer invalid.
      */
-    public function invalid(): void;
+    public function invalid(): bool;
 
 
     /**
      * Execute indexer index.
      */
-    public function index(): void;
+    public function index(): bool;
 }

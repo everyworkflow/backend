@@ -84,7 +84,8 @@ class CronJobList implements CronJobListInterface
         $cron = CronExpression::factory($schedule);
         $cronJob->setData('schedule', $schedule);
         if (!$isForced && !$cron->isDue()) {
-            echo PHP_EOL.'- not due: '.$jobCode.' at '.date('Y-m-d H:i:s');
+            echo '- not due: ' . $jobCode . ' at ' . date('Y-m-d H:i:s');
+            echo PHP_EOL;
 
             return;
         }
@@ -97,28 +98,32 @@ class CronJobList implements CronJobListInterface
             $cronJob->setData('state', 'processing');
             $cronJob->setData('error_message', '');
             $cronJob = $this->cronJobRepository->saveOne($cronJob);
-            echo PHP_EOL.'- Running: '.$jobCode.' at '.date('Y-m-d H:i:s');
+            echo '- Running: ' . $jobCode . ' at ' . date('Y-m-d H:i:s');
+            echo PHP_EOL;
 
             try {
                 $this->eventDispatcher->dispatch(
                     $cronJob,
-                    'cron_job_'.$jobCode.'_execute_before'
+                    'cron_job_' . $jobCode . '_execute_before'
                 );
                 $result = $job->execute();
                 if ($result) {
-                    echo PHP_EOL.'- Completed: '.$jobCode.' at '.date('Y-m-d H:i:s');
+                    echo '- Completed: ' . $jobCode . ' at ' . date('Y-m-d H:i:s');
                     $cronJob->setData('state', 'completed');
+                    echo PHP_EOL;
                 } else {
-                    echo PHP_EOL.'- Failed: '.$jobCode.' at '.date('Y-m-d H:i:s');
+                    echo '- Failed: ' . $jobCode . ' at ' . date('Y-m-d H:i:s');
+                    echo PHP_EOL;
                     $cronJob->setData('state', 'failed');
                 }
                 $cronJob->setData('error_message', '');
                 $this->eventDispatcher->dispatch(
                     $cronJob,
-                    'cron_job_'.$jobCode.'_execute_after'
+                    'cron_job_' . $jobCode . '_execute_after'
                 );
             } catch (\Exception $e) {
-                echo PHP_EOL.'Error: '.$jobCode.' at '.date('Y-m-d H:i:s').' Message: '.$e->getMessage();
+                echo 'Error: ' . $jobCode . ' at ' . date('Y-m-d H:i:s') . ' Message: ' . $e->getMessage();
+                echo PHP_EOL;
                 $cronJob->setData('state', 'error');
                 $cronJob->setData('error_message', $e->getMessage());
             }
@@ -148,9 +153,10 @@ class CronJobList implements CronJobListInterface
         foreach ($this->processList as $jobCode => $process) {
             $process->wait();
             $cronJob = $this->cronJobRepository->findOne(['code' => $jobCode]);
-            $logMsg = PHP_EOL.'--- Cron: '.$jobCode.' | schedule: '.$cronJob->getData('schedule').' | schedule_at: '.$cronJob->getData('schedule_at');
-            $logMsg = PHP_EOL;
+            $logMsg = '# Cron: ' . $jobCode . ' | schedule: ' . $cronJob->getData('schedule') . ' | schedule_at: ' . $cronJob->getData('schedule_at');
+            $logMsg .= PHP_EOL;
             $logMsg .= (string) $process->getOutput();
+            $logMsg .= PHP_EOL;
             $cronJob->setData('log', $logMsg);
             $cronJob->setData('process_id', null);
             echo $logMsg;

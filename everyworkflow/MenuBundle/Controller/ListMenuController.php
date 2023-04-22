@@ -16,11 +16,9 @@ use Symfony\Component\HttpFoundation\Request;
 
 class ListMenuController extends AbstractController
 {
-    protected MenuDataGridInterface $menuDataGrid;
-
-    public function __construct(MenuDataGridInterface $menuDataGrid)
-    {
-        $this->menuDataGrid = $menuDataGrid;
+    public function __construct(
+        protected MenuDataGridInterface $menuDataGrid
+    ) {
     }
 
     #[EwRoute(

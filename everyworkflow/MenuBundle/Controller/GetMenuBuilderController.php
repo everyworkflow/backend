@@ -16,15 +16,10 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 
 class GetMenuBuilderController extends AbstractController
 {
-    protected MenuRepositoryInterface $menuRepository;
-    protected MenuItemFormInterface $menuItemForm;
-
     public function __construct(
-        MenuRepositoryInterface $menuRepository,
-        MenuItemFormInterface $menuItemForm
+        protected MenuRepositoryInterface $menuRepository,
+        protected MenuItemFormInterface $menuItemForm
     ) {
-        $this->menuRepository = $menuRepository;
-        $this->menuItemForm = $menuItemForm;
     }
 
     #[EwRoute(
