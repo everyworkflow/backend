@@ -17,8 +17,8 @@ Version: Under Development `dev-main`
 - `docker-compose up -d` to spin up development containers
 - `docker-compose ps` to check status of development containers
 - `docker-compose exec cli bash` to get inside cli container
-- `composer install` to install composer dependencies
 - `cp .env.sample .env`
+- `composer install` to install composer dependencies
 - `bin/console lexik:jwt:generate-keypair` to generate JWT keypair
 - `bin/console mongo:database:drop` to drop database
 - `bin/console mongo:migrate` to migrate mongo migrations
