@@ -92,6 +92,9 @@ class BaseEntityRepository extends BaseDocumentRepository implements BaseEntityR
 
     public function create(array|BSONDocument $data = []): BaseEntityInterface
     {
+        if ($data instanceof BSONDocument) {
+            $data = $this->mapDocumentToArray($data);
+        }
         return $this->documentFactory->create($this->getDocumentClass(), $data);
     }
 

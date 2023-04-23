@@ -40,6 +40,9 @@ class AttributeRepository extends BaseDocumentRepository implements AttributeRep
 
     public function create(array|BSONDocument $data = []): BaseAttributeInterface
     {
+        if ($data instanceof BSONDocument) {
+            $data = $this->mapDocumentToArray($data);
+        }
         if ($this->getAttributeFactory()) {
             return $this->getAttributeFactory()->createAttribute($data);
         }
