@@ -20,9 +20,10 @@ use EveryWorkflow\MongoBundle\Exception\PrimaryKeyMissingException;
 use EveryWorkflow\MongoBundle\Factory\DocumentFactoryInterface;
 use EveryWorkflow\MongoBundle\Model\MongoConnectionInterface;
 use EveryWorkflow\MongoBundle\Support\Attribute\RepositoryAttribute;
+use MongoDB\BSON\ObjectId;
+use MongoDB\Model\BSONArray;
 use MongoDB\Model\BSONDocument;
 use MongoDB\UpdateResult;
-use ReflectionClass;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class BaseDocumentRepository extends BaseRepository implements BaseDocumentRepositoryInterface
@@ -30,9 +31,9 @@ class BaseDocumentRepository extends BaseRepository implements BaseDocumentRepos
     protected ?RepositoryAttribute $repositoryAttribute = null;
 
     /**
-     * @var array $indexKeys - Collection index keys.
-     * @var string $eventPrefix - Prefix for events triggered by repository.
-     * @var array $documentClass - Repostiory document classname.
+     * @var array  - Collection index keys
+     * @var string - Prefix for events triggered by repository
+     * @var array  - Repostiory document classname
      */
     public function __construct(
         protected DocumentFactoryInterface $documentFactory,
@@ -60,7 +61,7 @@ class BaseDocumentRepository extends BaseRepository implements BaseDocumentRepos
     public function getRepositoryAttribute(): ?RepositoryAttribute
     {
         if (!$this->repositoryAttribute) {
-            $reflectionClass = new ReflectionClass(get_class($this));
+            $reflectionClass = new \ReflectionClass(get_class($this));
             $attributes = $reflectionClass->getAttributes(RepositoryAttribute::class);
             foreach ($attributes as $attribute) {
                 $this->repositoryAttribute = $attribute->newInstance();
@@ -89,7 +90,7 @@ class BaseDocumentRepository extends BaseRepository implements BaseDocumentRepos
             $attrIndexKey = $this->getRepositoryAttribute()->getIndexKey();
             if (is_string($attrIndexKey)) {
                 $indexKeys = [...$indexKeys, $attrIndexKey];
-            } else if (is_array($attrIndexKey)) {
+            } elseif (is_array($attrIndexKey)) {
                 $indexKeys = [...$indexKeys, ...$attrIndexKey];
             }
             $this->indexKeys = $indexKeys;
@@ -143,8 +144,27 @@ class BaseDocumentRepository extends BaseRepository implements BaseDocumentRepos
         return $this->documentClass;
     }
 
-    public function create(array $data = []): BaseDocumentInterface
+    public function mapDocumentToArray(BSONDocument|BSONArray $doc): array
     {
+        $data = $doc->getArrayCopy() ?? [];
+        if (isset($data['_id']) && $data['_id'] instanceof ObjectId) {
+            $data['_id'] = (string) $data['_id'];
+        }
+        foreach ($data as $key => $val) {
+            if ($val instanceof BSONArray || $val instanceof BSONDocument) {
+                $data[$key] = $this->mapDocumentToArray($val);
+            }
+        }
+
+        return $data;
+    }
+
+    public function create(array|BSONDocument $data = []): BaseDocumentInterface
+    {
+        if ($data instanceof BSONDocument) {
+            $data = $this->mapDocumentToArray($data);
+        }
+
         return $this->documentFactory->create($this->getDocumentClass(), $data);
     }
 
@@ -170,7 +190,7 @@ class BaseDocumentRepository extends BaseRepository implements BaseDocumentRepos
     ): BaseDocumentInterface {
         $this->eventDispatcher->dispatch(
             $document,
-            $this->getEventPrefix() . '_save_one_before'
+            $this->getEventPrefix().'_save_one_before'
         );
         $validData = $this->getValidDocumentData($document);
         $filter = $this->getDocumentFilter($document, $validData, $otherFilter);
@@ -187,7 +207,7 @@ class BaseDocumentRepository extends BaseRepository implements BaseDocumentRepos
 
             if (1 === $result->getModifiedCount() && isset($document->toArray()['_id'])) {
                 $validData = ['_id' => $document->toArray()['_id']] + $validData;
-            } else if (1 === $result->getUpsertedCount()) {
+            } elseif (1 === $result->getUpsertedCount()) {
                 $validData = ['_id' => $result->getUpsertedId()] + $validData;
             }
         }
@@ -195,7 +215,7 @@ class BaseDocumentRepository extends BaseRepository implements BaseDocumentRepos
         $newDocument = $this->create($validData);
         $this->eventDispatcher->dispatch(
             $newDocument,
-            $this->getEventPrefix() . '_save_one_after'
+            $this->getEventPrefix().'_save_one_after'
         );
 
         return $newDocument;
@@ -209,7 +229,7 @@ class BaseDocumentRepository extends BaseRepository implements BaseDocumentRepos
     {
         $this->eventDispatcher->dispatch(
             $document,
-            $this->getEventPrefix() . '_insert_one_before'
+            $this->getEventPrefix().'_insert_one_before'
         );
         $validData = $this->getValidDocumentData($document);
         $result = $this->getCollection()->insertOne($validData);
@@ -218,7 +238,7 @@ class BaseDocumentRepository extends BaseRepository implements BaseDocumentRepos
         $newDocument = $this->create($validData);
         $this->eventDispatcher->dispatch(
             $newDocument,
-            $this->getEventPrefix() . '_insert_one_after'
+            $this->getEventPrefix().'_insert_one_after'
         );
 
         return $newDocument;
@@ -236,7 +256,7 @@ class BaseDocumentRepository extends BaseRepository implements BaseDocumentRepos
     ): BaseDocumentInterface {
         $this->eventDispatcher->dispatch(
             $document,
-            $this->getEventPrefix() . '_update_one_before'
+            $this->getEventPrefix().'_update_one_before'
         );
         $validData = $this->getValidDocumentData($document);
         $filter = $this->getDocumentFilter($document, $validData, $otherFilter);
@@ -249,7 +269,7 @@ class BaseDocumentRepository extends BaseRepository implements BaseDocumentRepos
         $newDocument = $this->create($validData);
         $this->eventDispatcher->dispatch(
             $newDocument,
-            $this->getEventPrefix() . '_update_one_after'
+            $this->getEventPrefix().'_update_one_after'
         );
 
         return $newDocument;
@@ -267,7 +287,7 @@ class BaseDocumentRepository extends BaseRepository implements BaseDocumentRepos
     ): BaseDocumentInterface {
         $this->eventDispatcher->dispatch(
             $document,
-            $this->getEventPrefix() . '_replace_one_before'
+            $this->getEventPrefix().'_replace_one_before'
         );
         $validData = $this->getValidDocumentData($document);
         $filter = $this->getDocumentFilter($document, $validData, $otherFilter);
@@ -280,7 +300,7 @@ class BaseDocumentRepository extends BaseRepository implements BaseDocumentRepos
         $newDocument = $this->create($validData);
         $this->eventDispatcher->dispatch(
             $newDocument,
-            $this->getEventPrefix() . '_replace_one_after'
+            $this->getEventPrefix().'_replace_one_after'
         );
 
         return $newDocument;
@@ -294,7 +314,7 @@ class BaseDocumentRepository extends BaseRepository implements BaseDocumentRepos
     {
         $this->eventDispatcher->dispatch(
             $document,
-            $this->getEventPrefix() . '_validate_document_before'
+            $this->getEventPrefix().'_validate_document_before'
         );
 
         $documentData = $document->toArray();
@@ -302,7 +322,7 @@ class BaseDocumentRepository extends BaseRepository implements BaseDocumentRepos
         $this->validatePrimaryKey($documentData, $otherFilter);
 
         if ($document instanceof CreatedUpdatedHelperTraitInterface) {
-            if ($document->getCreatedAt() === null) {
+            if (null === $document->getCreatedAt()) {
                 $document->setCreatedAt($this->systemDateTime->utcNow());
             }
             $document->setUpdatedAt($this->systemDateTime->utcNow());
@@ -321,7 +341,7 @@ class BaseDocumentRepository extends BaseRepository implements BaseDocumentRepos
         $newDocument = $this->create($documentData);
         $this->eventDispatcher->dispatch(
             $newDocument,
-            $this->getEventPrefix() . '_validate_document_after'
+            $this->getEventPrefix().'_validate_document_after'
         );
 
         return $newDocument->toArray();
@@ -336,11 +356,11 @@ class BaseDocumentRepository extends BaseRepository implements BaseDocumentRepos
         if (is_array($this->getPrimaryKey())) {
             foreach ($this->getPrimaryKey() as $key) {
                 if ('_id' !== $key && !isset($data[$key])) {
-                    throw new PrimaryKeyMissingException('Primary Key (' . $key . ') missing.');
+                    throw new PrimaryKeyMissingException('Primary Key ('.$key.') missing.');
                 }
             }
         } elseif ('_id' !== $this->getPrimaryKey() && !isset($data[$this->getPrimaryKey()])) {
-            throw new PrimaryKeyMissingException('Primary Key (' . $this->getPrimaryKey() . ') missing.');
+            throw new PrimaryKeyMissingException('Primary Key ('.$this->getPrimaryKey().') missing.');
         }
     }
 
@@ -357,11 +377,11 @@ class BaseDocumentRepository extends BaseRepository implements BaseDocumentRepos
                         if (isset($documentData[$key]) && !empty($documentData[$key])) {
                             if (is_string($documentData[$key])) {
                                 $keyFilters[$key] = new \MongoDB\BSON\ObjectId($documentData[$key]);
-                            } else if ($documentData[$key] instanceof \MongoDB\BSON\ObjectId) {
+                            } elseif ($documentData[$key] instanceof \MongoDB\BSON\ObjectId) {
                                 $keyFilters[$key] = $documentData[$key];
                             }
                         }
-                    } else if (isset($validData[$key])) {
+                    } elseif (isset($validData[$key])) {
                         $keyFilters[$key] = $validData[$key];
                     }
                 }
@@ -374,11 +394,11 @@ class BaseDocumentRepository extends BaseRepository implements BaseDocumentRepos
                 if (isset($documentData[$this->getPrimaryKey()]) && !empty($documentData[$this->getPrimaryKey()])) {
                     if (is_string($documentData[$this->getPrimaryKey()])) {
                         $filter[$this->getPrimaryKey()] = new \MongoDB\BSON\ObjectId($documentData[$this->getPrimaryKey()]);
-                    } else if ($documentData[$this->getPrimaryKey()] instanceof \MongoDB\BSON\ObjectId) {
+                    } elseif ($documentData[$this->getPrimaryKey()] instanceof \MongoDB\BSON\ObjectId) {
                         $filter[$this->getPrimaryKey()] = $documentData[$this->getPrimaryKey()];
                     }
                 }
-            } else if (isset($validData[$this->getPrimaryKey()])) {
+            } elseif (isset($validData[$this->getPrimaryKey()])) {
                 $filter[$this->getPrimaryKey()] = $validData[$this->getPrimaryKey()];
             }
         }
@@ -395,7 +415,7 @@ class BaseDocumentRepository extends BaseRepository implements BaseDocumentRepos
         $mongoData = $this->getCollection()->find($filter, $options);
         /** @var BSONDocument $mongoItem */
         foreach ($mongoData as $mongoItem) {
-            $items[] = $this->create(json_decode(json_encode($mongoItem), true));
+            $items[] = $this->create($mongoItem);
         }
 
         return $items;
@@ -408,16 +428,16 @@ class BaseDocumentRepository extends BaseRepository implements BaseDocumentRepos
     {
         $mongoItem = $this->getCollection()->findOne($filter, $options);
         if (!$mongoItem) {
-            throw new \Exception('Document not found under ' . $this->getCollectionName());
+            throw new \Exception('Document not found under '.$this->getCollectionName());
         }
 
-        return $this->create(json_decode(json_encode($mongoItem), true));
+        return $this->create($mongoItem);
     }
 
     /**
      * @throws \Exception
      */
-    public function findById(string | \MongoDB\BSON\ObjectId $uuid): BaseDocumentInterface
+    public function findById(string|ObjectId $uuid): BaseDocumentInterface
     {
         if ($uuid instanceof \MongoDB\BSON\ObjectId) {
             $filter = ['_id' => $uuid];
@@ -425,7 +445,7 @@ class BaseDocumentRepository extends BaseRepository implements BaseDocumentRepos
             try {
                 $filter = ['_id' => new \MongoDB\BSON\ObjectId($uuid)];
             } catch (\Exception $e) {
-                throw new \Exception('Invalid ID: ' . $uuid);
+                throw new \Exception('Invalid ID: '.$uuid);
             }
         }
 
@@ -441,7 +461,7 @@ class BaseDocumentRepository extends BaseRepository implements BaseDocumentRepos
         foreach ($ids as $id) {
             if ($id instanceof \MongoDB\BSON\ObjectId) {
                 $updateIds[] = $id;
-            } else if (is_string($id)) {
+            } elseif (is_string($id)) {
                 $updateIds[] = new \MongoDB\BSON\ObjectId($id);
             }
         }

@@ -13,6 +13,7 @@ use EveryWorkflow\CoreBundle\Support\ArrayableInterface;
 use EveryWorkflow\MongoBundle\Document\BaseDocumentInterface;
 use EveryWorkflow\MongoBundle\Exception\PrimaryKeyMissingException;
 use EveryWorkflow\MongoBundle\Support\Attribute\RepositoryAttribute;
+use MongoDB\Model\BSONDocument;
 use MongoDB\UpdateResult;
 
 interface BaseDocumentRepositoryInterface extends BaseRepositoryInterface
@@ -26,8 +27,10 @@ interface BaseDocumentRepositoryInterface extends BaseRepositoryInterface
     public function getDocumentClass(): ?string;
 
     public function getEventPrefix(): string;
-    
-    public function create(array $data = []): BaseDocumentInterface;
+
+    public function mapDocumentToArray(BSONDocument $doc): array;
+
+    public function create(array|BSONDocument $data = []): BaseDocumentInterface;
 
     public function deleteOneByFilter(array $filter = []): object|array|null;
 
@@ -95,3 +98,4 @@ interface BaseDocumentRepositoryInterface extends BaseRepositoryInterface
         array $options = []
     ): UpdateResult;
 }
+

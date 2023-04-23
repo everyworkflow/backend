@@ -13,6 +13,7 @@ use EveryWorkflow\EavBundle\Attribute\BaseAttributeInterface;
 use EveryWorkflow\EavBundle\Factory\AttributeFactoryInterface;
 use EveryWorkflow\MongoBundle\Repository\BaseDocumentRepository;
 use EveryWorkflow\MongoBundle\Support\Attribute\RepositoryAttribute;
+use MongoDB\Model\BSONDocument;
 use Symfony\Contracts\Service\Attribute\Required;
 
 #[RepositoryAttribute(
@@ -28,6 +29,7 @@ class AttributeRepository extends BaseDocumentRepository implements AttributeRep
     public function setAttributeFactory(AttributeFactoryInterface $attributeFactory): self
     {
         $this->attributeFactory = $attributeFactory;
+
         return $this;
     }
 
@@ -36,12 +38,12 @@ class AttributeRepository extends BaseDocumentRepository implements AttributeRep
         return $this->attributeFactory;
     }
 
-    public function create(array $data = []): BaseAttributeInterface
+    public function create(array|BSONDocument $data = []): BaseAttributeInterface
     {
         if ($this->getAttributeFactory()) {
             return $this->getAttributeFactory()->createAttribute($data);
         }
-        
+
         return parent::create($data);
     }
 }

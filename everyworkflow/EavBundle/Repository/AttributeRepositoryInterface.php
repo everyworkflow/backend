@@ -11,6 +11,7 @@ namespace EveryWorkflow\EavBundle\Repository;
 use EveryWorkflow\EavBundle\Attribute\BaseAttributeInterface;
 use EveryWorkflow\EavBundle\Factory\AttributeFactoryInterface;
 use EveryWorkflow\MongoBundle\Repository\BaseDocumentRepositoryInterface;
+use MongoDB\Model\BSONDocument;
 
 interface AttributeRepositoryInterface extends BaseDocumentRepositoryInterface
 {
@@ -18,5 +19,5 @@ interface AttributeRepositoryInterface extends BaseDocumentRepositoryInterface
 
     public function getAttributeFactory(): ?AttributeFactoryInterface;
 
-    public function create(array $data = []): BaseAttributeInterface;
+    public function create(array|BSONDocument $data = []): BaseAttributeInterface;
 }

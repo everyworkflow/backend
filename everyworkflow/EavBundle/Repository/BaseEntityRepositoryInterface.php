@@ -13,6 +13,7 @@ use EveryWorkflow\DataFormBundle\Model\FormInterface;
 use EveryWorkflow\EavBundle\Attribute\BaseAttributeInterface;
 use EveryWorkflow\EavBundle\Entity\BaseEntityInterface;
 use EveryWorkflow\MongoBundle\Repository\BaseDocumentRepositoryInterface;
+use MongoDB\Model\BSONDocument;
 
 interface BaseEntityRepositoryInterface extends BaseDocumentRepositoryInterface
 {
@@ -20,7 +21,7 @@ interface BaseEntityRepositoryInterface extends BaseDocumentRepositoryInterface
 
     public function setEntityCode(string $entityCode): self;
 
-    public function create(array $data = []): BaseEntityInterface;
+    public function create(array|BSONDocument $data = []): BaseEntityInterface;
 
     /**
      * @throws PrimaryKeyMissingException

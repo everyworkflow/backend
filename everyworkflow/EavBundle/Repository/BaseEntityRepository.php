@@ -20,14 +20,14 @@ use EveryWorkflow\EavBundle\Support\Attribute\EntityRepositoryAttribute;
 use EveryWorkflow\MongoBundle\Factory\DocumentFactoryInterface;
 use EveryWorkflow\MongoBundle\Model\MongoConnectionInterface;
 use EveryWorkflow\MongoBundle\Repository\BaseDocumentRepository;
-use ReflectionClass;
+use MongoDB\Model\BSONDocument;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class BaseEntityRepository extends BaseDocumentRepository implements BaseEntityRepositoryInterface
 {
     /**
-     * @var string $entityCode - Entity unique identifier, must be defined.
-     * @var array $entityAttributes - Entity attributes.
+     * @var string - Entity unique identifier, must be defined
+     * @var array  - Entity attributes
      */
     public function __construct(
         protected AttributeRepositoryInterface $attributeRepository,
@@ -64,7 +64,7 @@ class BaseEntityRepository extends BaseDocumentRepository implements BaseEntityR
     public function getRepositoryAttribute(): ?EntityRepositoryAttribute
     {
         if (!$this->repositoryAttribute) {
-            $reflectionClass = new ReflectionClass(get_class($this));
+            $reflectionClass = new \ReflectionClass(get_class($this));
             $attributes = $reflectionClass->getAttributes(EntityRepositoryAttribute::class);
             foreach ($attributes as $attribute) {
                 $this->repositoryAttribute = $attribute->newInstance();
@@ -90,7 +90,7 @@ class BaseEntityRepository extends BaseDocumentRepository implements BaseEntityR
         return $this;
     }
 
-    public function create(array $data = []): BaseEntityInterface
+    public function create(array|BSONDocument $data = []): BaseEntityInterface
     {
         return $this->documentFactory->create($this->getDocumentClass(), $data);
     }
@@ -114,7 +114,7 @@ class BaseEntityRepository extends BaseDocumentRepository implements BaseEntityR
     {
         if (!$this->entityAttributes) {
             $attributeInfo = $this->coreHelper->getEWFCacheInterface()
-                ->getItem('base_entity_attribute' . $this->getEntityCode());
+                ->getItem('base_entity_attribute'.$this->getEntityCode());
             if (!$attributeInfo->isHit() || true) {
                 // $this->setSystemAttribute();
                 $this->entityAttributes = $this->attributeRepository->find(['entity_code' => $this->getEntityCode()]);
