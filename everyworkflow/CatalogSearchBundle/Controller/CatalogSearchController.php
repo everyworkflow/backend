@@ -42,6 +42,28 @@ class CatalogSearchController extends AbstractController
         }
 
         $params = $request->query->all();
+
+        $filterQuery = [];
+        $filter = [];
+        if (isset($params['filter']) && is_string($params['filter'])) {
+            try {
+                $filter = json_decode($params['filter'], true);
+            } catch (\Exception $e) {
+            }
+            if (!is_array($filter)) {
+                $filter = [];
+            }
+        }
+        foreach ($filter as $key => $val) {
+            if ('price' === $key && is_array($val) && 2 === count($val)) {
+                $filterQuery[$key] = ['$gte' => $val[0], '$lte' => $val[1]];
+            } elseif (is_string($val) && '' !== $val && 'undefined' !== $val && 'null' !== $val) {
+                $filterQuery[$key] = $val;
+            } elseif (is_array($val) && count($val) > 0) {
+                $filterQuery[$key] = ['$in' => $val];
+            }
+        }
+
         $perPage = $params['per-page'] ?? 24;
         $perPage = (int) $perPage;
         if ($perPage < 24 || $perPage > 240) {
@@ -54,30 +76,50 @@ class CatalogSearchController extends AbstractController
         }
         $skip = $perPage * ($currentPage - 1);
 
+        $itemsPipline = [];
+        if (count($filterQuery)) {
+            $itemsPipline[] = [
+                '$match' => $filterQuery,
+            ];
+        }
+        $itemsPipline[] = [
+            '$unset' => ['flag'],
+        ];
+        $itemsPipline[] = [
+            '$skip' => $skip,
+        ];
+        $itemsPipline[] = [
+            '$limit' => $perPage,
+        ];
+
+        $metaDataPipline = [];
+        if (count($filterQuery)) {
+            $metaDataPipline[] = [
+                '$match' => $filterQuery,
+            ];
+        }
+        $metaDataPipline[] = [
+            '$group' => [
+                '_id' => null,
+                'total_count' => [
+                    '$sum' => 1,
+                ],
+            ],
+        ];
+
         $pipeline = [
             [
                 '$match' => $matchQuery,
             ],
             [
                 '$facet' => [
-                    'items' => [
-                        [
-                            '$unset' => ['flag'],
-                        ],
-                        [
-                            '$skip' => $skip,
-                        ],
-                        [
-                            '$limit' => $perPage,
-                        ],
-                    ],
-                    'meta_data' => [
+                    'items' => $itemsPipline,
+                    'meta_data' => $metaDataPipline,
+                    'attribute_data' => [
                         [
                             '$group' => [
                                 '_id' => null,
-                                'total_count' => [
-                                    '$sum' => 1,
-                                ],
+
                                 'max_price' => [
                                     '$max' => '$price',
                                 ],
@@ -142,8 +184,8 @@ class CatalogSearchController extends AbstractController
             'options' => [],
         ];
 
-        if (isset($resultData['meta_data'][0]['category'])) {
-            $categoryCodeList = $resultData['meta_data'][0]['category'] ?? [];
+        if (isset($resultData['attribute_data'][0]['category'])) {
+            $categoryCodeList = $resultData['attribute_data'][0]['category'] ?? [];
 
             // TODO: Remove below _debug_category_code_list after stable
             $data['child_category']['_debug_category_code_list'] = $categoryCodeList;
@@ -169,11 +211,11 @@ class CatalogSearchController extends AbstractController
                     'type' => $attribute->getType(),
                     'entity_code' => $attribute->getEntityCode(),
                     'sort_order' => $attribute->getSortOrder(),
-                    'min_price' => $resultData['meta_data'][0]['min_price'] ?? 0,
-                    'max_price' => $resultData['meta_data'][0]['max_price'] ?? 0,
+                    'min_price' => $resultData['attribute_data'][0]['min_price'] ?? 0,
+                    'max_price' => $resultData['attribute_data'][0]['max_price'] ?? 0,
                 ];
                 $data['filter_attributes'][] = $attributeData;
-            } elseif (isset($resultData['meta_data'][0][$attribute->getCode()])) {
+            } elseif (isset($resultData['attribute_data'][0][$attribute->getCode()])) {
                 $attributeData = [
                     'label' => $attribute->getName(),
                     'code' => $attribute->getCode(),
@@ -183,12 +225,12 @@ class CatalogSearchController extends AbstractController
                 ];
                 if ('select_attribute' === $attribute->getType()) {
                     $options = [];
-                    if (is_array($resultData['meta_data'][0][$attribute->getCode()])) {
+                    if (is_array($resultData['attribute_data'][0][$attribute->getCode()])) {
                         $attributeOptions = $attribute->getData('options');
                         $attributeOptions = array_column($attributeOptions, null, 'code');
 
-                        if (is_array($resultData['meta_data'][0][$attribute->getCode()])) {
-                            foreach ($resultData['meta_data'][0][$attribute->getCode()] as $optionCode) {
+                        if (is_array($resultData['attribute_data'][0][$attribute->getCode()])) {
+                            foreach ($resultData['attribute_data'][0][$attribute->getCode()] as $optionCode) {
                                 if (isset($attributeOptions[$optionCode])) {
                                     $options[] = $attributeOptions[$optionCode];
                                 }
