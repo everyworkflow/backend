@@ -36,5 +36,9 @@ EveryWorkflowEcommerceBundle:
   resource: "@EveryWorkflowEcommerceBundle/Resources/config/routes.yaml"
   prefix: /api
 
+EveryWorkflowCatalogSearchBundle:
+  resource: "@EveryWorkflowCatalogSearchBundle/Resources/config/routes.yaml"
+  prefix: /api
+
 EveryWorkflowSwaggerBundle:
   resource: "@EveryWorkflowSwaggerBundle/Resources/config/routes.yaml"

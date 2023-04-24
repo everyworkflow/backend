@@ -13,7 +13,9 @@
         "ext-mongodb": "*",
         "mongodb/mongodb": "^1.15",
         "nesbot/carbon": "^2.66",
+        "fakerphp/faker": "^1.21",
         "symfony/console": "6.2.*",
+        "symfony/string": "6.2.*",
         "everyworkflow/core-bundle": "*"
     },
     "autoload": {

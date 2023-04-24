@@ -55,7 +55,7 @@ class CatalogProductIndexer extends AbstractIndexer implements CatalogProductInd
             ], [
                 '$set' => [
                     'indexer.index_status.catalog_product_indexer' => 'invalid',
-                ]
+                ],
             ]);
 
         // Checking if any product is invalid
@@ -69,18 +69,17 @@ class CatalogProductIndexer extends AbstractIndexer implements CatalogProductInd
         if (!$isIndexInvalid) {
             echo '- Everything seems indexed.';
             echo PHP_EOL;
+
             return self::SUCCESS;
         }
 
         // Index attribute wise
-        $attributes = $this->attributeRepository->find([
-            'entity_code' => 'catalog_product',
-        ]);
+        $attributes = $this->catalogProductRepository->getAttributes();
         foreach ($attributes as $attribute) {
             try {
                 $this->indexAttribute($attribute);
             } catch (\Exception $e) {
-                echo '- Error: attribute index error | Code: ' . $attribute->getCode . ' | Message: ' . $e->getMessage();
+                echo '- Error: attribute index error | Code: '.$attribute->getCode.' | Message: '.$e->getMessage();
                 echo PHP_EOL;
             }
         }
@@ -94,7 +93,7 @@ class CatalogProductIndexer extends AbstractIndexer implements CatalogProductInd
                 [
                     '$set' => [
                         'indexer.index_status.catalog_product_indexer' => 'indexed',
-                    ]
+                    ],
                 ]
             );
 
@@ -106,11 +105,11 @@ class CatalogProductIndexer extends AbstractIndexer implements CatalogProductInd
         switch ($attribute->getType()) {
             case 'select_attribute':
                 $this->indexSelectAttribute($attribute);
-                echo  '- Success: attribute_indexed | Code: ' . $attribute->getCode() . ' | Type: ' . $attribute->getType();
+                echo '- Success: attribute_indexed | Code: '.$attribute->getCode().' | Type: '.$attribute->getType();
                 echo PHP_EOL;
                 break;
             default:
-                echo  '- Info: attribute_skipped | Code: ' . $attribute->getCode() . ' | Type: ' . $attribute->getType();
+                echo '- Info: attribute_skipped | Code: '.$attribute->getCode().' | Type: '.$attribute->getType();
                 echo PHP_EOL;
         }
     }
@@ -125,18 +124,18 @@ class CatalogProductIndexer extends AbstractIndexer implements CatalogProductInd
             $filter[$attribute->getCode()] = $option['code'];
 
             $updateData = [];
-            $updateData['indexer.attribute.' . $attribute->getCode()] = $option['code'];
-            $updateData['indexer.attribute_label.' . $attribute->getCode()] = $option['label'];
+            $updateData['indexer.attribute.'.$attribute->getCode()] = $option['code'];
+            $updateData['indexer.attribute_label.'.$attribute->getCode()] = $option['label'];
             $update = [
                 '$set' => $updateData,
             ];
 
             try {
                 $result = $this->catalogProductRepository->getCollection()->updateMany($filter, $update);
-                echo  '-- Success: attribute_option_index | Code: ' . $option['code'] . ' | Matched Count: ' . $result->getMatchedCount() . ' | Modified Count: ' . $result->getModifiedCount();
+                echo '-- Success: attribute_option_index | Code: '.$option['code'].' | Matched Count: '.$result->getMatchedCount().' | Modified Count: '.$result->getModifiedCount();
                 echo PHP_EOL;
             } catch (\Exception $e) {
-                echo '-- Error: attribute_option_index | Code: ' . $option['code'] . ' | Error: ' . $e->getMessage();
+                echo '-- Error: attribute_option_index | Code: '.$option['code'].' | Error: '.$e->getMessage();
             }
         }
     }

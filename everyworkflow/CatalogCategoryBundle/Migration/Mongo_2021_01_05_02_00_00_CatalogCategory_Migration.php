@@ -70,6 +70,15 @@ class Mongo_2021_01_05_02_00_00_CatalogCategory_Migration implements MigrationIn
                 'is_required' => true,
                 'sort_order' => 20,
             ],
+            [
+                'code' => 'parent',
+                'name' => 'Parent',
+                'type' => 'select_attribute',
+                'is_used_in_grid' => true,
+                'is_used_in_form' => true,
+                'is_required' => true,
+                'sort_order' => 25,
+            ],
         ];
 
         foreach ($attributeData as $item) {

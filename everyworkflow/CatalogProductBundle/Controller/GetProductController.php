@@ -10,6 +10,7 @@ namespace EveryWorkflow\CatalogProductBundle\Controller;
 
 use EveryWorkflow\CatalogProductBundle\Repository\CatalogProductRepositoryInterface;
 use EveryWorkflow\CoreBundle\Annotation\EwRoute;
+use MongoDB\BSON\ObjectId;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -22,10 +23,10 @@ class GetProductController extends AbstractController
     }
 
     #[EwRoute(
-        path: 'catalog/product/{uuid}',
+        path: 'catalog/product/{slug}',
         name: 'catalog.product.view',
         methods: 'GET',
-        permissions: 'catalog.product.view',
+        // permissions: 'catalog.product.view',
         swagger: [
             'parameters' => [
                 [
@@ -36,14 +37,21 @@ class GetProductController extends AbstractController
             ],
         ]
     )]
-    public function __invoke(Request $request, string $uuid = 'create'): JsonResponse
+    public function __invoke(Request $request, string $slug = 'create'): JsonResponse
     {
         $data = [];
 
-        if ('create' !== $uuid) {
-            $item = $this->catalogProductRepository->findById($uuid);
+        if ('create' !== $slug) {
+            $query = [];
+            try {
+                $query['_id'] = new ObjectId($slug);
+            } catch (\Exception $e) {
+                $query['url_key'] = $slug;
+            }
+            $item = $this->catalogProductRepository->findOne($query);
             if ($item) {
                 $data['item'] = $item->toArray();
+                $data['item']['price_formatted'] = 'Rs. '.number_format($data['item']['price'], 0);
             }
         }
 

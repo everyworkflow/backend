@@ -13,6 +13,7 @@ use EveryWorkflow\CatalogProductBundle\Repository\CatalogProductRepositoryInterf
 use EveryWorkflow\EavBundle\Repository\AttributeRepositoryInterface;
 use EveryWorkflow\MenuBundle\Repository\MenuRepositoryInterface;
 use EveryWorkflow\MongoBundle\Support\SeederInterface;
+use Symfony\Component\String\Slugger\SluggerInterface;
 
 class Mongo_2023_01_01_00_00_00_Ecommerce_Seeder implements SeederInterface
 {
@@ -20,6 +21,7 @@ class Mongo_2023_01_01_00_00_00_Ecommerce_Seeder implements SeederInterface
     protected array $productAttributes = [];
 
     public function __construct(
+        protected SluggerInterface $slugger,
         protected AttributeRepositoryInterface $attributeRepository,
         protected MenuRepositoryInterface $menuRepository,
         protected CatalogCategoryRepositoryInterface $catalogCategoryRepository,
@@ -30,9 +32,9 @@ class Mongo_2023_01_01_00_00_00_Ecommerce_Seeder implements SeederInterface
     public function seed(): bool
     {
         $this->seedStoreMenu();
-        // $this->seedCategories();
-        // $this->seedProductAttributes();
-        // $this->seedProducts();
+        $this->seedCategories();
+        $this->seedProductAttributes();
+        $this->seedProducts();
 
         return self::SUCCESS;
     }
@@ -40,9 +42,9 @@ class Mongo_2023_01_01_00_00_00_Ecommerce_Seeder implements SeederInterface
     public function rollback(): bool
     {
         $this->menuRepository->deleteByFilter(['code' => 'store_panel_menu']);
-        // $this->catalogCategoryRepository->getCollection()->drop();
-        // $this->attributeRepository->deleteByFilter(['flag.is_created_via_seeder' => true]);
-        // $this->catalogProductRepository->getCollection()->drop();
+        $this->catalogCategoryRepository->getCollection()->drop();
+        $this->attributeRepository->deleteByFilter(['flag.is_created_via_seeder' => true]);
+        $this->catalogProductRepository->getCollection()->drop();
 
         return self::SUCCESS;
     }
@@ -51,12 +53,12 @@ class Mongo_2023_01_01_00_00_00_Ecommerce_Seeder implements SeederInterface
     {
         $menuBuilderData = json_decode('[
             {
-              "item_label": "Product",
-              "item_path": "/product"
+              "item_label": "Category",
+              "item_path": "/category"
             },
             {
-              "item_label": "Product single",
-              "item_path": "/product/single"
+              "item_label": "Product",
+              "item_path": "/product"
             },
             {
               "item_label": "About",
@@ -93,12 +95,18 @@ class Mongo_2023_01_01_00_00_00_Ecommerce_Seeder implements SeederInterface
 
     protected function seedCategories(): void
     {
-        for ($i = 1; $i < 50; ++$i) {
+        $faker = $faker = \Faker\Factory::create();
+        for ($i = 1; $i < 20; ++$i) {
+            $name = $faker->unique()->words(3, true);
+            $slug = $this->slugger->slug($name)->toString();
+            $name = ucwords($name);
+            // $image = $faker->g
+
             $this->categories[] = [
                 'status' => 'enable',
-                'name' => 'Category - '.$i,
-                'code' => 'category-'.$i,
-                'path' => 'category-'.$i,
+                'name' => $name,
+                'code' => $slug,
+                'path' => $slug,
             ];
         }
 
@@ -248,6 +256,16 @@ class Mongo_2023_01_01_00_00_00_Ecommerce_Seeder implements SeederInterface
             ],
         ];
         $this->productAttributes = [
+            'gallery' => [
+                'code' => 'gallery',
+                'name' => 'Gallery',
+                'type' => 'media_attribute',
+                'field_type' => 'media_image_gallery_selector_field',
+                'is_required' => false,
+                'is_used_in_grid' => true,
+                'is_used_in_form' => true,
+                'sort_order' => 500,
+            ],
             'color' => [
                 'code' => 'color',
                 'name' => 'Color',
@@ -257,6 +275,7 @@ class Mongo_2023_01_01_00_00_00_Ecommerce_Seeder implements SeederInterface
                 'is_used_in_grid' => true,
                 'is_used_in_form' => true,
                 'options' => $colorOptions,
+                'sort_order' => 100,
             ],
             'size' => [
                 'code' => 'size',
@@ -267,14 +286,13 @@ class Mongo_2023_01_01_00_00_00_Ecommerce_Seeder implements SeederInterface
                 'is_used_in_grid' => true,
                 'is_used_in_form' => true,
                 'options' => $sizeOptions,
+                'sort_order' => 110,
             ],
         ];
 
-        $sortOrder = 100;
         foreach ($this->productAttributes as $item) {
             $item['status'] = 'enable';
             $item['entity_code'] = $this->catalogProductRepository->getEntityCode();
-            $item['sort_order'] = $sortOrder++;
             $item['flag.is_created_via_seeder'] = true;
             $attribute = $this->attributeRepository->create($item);
             $this->attributeRepository->saveOne($attribute);
@@ -296,7 +314,14 @@ class Mongo_2023_01_01_00_00_00_Ecommerce_Seeder implements SeederInterface
 
         $categoryLength = count($this->categories);
 
-        for ($i = 1; $i < 5000; ++$i) {
+        $timeNow = date('Y-m-d H:i:s');
+
+        $faker = \Faker\Factory::create();
+        for ($i = 1; $i < 100000; ++$i) {
+            $name = $faker->unique()->words(rand(3, 6), true);
+            $slug = $this->slugger->slug($name)->toString();
+            $name = ucwords($name);
+
             $colorIndex = rand(0, $colorOptionLength - 1);
             $colorOption = $colorOptions[$colorIndex];
 
@@ -306,26 +331,45 @@ class Mongo_2023_01_01_00_00_00_Ecommerce_Seeder implements SeederInterface
             $categoryIndex = rand(0, $categoryLength - 1);
             $category = $this->categories[$categoryIndex] ?? [];
 
+            $gallery = [];
+            $galleryLength = rand(1, 8);
+            for ($j = 1; $j <= $galleryLength; ++$j) {
+                $imgName = $name.' - '.$j;
+                $gallery[] = [
+                    'path_name' => $faker->imageUrl(240, 240, $imgName, true),
+                    'title' => $imgName,
+                ];
+            }
+
             $itemData[] = [
                 'status' => 'enable',
-                'name' => 'Product Name - '.$i,
-                'sku' => 'sku-'.$i,
+                'name' => $name,
+                'sku' => $slug,
                 'category' => $category['code'] ?? '',
-                'price' => 5 * $i,
-                'quantity' => 1000 + $i,
+                'price' => $faker->numberBetween(1, 100000),
+                'quantity' => $faker->numberBetween(0, 1000),
                 'color' => $colorOption['code'] ?? '',
                 'size' => $sizeOption['code'] ?? '',
-                'short_description' => 'This is just a short description. '.$i,
-                'description' => 'This is just a description. '.$i,
-                'meta_title' => 'Product Name - '.$i,
-                'url_key' => 'sku-'.$i,
-                'flag.is_created_via_seeder' => true,
+                'gallery' => $gallery,
+                'short_description' => $faker->sentences(rand(1, 3), true),
+                'description' => $faker->paragraphs(rand(3, 6), true),
+                'meta_title' => $name,
+                'url_key' => $slug,
+                'flag' => [
+                    'is_created_via_seeder' => true,
+                ],
+                'created_at' => $timeNow,
+                'updated_at' => $timeNow,
             ];
-        }
 
-        foreach ($itemData as $item) {
-            $document = $this->catalogProductRepository->create($item);
-            $this->catalogProductRepository->saveOne($document);
+            if (count($itemData) > 1000) {
+                $this->catalogProductRepository->getCollection()->insertMany($itemData);
+                $itemData = [];
+            }
+        }
+        if (count($itemData)) {
+            $this->catalogProductRepository->getCollection()->insertMany($itemData);
+            $itemData = [];
         }
     }
 }
