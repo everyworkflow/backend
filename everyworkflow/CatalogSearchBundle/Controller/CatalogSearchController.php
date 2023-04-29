@@ -64,10 +64,10 @@ class CatalogSearchController extends AbstractController
             }
         }
 
-        $perPage = $params['per-page'] ?? 24;
+        $perPage = $params['per-page'] ?? 25;
         $perPage = (int) $perPage;
-        if ($perPage < 24 || $perPage > 240) {
-            $currentPage = 24;
+        if ($perPage < 25 || $perPage > 200) {
+            $currentPage = 25;
         }
         $currentPage = $params['page'] ?? 1;
         $currentPage = (int) $currentPage;

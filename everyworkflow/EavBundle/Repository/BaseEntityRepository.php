@@ -67,7 +67,10 @@ class BaseEntityRepository extends BaseDocumentRepository implements BaseEntityR
             $reflectionClass = new \ReflectionClass(get_class($this));
             $attributes = $reflectionClass->getAttributes(EntityRepositoryAttribute::class);
             foreach ($attributes as $attribute) {
-                $this->repositoryAttribute = $attribute->newInstance();
+                $obj = $attribute->newInstance();
+                if ($obj instanceof EntityRepositoryAttribute) {
+                    $this->repositoryAttribute = $obj;
+                }
             }
         }
 
@@ -76,8 +79,9 @@ class BaseEntityRepository extends BaseDocumentRepository implements BaseEntityR
 
     public function getEntityCode(): string
     {
-        if (empty($this->entityCode) && $this->getRepositoryAttribute()) {
-            $this->entityCode = $this->getRepositoryAttribute()->getEntityCode();
+        $respositoryAttribute = $this->getRepositoryAttribute();
+        if (empty($this->entityCode) && $respositoryAttribute instanceof EntityRepositoryAttribute) {
+            $this->entityCode = $respositoryAttribute->getEntityCode();
         }
 
         return $this->entityCode;
@@ -95,6 +99,7 @@ class BaseEntityRepository extends BaseDocumentRepository implements BaseEntityR
         if ($data instanceof BSONDocument) {
             $data = $this->mapDocumentToArray($data);
         }
+
         return $this->documentFactory->create($this->getDocumentClass(), $data);
     }
 
@@ -116,15 +121,15 @@ class BaseEntityRepository extends BaseDocumentRepository implements BaseEntityR
     public function getAttributes(): array
     {
         if (!$this->entityAttributes) {
-            $attributeInfo = $this->coreHelper->getEWFCacheInterface()
-                ->getItem('base_entity_attribute'.$this->getEntityCode());
-            if (!$attributeInfo->isHit() || true) {
-                // $this->setSystemAttribute();
-                $this->entityAttributes = $this->attributeRepository->find(['entity_code' => $this->getEntityCode()]);
-                $attributeInfo->set($this->entityAttributes);
-                $this->coreHelper->getEWFCacheInterface()->save($attributeInfo);
-                $this->entityAttributes = $attributeInfo->get();
-            }
+            // $attributeInfo = $this->coreHelper->getEWFCacheInterface()
+            //     ->getItem('base_entity_attribute'.$this->getEntityCode());
+            // if (!$attributeInfo->isHit() || true) {
+            // $this->setSystemAttribute();
+            $this->entityAttributes = $this->attributeRepository->find(['entity_code' => $this->getEntityCode()]);
+            // $attributeInfo->set($this->entityAttributes);
+            // $this->coreHelper->getEWFCacheInterface()->save($attributeInfo);
+            // $this->entityAttributes = $attributeInfo->get();
+            // }
         }
 
         return $this->entityAttributes;

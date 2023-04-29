@@ -39,10 +39,12 @@ class EntityForm extends Form implements EntityFormInterface
             $this->formFieldFactory->create([
                 'label' => 'Code',
                 'name' => 'code',
+                'is_required' => true,
             ]),
             $this->formFieldFactory->create([
                 'label' => 'Name',
                 'name' => 'name',
+                'is_required' => true,
             ]),
             $this->formFieldFactory->create([
                 'label' => 'Class',
@@ -62,6 +64,7 @@ class EntityForm extends Form implements EntityFormInterface
                         'value' => 'Disable',
                     ],
                 ],
+                'is_required' => true,
             ]),
             $this->formFieldFactory->create([
                 'label' => 'Sort order',

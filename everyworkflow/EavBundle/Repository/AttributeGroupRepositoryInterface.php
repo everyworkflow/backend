@@ -8,9 +8,9 @@ declare(strict_types=1);
 
 namespace EveryWorkflow\EavBundle\Repository;
 
-use EveryWorkflow\MongoBundle\Repository\BaseRepositoryInterface;
+use EveryWorkflow\MongoBundle\Repository\BaseDocumentRepositoryInterface;
 
-interface AttributeGroupRepositoryInterface extends BaseRepositoryInterface
+interface AttributeGroupRepositoryInterface extends BaseDocumentRepositoryInterface
 {
     // Something
 }

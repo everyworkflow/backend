@@ -11,13 +11,17 @@ use EveryWorkflow\DataGridBundle\Model\DataGrid;
 use EveryWorkflow\EavBundle\Attribute\BaseAttribute;
 use EveryWorkflow\EavBundle\Attribute\BaseAttributeInterface;
 use EveryWorkflow\EavBundle\Controller\Attribute\ListAttributeController;
+use EveryWorkflow\EavBundle\Controller\AttributeGroup\ListAttributeGroupController;
 use EveryWorkflow\EavBundle\Controller\Entity\ListEntityController;
 use EveryWorkflow\EavBundle\Factory\AttributeFactory;
 use EveryWorkflow\EavBundle\Form\AttributeForm;
 use EveryWorkflow\EavBundle\Form\AttributeFormInterface;
+use EveryWorkflow\EavBundle\Form\AttributeGroupForm;
 use EveryWorkflow\EavBundle\Form\EntityForm;
 use EveryWorkflow\EavBundle\GridConfig\AttributeGridConfig;
+use EveryWorkflow\EavBundle\GridConfig\AttributeGroupGridConfig;
 use EveryWorkflow\EavBundle\GridConfig\EntityGridConfig;
+use EveryWorkflow\EavBundle\Repository\AttributeGroupRepository;
 use EveryWorkflow\EavBundle\Repository\AttributeRepository;
 use EveryWorkflow\EavBundle\Repository\EntityRepository;
 
@@ -68,4 +72,16 @@ return function (ContainerConfigurator $configurator) {
         ->arg('$form', service(AttributeForm::class));
     $services->set(ListAttributeController::class)
         ->arg('$dataGrid', service('ew_attribute_grid'));
+
+    $services->set('ew_attribute_group_grid_config', AttributeGroupGridConfig::class);
+    $services->set('ew_attribute_group_grid_source', RepositorySource::class)
+        ->arg('$baseRepository', service(AttributeGroupRepository::class))
+        ->arg('$dataGridConfig', service('ew_attribute_group_grid_config'))
+        ->arg('$form', service(AttributeGroupForm::class));
+    $services->set('ew_attribute_group_grid', DataGrid::class)
+        ->arg('$source', service('ew_attribute_group_grid_source'))
+        ->arg('$dataGridConfig', service('ew_attribute_group_grid_config'))
+        ->arg('$form', service(AttributeGroupForm::class));
+    $services->set(ListAttributeGroupController::class)
+        ->arg('$dataGrid', service('ew_attribute_group_grid'));
 };

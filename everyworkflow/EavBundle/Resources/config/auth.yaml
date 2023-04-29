@@ -10,3 +10,8 @@ auth:
       list: List Attribute
       save: Save Attribute
       delete: Delete Attribute
+    eav.attribute_group:
+      view: View Attribute group
+      list: List Attribute group
+      save: Save Attribute group
+      delete: Delete Attribute group

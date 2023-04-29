@@ -12,11 +12,14 @@ use EveryWorkflow\CoreBundle\Support\ArrayableInterface;
 use EveryWorkflow\DataFormBundle\Model\FormInterface;
 use EveryWorkflow\EavBundle\Attribute\BaseAttributeInterface;
 use EveryWorkflow\EavBundle\Entity\BaseEntityInterface;
+use EveryWorkflow\EavBundle\Support\Attribute\EntityRepositoryAttribute;
 use EveryWorkflow\MongoBundle\Repository\BaseDocumentRepositoryInterface;
 use MongoDB\Model\BSONDocument;
 
 interface BaseEntityRepositoryInterface extends BaseDocumentRepositoryInterface
 {
+    public function getRepositoryAttribute(): ?EntityRepositoryAttribute;
+
     public function getEntityCode(): string;
 
     public function setEntityCode(string $entityCode): self;

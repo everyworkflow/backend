@@ -83,6 +83,11 @@ class MenuItemForm extends Form implements MenuItemFormInterface
                 'name' => 'item_permission',
                 'field_type' => 'text_field',
             ]),
+            $this->formFieldFactory->create([
+                'label' => 'Item CSS class',
+                'name' => 'item_css_class',
+                'field_type' => 'text_field',
+            ]),
         ];
 
         return array_merge($fields, parent::getFields());

@@ -12,24 +12,13 @@ use Doctrine\Inflector\InflectorFactory;
 #[Attribute(Attribute::TARGET_CLASS)]
 class RepositoryAttribute
 {
-    protected string $documentClass;
-    protected string|array $primaryKey;
-    protected ?string $collectionName;
-    protected string|array|null $indexKey = [];
-    protected ?string $eventPrefix;
-
     public function __construct(
-        string $documentClass,
-        string|array $primaryKey = '_id',
-        ?string $collectionName = null,
-        string|array|null $indexKey = null,
-        $eventPrefix = null
+        protected string $documentClass,
+        protected string|array $primaryKey = '_id',
+        protected ?string $collectionName = null,
+        protected string|array|null $indexKey = null,
+        protected ?string $eventPrefix = null
     ) {
-        $this->documentClass = $documentClass;
-        $this->primaryKey = $primaryKey;
-        $this->collectionName = $collectionName;
-        $this->indexKey = $indexKey;
-        $this->eventPrefix = $eventPrefix;
     }
 
     public function setDocumentClass(string $documentClass): self

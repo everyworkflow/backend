@@ -22,12 +22,12 @@ use EveryWorkflow\EavBundle\Repository\EntityRepositoryInterface;
 class AttributeForm extends Form implements AttributeFormInterface
 {
     public function __construct(
-        DataObjectInterface $dataObject,
-        FormSectionFactoryInterface $formSectionFactory,
-        FormFieldFactoryInterface $formFieldFactory,
         protected EntityRepositoryInterface $entityRepository,
         protected EavConfigProviderInterface $eavConfigProvider,
-        protected FieldOptionFactoryInterface $fieldOptionFactory
+        protected FieldOptionFactoryInterface $fieldOptionFactory,
+        DataObjectInterface $dataObject,
+        FormSectionFactoryInterface $formSectionFactory,
+        FormFieldFactoryInterface $formFieldFactory
     ) {
         parent::__construct($dataObject, $formSectionFactory, $formFieldFactory);
     }
@@ -150,16 +150,19 @@ class AttributeForm extends Form implements AttributeFormInterface
                 'name' => 'entity_code',
                 'field_type' => 'select_field',
                 'options' => $this->getEntityCodeOptions(),
+                'is_required' => true,
             ]),
             $this->formFieldFactory->create([
                 'label' => 'Code',
                 'name' => 'code',
                 'field_type' => 'text_field',
+                'is_required' => true,
             ]),
             $this->formFieldFactory->create([
                 'label' => 'Name',
                 'name' => 'name',
                 'field_type' => 'text_field',
+                'is_required' => true,
             ]),
             $this->formFieldFactory->create([
                 'label' => 'Type',
@@ -167,6 +170,7 @@ class AttributeForm extends Form implements AttributeFormInterface
                 'field_type' => 'select_field',
                 'is_actionable' => true,
                 ...$this->getAttributeTypeOptionsAndActions(),
+                'is_required' => true,
             ]),
             $this->formFieldFactory->create([
                 'label' => 'Status',
@@ -182,6 +186,7 @@ class AttributeForm extends Form implements AttributeFormInterface
                         'value' => 'Disable',
                     ]),
                 ],
+                'is_required' => true,
             ]),
             $this->formFieldFactory->create([
                 'label' => 'Sort order',

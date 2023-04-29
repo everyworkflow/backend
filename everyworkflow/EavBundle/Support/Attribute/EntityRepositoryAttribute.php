@@ -9,18 +9,15 @@ namespace EveryWorkflow\EavBundle\Support\Attribute;
 #[\Attribute(\Attribute::TARGET_CLASS)]
 class EntityRepositoryAttribute extends \EveryWorkflow\MongoBundle\Support\Attribute\RepositoryAttribute
 {
-    protected string $entityCode = '';
-
     public function __construct(
         string $documentClass,
         string|array $primaryKey = '_id',
         ?string $collectionName = null,
         string|array|null $indexKey = null,
         $eventPrefix = null,
-        string $entityCode = ''
+        protected string $entityCode = ''
     ) {
         parent::__construct($documentClass, $primaryKey, $collectionName, $indexKey, $eventPrefix);
-        $this->entityCode = $entityCode;
     }
 
     public function setEntityCode(string $entityCode): self
