@@ -8,8 +8,12 @@ declare(strict_types=1);
 
 namespace EveryWorkflow\IndexerBundle\Indexer;
 
-abstract class AbstractIndexer
+use EveryWorkflow\IndexerBundle\Support\IndexerInterface;
+
+abstract class AbstractIndexer implements IndexerInterface
 {
+    protected bool $isForced = false;
+
     public function getCode(): string
     {
         return '';
@@ -18,6 +22,17 @@ abstract class AbstractIndexer
     public function getPriority(): int
     {
         return 0;
+    }
+
+    public function isForced(): bool
+    {
+        return $this->isForced;
+    }
+
+    public function setIsForced(bool $isForced): self
+    {
+        $this->isForced = $isForced;
+        return $this;
     }
 
     /**

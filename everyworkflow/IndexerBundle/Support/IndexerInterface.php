@@ -15,6 +15,10 @@ interface IndexerInterface
 
     public function getPriority(): int;
 
+    public function isForced(): bool;
+
+    public function setIsForced(bool $isForced): self;
+
     /**
      * @return string[]
      */

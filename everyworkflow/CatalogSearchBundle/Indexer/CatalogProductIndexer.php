@@ -66,7 +66,7 @@ class CatalogProductIndexer extends AbstractIndexer implements CatalogProductInd
         } catch (\Exception $e) {
             $isIndexInvalid = null;
         }
-        if (!$isIndexInvalid) {
+        if (!$isIndexInvalid && !$this->isForced()) {
             echo '- Everything seems indexed.';
             echo PHP_EOL;
 

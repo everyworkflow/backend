@@ -120,6 +120,9 @@ class IndexerList implements IndexerListInterface
                     $indexer,
                     'indexer_' . $code . '_execute_before'
                 );
+                if ($isForced) {
+                    $item->setIsForced(true);
+                }
                 $item->index();
                 echo '- Completed: ' . $code . ' at ' . date('Y-m-d H:i:s');
                 echo PHP_EOL;
