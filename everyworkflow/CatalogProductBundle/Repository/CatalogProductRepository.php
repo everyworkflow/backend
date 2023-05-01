@@ -10,6 +10,7 @@ namespace EveryWorkflow\CatalogProductBundle\Repository;
 
 use EveryWorkflow\CatalogProductBundle\Entity\CatalogProductEntity;
 use EveryWorkflow\EavBundle\Repository\BaseEntityRepository;
+use EveryWorkflow\EavBundle\Repository\HelperTrait\AttributeGroupHelperTrait;
 use EveryWorkflow\EavBundle\Support\Attribute\EntityRepositoryAttribute;
 
 #[EntityRepositoryAttribute(
@@ -19,5 +20,5 @@ use EveryWorkflow\EavBundle\Support\Attribute\EntityRepositoryAttribute;
 )]
 class CatalogProductRepository extends BaseEntityRepository implements CatalogProductRepositoryInterface
 {
-    // Something
+    use AttributeGroupHelperTrait;
 }

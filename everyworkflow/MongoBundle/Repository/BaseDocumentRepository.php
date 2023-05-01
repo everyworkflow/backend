@@ -170,11 +170,15 @@ class BaseDocumentRepository extends BaseRepository implements BaseDocumentRepos
 
     public function deleteOneByFilter(array $filter = []): object|array|null
     {
+        $filter['flags.can_delete'] = ['$ne' => false];
+
         return $this->getCollection()->findOneAndDelete($filter);
     }
 
     public function deleteByFilter(array $filter = []): object|array|null
     {
+        $filter['flags.can_delete'] = ['$ne' => false];
+
         return $this->getCollection()->deleteMany($filter);
     }
 
@@ -198,6 +202,7 @@ class BaseDocumentRepository extends BaseRepository implements BaseDocumentRepos
             $result = $this->getCollection()->insertOne($validData);
             $validData = ['_id' => $result->getInsertedId()] + $validData;
         } else {
+            $filter['flags.can_update'] = ['$ne' => false];
             $options = array_merge(['upsert' => true], $otherOptions);
             $result = $this->getCollection()->updateOne($filter, ['$set' => $validData], $options);
 
@@ -260,6 +265,7 @@ class BaseDocumentRepository extends BaseRepository implements BaseDocumentRepos
         );
         $validData = $this->getValidDocumentData($document);
         $filter = $this->getDocumentFilter($document, $validData, $otherFilter);
+        $filter['flags.can_update'] = ['$ne' => false];
         $result = $this->getCollection()->updateOne($filter, ['$set' => $validData], $otherOptions);
 
         if (1 !== $result->getModifiedCount()) {
@@ -291,6 +297,7 @@ class BaseDocumentRepository extends BaseRepository implements BaseDocumentRepos
         );
         $validData = $this->getValidDocumentData($document);
         $filter = $this->getDocumentFilter($document, $validData, $otherFilter);
+        $filter['flags.can_update'] = ['$ne' => false];
         $result = $this->getCollection()->replaceOne($filter, $validData, $otherOptions);
 
         if (1 !== $result->getModifiedCount()) {

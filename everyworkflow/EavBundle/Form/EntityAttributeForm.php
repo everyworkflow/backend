@@ -14,8 +14,10 @@ use EveryWorkflow\DataFormBundle\Factory\FormFieldFactoryInterface;
 use EveryWorkflow\DataFormBundle\Factory\FormSectionFactoryInterface;
 use EveryWorkflow\DataFormBundle\Field\Select\Option;
 use EveryWorkflow\DataFormBundle\Model\Form;
+use EveryWorkflow\EavBundle\Document\AttributeGroupDocumentInterface;
 use EveryWorkflow\EavBundle\Factory\AttributeFieldFactoryInterface;
 use EveryWorkflow\EavBundle\Repository\BaseEntityRepositoryInterface;
+use EveryWorkflow\EavBundle\Repository\HelperTrait\AttributeGroupHelperTraitInterface;
 
 class EntityAttributeForm extends Form implements EntityAttributeFormInterface
 {
@@ -29,17 +31,26 @@ class EntityAttributeForm extends Form implements EntityAttributeFormInterface
         parent::__construct($dataObject, $formSectionFactory, $formFieldFactory);
     }
 
-    public function loadAttributeFields(BaseEntityRepositoryInterface $baseEntityRepository): self
-    {
-        $fields = [
-            '_id' => $this->getFormFieldFactory()->create([
-                'name' => '_id',
-                'label' => 'UUID',
-                'is_readonly' => true,
-                'sort_order' => 1,
-            ]),
-        ];
+    public function loadAttributeFields(
+        BaseEntityRepositoryInterface $baseEntityRepository,
+        string $attributeGroupCode = 'default'
+    ): self {
+        if ($baseEntityRepository instanceof AttributeGroupHelperTraitInterface) {
+            $sections = $this->getSectionsForRepositoryByGroupCode($baseEntityRepository, $attributeGroupCode);
+        } else {
+            $sections = $this->getSectionsForRepository($baseEntityRepository);
+        }
+        $this->setSections($sections);
 
+        return $this;
+    }
+
+    protected function getSectionsForRepository(
+        BaseEntityRepositoryInterface $baseEntityRepository,
+    ): array {
+        $sections = [];
+
+        $generalFields = [];
         try {
             $attributes = $baseEntityRepository->getAttributes();
             foreach ($attributes as $attribute) {
@@ -49,12 +60,32 @@ class EntityAttributeForm extends Form implements EntityAttributeFormInterface
                     'updated_at',
                     ])
                 ) {
-                    $fields[$attribute->getCode()] = $this->attributeFieldFactory->createFromAttribute($attribute);
+                    $generalFields[$attribute->getCode()] = $this->attributeFieldFactory->createFromAttribute($attribute);
                 }
             }
         } catch (\Exception $e) {
             // ignoring if attributes doesn't exist
         }
+        $generalFields = $this->getGeneralFields($generalFields);
+
+        $sections['general'] = $this->formSectionFactory->create([
+            'section_type' => 'card_section',
+            'code' => 'general',
+            'title' => 'General',
+            'fields' => array_values($generalFields),
+        ]);
+
+        return $sections;
+    }
+
+    protected function getGeneralFields(array $fields = []): array
+    {
+        $fields['_id'] = $this->getFormFieldFactory()->create([
+            'name' => '_id',
+            'label' => 'UUID',
+            'is_readonly' => true,
+            'sort_order' => 1,
+        ]);
 
         if (!isset($fields['status'])) {
             $fields['status'] = $this->formFieldFactory->create([
@@ -90,15 +121,46 @@ class EntityAttributeForm extends Form implements EntityAttributeFormInterface
             'sort_order' => 10001,
         ]);
 
-        $this->setSections([
-            $this->formSectionFactory->create([
-                'section_type' => 'card_section',
-                'code' => 'general',
-                'title' => 'General',
-                'fields' => array_values($fields),
-            ]),
-        ]);
+        return $fields;
+    }
 
-        return $this;
+    protected function getSectionsForRepositoryByGroupCode(
+        BaseEntityRepositoryInterface $baseEntityRepository,
+        string $groupCode
+    ): array {
+        $sections = [];
+
+        if ($baseEntityRepository instanceof AttributeGroupHelperTraitInterface) {
+            $attributeData = $baseEntityRepository->getAttributeDataByGroupCode($groupCode);
+            $attributeGroup = $attributeData['attribute_group'] ?? null;
+            if ($attributeGroup && $attributeGroup instanceof AttributeGroupDocumentInterface) {
+                $attributeGroupData = $attributeGroup->getData('attribute_group_data');
+                $attributes = $attributeData['attributes'] ?? [];
+
+                foreach ($attributeGroupData as $section) {
+                    if (isset($section['code'], $section['name']) && '' !== $section['code']) {
+                        $sectionFields = [];
+                        foreach ($section['attributes'] as $attributeCode) {
+                            if (isset($attributes[$attributeCode])) {
+                                $sectionFields[$attributeCode] = $this->attributeFieldFactory->createFromAttribute(
+                                    $attributes[$attributeCode]
+                                );
+                            }
+                        }
+                        if ('general' === $section['code']) {
+                            $sectionFields = $this->getGeneralFields($sectionFields);
+                        }
+                        $sections[$section['code']] = $this->formSectionFactory->create([
+                            'section_type' => 'card_section',
+                            'code' => $section['code'],
+                            'title' => $section['name'],
+                            'fields' => array_values($sectionFields),
+                        ]);
+                    }
+                }
+            }
+        }
+
+        return $sections;
     }
 }

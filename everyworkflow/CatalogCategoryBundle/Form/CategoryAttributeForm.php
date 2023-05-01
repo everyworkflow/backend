@@ -13,8 +13,10 @@ use EveryWorkflow\EavBundle\Repository\BaseEntityRepositoryInterface;
 
 class CategoryAttributeForm extends EntityAttributeForm implements CategoryAttributeFormInterface
 {
-    public function loadAttributeFields(BaseEntityRepositoryInterface $baseEntityRepository): self
-    {
+    public function loadAttributeFields(
+        BaseEntityRepositoryInterface $baseEntityRepository,
+        string $attributeGroupCode = 'default'
+    ): self {
         parent::loadAttributeFields($baseEntityRepository);
 
         $sections = $this->getSections();
@@ -44,8 +46,11 @@ class CategoryAttributeForm extends EntityAttributeForm implements CategoryAttri
         return $this;
     }
 
-    protected function getRecursiveTreeOptions(BaseEntityRepositoryInterface $baseEntityRepository, string $parentCode = 'default', array $skipCodes = []): array
-    {
+    protected function getRecursiveTreeOptions(
+        BaseEntityRepositoryInterface $baseEntityRepository,
+        string $parentCode = 'default',
+        array $skipCodes = []
+    ): array {
         $itemList = [];
         $items = $baseEntityRepository->find(['parent' => $parentCode]);
         foreach ($items as $item) {
@@ -58,6 +63,7 @@ class CategoryAttributeForm extends EntityAttributeForm implements CategoryAttri
                 ];
             }
         }
+
         return $itemList;
     }
 }

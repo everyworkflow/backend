@@ -30,6 +30,7 @@ class BaseEntityRepository extends BaseDocumentRepository implements BaseEntityR
      * @var array  - Entity attributes
      */
     public function __construct(
+        protected AttributeGroupRepositoryInterface $attributeGroupRepository,
         protected AttributeRepositoryInterface $attributeRepository,
         protected EntityAttributeFormInterface $entityAttributeForm,
         DocumentFactoryInterface $documentFactory,
@@ -121,15 +122,10 @@ class BaseEntityRepository extends BaseDocumentRepository implements BaseEntityR
     public function getAttributes(): array
     {
         if (!$this->entityAttributes) {
-            // $attributeInfo = $this->coreHelper->getEWFCacheInterface()
-            //     ->getItem('base_entity_attribute'.$this->getEntityCode());
-            // if (!$attributeInfo->isHit() || true) {
-            // $this->setSystemAttribute();
-            $this->entityAttributes = $this->attributeRepository->find(['entity_code' => $this->getEntityCode()]);
-            // $attributeInfo->set($this->entityAttributes);
-            // $this->coreHelper->getEWFCacheInterface()->save($attributeInfo);
-            // $this->entityAttributes = $attributeInfo->get();
-            // }
+            $attributes = $this->attributeRepository->find(['entity_code' => $this->getEntityCode()]);
+            foreach ($attributes as $attribute) {
+                $this->entityAttributes[$attribute->getData('code')] = $attribute;
+            }
         }
 
         return $this->entityAttributes;

@@ -13,5 +13,8 @@ use EveryWorkflow\EavBundle\Repository\BaseEntityRepositoryInterface;
 
 interface EntityAttributeFormInterface extends FormInterface
 {
-    public function loadAttributeFields(BaseEntityRepositoryInterface $baseEntityRepository): self;
+    public function loadAttributeFields(
+        BaseEntityRepositoryInterface $baseEntityRepository,
+        string $attributeGroupCode = 'default'
+    ): self;
 }

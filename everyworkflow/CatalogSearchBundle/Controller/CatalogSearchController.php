@@ -83,7 +83,7 @@ class CatalogSearchController extends AbstractController
             ];
         }
         $itemsPipline[] = [
-            '$unset' => ['flag'],
+            '$unset' => ['flags'],
         ];
         $itemsPipline[] = [
             '$skip' => $skip,
