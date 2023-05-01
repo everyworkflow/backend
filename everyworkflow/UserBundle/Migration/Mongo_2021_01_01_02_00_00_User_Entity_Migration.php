@@ -26,13 +26,15 @@ class Mongo_2021_01_01_02_00_00_User_Entity_Migration implements MigrationInterf
 
     public function migrate(): bool
     {
-        $userEntity = $this->entityRepository->create();
-        $userEntity
+        /** @var EntityDocument $entity */
+        $entity = $this->entityRepository->create();
+        $entity
             ->setName('User')
             ->setCode($this->userRepository->getEntityCode())
             ->setClass(UserEntity::class)
             ->setStatus(EntityDocument::STATUS_ENABLE);
-        $this->entityRepository->saveOne($userEntity);
+        $entity->setData('flags', ['can_delete' => false, 'can_update' => false]);
+        $this->entityRepository->saveOne($entity);
 
         $attributeData = [
             [
@@ -44,6 +46,7 @@ class Mongo_2021_01_01_02_00_00_User_Entity_Migration implements MigrationInterf
                 'is_used_in_form' => true,
                 'is_required' => true,
                 'sort_order' => 10,
+                'flags' => ['can_delete' => false],
             ],
             [
                 'code' => 'last_name',
@@ -54,6 +57,7 @@ class Mongo_2021_01_01_02_00_00_User_Entity_Migration implements MigrationInterf
                 'is_used_in_form' => true,
                 'is_required' => false,
                 'sort_order' => 12,
+                'flags' => ['can_delete' => false],
             ],
             [
                 'code' => 'email',
@@ -64,6 +68,7 @@ class Mongo_2021_01_01_02_00_00_User_Entity_Migration implements MigrationInterf
                 'is_used_in_form' => true,
                 'is_required' => true,
                 'sort_order' => 30,
+                'flags' => ['can_delete' => false],
             ],
             [
                 'code' => 'dob',

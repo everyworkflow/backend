@@ -26,14 +26,15 @@ class Mongo_2021_01_05_00_00_00_Menu_Migration implements MigrationInterface
 
     public function migrate(): bool
     {
-        /** @var EntityDocument $productEntity */
-        $productEntity = $this->entityRepository->create();
-        $productEntity
+        /** @var EntityDocument $entity */
+        $entity = $this->entityRepository->create();
+        $entity
             ->setName('Menu')
             ->setCode($this->menuRepository->getEntityCode())
             ->setClass(MenuEnity::class)
             ->setStatus(MenuEnity::STATUS_ENABLE);
-        $this->entityRepository->saveOne($productEntity);
+        $entity->setData('flags', ['can_delete' => false, 'can_update' => false]);
+        $this->entityRepository->saveOne($entity);
 
         $attributeData = [
             [
@@ -43,6 +44,7 @@ class Mongo_2021_01_05_00_00_00_Menu_Migration implements MigrationInterface
                 'is_used_in_grid' => true,
                 'is_used_in_form' => true,
                 'is_required' => true,
+                'flags' => ['can_delete' => false],
             ],
             [
                 'code' => 'name',
@@ -51,6 +53,7 @@ class Mongo_2021_01_05_00_00_00_Menu_Migration implements MigrationInterface
                 'is_used_in_grid' => true,
                 'is_used_in_form' => true,
                 'is_required' => true,
+                'flags' => ['can_delete' => false],
             ],
         ];
 

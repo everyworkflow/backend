@@ -33,6 +33,7 @@ class Mongo_2021_01_04_00_00_00_Customer_Migration implements MigrationInterface
             ->setCode($this->customerRepository->getEntityCode())
             ->setClass(CustomerEntity::class)
             ->setStatus(EntityDocument::STATUS_ENABLE);
+        $customerEntity->setData('flags', ['can_delete' => false, 'can_update' => false]);
         $this->entityRepository->saveOne($customerEntity);
 
         $attributeData = [
@@ -43,6 +44,7 @@ class Mongo_2021_01_04_00_00_00_Customer_Migration implements MigrationInterface
                 'is_used_in_grid' => true,
                 'is_used_in_form' => true,
                 'is_required' => true,
+                'flags' => ['can_delete' => false],
             ],
             [
                 'code' => 'first_name',
@@ -51,6 +53,7 @@ class Mongo_2021_01_04_00_00_00_Customer_Migration implements MigrationInterface
                 'is_used_in_grid' => true,
                 'is_used_in_form' => true,
                 'is_required' => true,
+                'flags' => ['can_delete' => false],
             ],
             [
                 'code' => 'last_name',
@@ -59,6 +62,7 @@ class Mongo_2021_01_04_00_00_00_Customer_Migration implements MigrationInterface
                 'is_used_in_grid' => true,
                 'is_used_in_form' => true,
                 'is_required' => true,
+                'flags' => ['can_delete' => false],
             ],
         ];
 

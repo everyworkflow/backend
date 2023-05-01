@@ -10,6 +10,7 @@ namespace EveryWorkflow\EcommerceBundle\Seeder;
 
 use EveryWorkflow\CatalogCategoryBundle\Repository\CatalogCategoryRepositoryInterface;
 use EveryWorkflow\CatalogProductBundle\Repository\CatalogProductRepositoryInterface;
+use EveryWorkflow\EavBundle\Repository\AttributeGroupRepositoryInterface;
 use EveryWorkflow\EavBundle\Repository\AttributeRepositoryInterface;
 use EveryWorkflow\MenuBundle\Repository\MenuRepositoryInterface;
 use EveryWorkflow\MongoBundle\Support\SeederInterface;
@@ -23,6 +24,7 @@ class Mongo_2023_01_01_00_00_00_Ecommerce_Seeder implements SeederInterface
     public function __construct(
         protected SluggerInterface $slugger,
         protected AttributeRepositoryInterface $attributeRepository,
+        protected AttributeGroupRepositoryInterface $attributeGroupRepository,
         protected MenuRepositoryInterface $menuRepository,
         protected CatalogCategoryRepositoryInterface $catalogCategoryRepository,
         protected CatalogProductRepositoryInterface $catalogProductRepository
@@ -32,8 +34,9 @@ class Mongo_2023_01_01_00_00_00_Ecommerce_Seeder implements SeederInterface
     public function seed(): bool
     {
         $this->seedStoreMenu();
-        $this->seedCategories();
         $this->seedProductAttributes();
+        $this->seedProductAttributeGroup();
+        $this->seedCategories();
         $this->seedProducts();
 
         return self::SUCCESS;
@@ -41,10 +44,10 @@ class Mongo_2023_01_01_00_00_00_Ecommerce_Seeder implements SeederInterface
 
     public function rollback(): bool
     {
-        $this->menuRepository->deleteByFilter(['code' => 'store_panel_menu']);
-        $this->catalogCategoryRepository->getCollection()->drop();
-        $this->attributeRepository->deleteByFilter(['flag.is_created_via_seeder' => true]);
-        $this->catalogProductRepository->getCollection()->drop();
+        $this->catalogProductRepository->deleteByFilter(['flags.is_created_via_seeder' => true]);
+        $this->catalogCategoryRepository->deleteByFilter(['flags.is_created_via_seeder' => true]);
+        $this->attributeRepository->deleteByFilter(['flags.is_created_via_seeder' => true]);
+        $this->menuRepository->deleteByFilter(['flags.is_created_via_seeder' => true]);
 
         return self::SUCCESS;
     }
@@ -89,31 +92,11 @@ class Mongo_2023_01_01_00_00_00_Ecommerce_Seeder implements SeederInterface
             'code' => 'store_panel_menu',
             'status' => 'enable',
             'menu_builder_data' => $menuBuilderData,
+            'flags' => [
+                'is_created_via_seeder' => true,
+            ],
         ]);
         $this->menuRepository->saveOne($frontendMenu);
-    }
-
-    protected function seedCategories(): void
-    {
-        $faker = $faker = \Faker\Factory::create();
-        for ($i = 1; $i < 20; ++$i) {
-            $name = $faker->unique()->words(3, true);
-            $slug = $this->slugger->slug($name)->toString();
-            $name = ucwords($name);
-            // $image = $faker->g
-
-            $this->categories[] = [
-                'status' => 'enable',
-                'name' => $name,
-                'code' => $slug,
-                'path' => $slug,
-            ];
-        }
-
-        foreach ($this->categories as $item) {
-            $document = $this->catalogCategoryRepository->create($item);
-            $this->catalogCategoryRepository->saveOne($document);
-        }
     }
 
     protected function seedProductAttributes(): void
@@ -293,9 +276,128 @@ class Mongo_2023_01_01_00_00_00_Ecommerce_Seeder implements SeederInterface
         foreach ($this->productAttributes as $item) {
             $item['status'] = 'enable';
             $item['entity_code'] = $this->catalogProductRepository->getEntityCode();
-            $item['flag.is_created_via_seeder'] = true;
+            $item['flags'] = [
+                'is_created_via_seeder' => true,
+                'can_delete' => false,
+            ];
             $attribute = $this->attributeRepository->create($item);
             $this->attributeRepository->saveOne($attribute);
+        }
+    }
+
+    protected function seedProductAttributeGroup(): void
+    {
+        $groupData = [
+            'name' => 'Default',
+            'code' => 'default',
+            'entity_code' => 'catalog_product',
+            'status' => 'enable',
+            'sort_order' => 1,
+            'attribute_group_data' => [
+                [
+                    'code' => 'general',
+                    'name' => 'General',
+                    'sort_order' => 10,
+                    'attributes' => [
+                        'sku',
+                        'name',
+                        'url_key',
+                    ],
+                ],
+                [
+                    'code' => 'price',
+                    'name' => 'Price',
+                    'sort_order' => 20,
+                    'attributes' => [
+                        'price',
+                        'special_price_from',
+                        'special_price',
+                        'special_price_to',
+                    ],
+                ],
+                [
+                    'code' => 'inventory',
+                    'name' => 'Inventory',
+                    'sort_order' => 30,
+                    'attributes' => [
+                        'quantity',
+                    ],
+                ],
+                [
+                    'code' => 'gallery',
+                    'name' => 'Gallery',
+                    'sort_order' => 300,
+                    'attributes' => [
+                        'gallery',
+                    ],
+                ],
+                [
+                    'code' => 'content',
+                    'name' => 'Content',
+                    'sort_order' => 500,
+                    'attributes' => [
+                        'short_description',
+                        'description',
+                    ],
+                ],
+                [
+                    'code' => 'meta_information',
+                    'name' => 'Meta Information',
+                    'sort_order' => 1000,
+                    'attributes' => [
+                        'meta_title',
+                        'meta_description',
+                        'meta_keywords',
+                    ],
+                ],
+            ],
+            'flags' => [
+                'is_created_via_seeder' => true,
+                'can_delete' => false,
+            ],
+        ];
+
+        $this->attributeGroupRepository->saveOne($this->attributeGroupRepository->create($groupData));
+
+        $groupData['name'] = 'Clothing';
+        $groupData['code'] = 'clothing';
+        $groupData['sort_order'] = 10;
+        $groupData['attribute_group_data'][] = [
+            'code' => 'Product Information',
+            'name' => 'product_information',
+            'sort_order' => 100,
+            'attributes' => [
+                'color',
+                'size',
+            ],
+        ];
+
+        $this->attributeGroupRepository->saveOne($this->attributeGroupRepository->create($groupData));
+    }
+
+    protected function seedCategories(): void
+    {
+        $faker = $faker = \Faker\Factory::create();
+        for ($i = 1; $i < 20; ++$i) {
+            $name = $faker->unique()->words(3, true);
+            $slug = $this->slugger->slug($name)->toString();
+            $name = ucwords($name);
+
+            $this->categories[] = [
+                'status' => 'enable',
+                'name' => $name,
+                'code' => $slug,
+                'parent' => '---',
+                'path' => $slug,
+                'flags' => [
+                    'is_created_via_seeder' => true,
+                ],
+            ];
+        }
+
+        foreach ($this->categories as $item) {
+            $document = $this->catalogCategoryRepository->create($item);
+            $this->catalogCategoryRepository->saveOne($document);
         }
     }
 
@@ -355,7 +457,7 @@ class Mongo_2023_01_01_00_00_00_Ecommerce_Seeder implements SeederInterface
                 'description' => $faker->paragraphs(rand(3, 6), true),
                 'meta_title' => $name,
                 'url_key' => $slug,
-                'flag' => [
+                'flags' => [
                     'is_created_via_seeder' => true,
                 ],
                 'created_at' => $timeNow,

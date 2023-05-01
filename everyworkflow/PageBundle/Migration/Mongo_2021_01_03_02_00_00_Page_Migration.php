@@ -26,14 +26,15 @@ class Mongo_2021_01_03_02_00_00_Page_Migration implements MigrationInterface
 
     public function migrate(): bool
     {
-        /** @var EntityDocument $pageEntity */
-        $pageEntity = $this->entityRepository->create();
-        $pageEntity
+        /** @var EntityDocument $entity */
+        $entity = $this->entityRepository->create();
+        $entity
             ->setName('Page')
             ->setCode($this->pageRepository->getEntityCode())
             ->setClass(PageEntity::class)
             ->setStatus(EntityDocument::STATUS_ENABLE);
-        $this->entityRepository->saveOne($pageEntity);
+        $entity->setData('flags', ['can_delete' => false, 'can_update' => false]);
+        $this->entityRepository->saveOne($entity);
 
         $attributeData = [
             [
@@ -45,6 +46,7 @@ class Mongo_2021_01_03_02_00_00_Page_Migration implements MigrationInterface
                 'is_used_in_form' => true,
                 'is_required' => true,
                 'sort_order' => 10,
+                'flags' => ['can_delete' => false],
             ],
             [
                 'code' => 'url_path',
@@ -55,6 +57,7 @@ class Mongo_2021_01_03_02_00_00_Page_Migration implements MigrationInterface
                 'is_used_in_form' => true,
                 'is_required' => true,
                 'sort_order' => 20,
+                'flags' => ['can_delete' => false],
             ],
             [
                 'code' => 'meta_title',
@@ -64,6 +67,7 @@ class Mongo_2021_01_03_02_00_00_Page_Migration implements MigrationInterface
                 'is_used_in_form' => true,
                 'is_required' => false,
                 'sort_order' => 9000,
+                'flags' => ['can_delete' => false],
             ],
             [
                 'code' => 'meta_description',
@@ -73,6 +77,7 @@ class Mongo_2021_01_03_02_00_00_Page_Migration implements MigrationInterface
                 'is_used_in_form' => true,
                 'is_required' => false,
                 'sort_order' => 9101,
+                'flags' => ['can_delete' => false],
             ],
             [
                 'code' => 'meta_keyword',
@@ -82,6 +87,7 @@ class Mongo_2021_01_03_02_00_00_Page_Migration implements MigrationInterface
                 'is_used_in_form' => true,
                 'is_required' => false,
                 'sort_order' => 9102,
+                'flags' => ['can_delete' => false],
             ],
         ];
 

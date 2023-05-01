@@ -33,14 +33,15 @@ class Mongo_2021_01_05_02_00_00_CatalogCategory_Migration implements MigrationIn
 
     public function migrate(): bool
     {
-        /** @var EntityDocument $categoryEntity */
-        $categoryEntity = $this->entityRepository->create();
-        $categoryEntity
+        /** @var EntityDocument $entity */
+        $entity = $this->entityRepository->create();
+        $entity
             ->setName('Catalog category')
             ->setCode($this->catalogCategoryRepository->getEntityCode())
             ->setClass(CatalogCategoryEntity::class)
             ->setStatus(CatalogCategoryEntity::STATUS_ENABLE);
-        $this->entityRepository->saveOne($categoryEntity);
+        $entity->setData('flags', ['can_delete' => false, 'can_update' => false]);
+        $this->entityRepository->saveOne($entity);
 
         $attributeData = [
             [
@@ -51,6 +52,7 @@ class Mongo_2021_01_05_02_00_00_CatalogCategory_Migration implements MigrationIn
                 'is_used_in_form' => true,
                 'is_required' => true,
                 'sort_order' => 10,
+                'flags' => ['can_delete' => false],
             ],
             [
                 'code' => 'code',
@@ -60,6 +62,7 @@ class Mongo_2021_01_05_02_00_00_CatalogCategory_Migration implements MigrationIn
                 'is_used_in_form' => true,
                 'is_required' => true,
                 'sort_order' => 15,
+                'flags' => ['can_delete' => false, 'can_update' => false],
             ],
             [
                 'code' => 'path',
@@ -69,6 +72,7 @@ class Mongo_2021_01_05_02_00_00_CatalogCategory_Migration implements MigrationIn
                 'is_used_in_form' => true,
                 'is_required' => true,
                 'sort_order' => 20,
+                'flags' => ['can_delete' => false],
             ],
             [
                 'code' => 'parent',
@@ -78,6 +82,7 @@ class Mongo_2021_01_05_02_00_00_CatalogCategory_Migration implements MigrationIn
                 'is_used_in_form' => true,
                 'is_required' => true,
                 'sort_order' => 25,
+                'flags' => ['can_delete' => false],
             ],
         ];
 

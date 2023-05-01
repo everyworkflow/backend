@@ -11,6 +11,7 @@ namespace EveryWorkflow\CatalogProductBundle\Migration;
 use EveryWorkflow\CatalogProductBundle\Entity\CatalogProductEntity;
 use EveryWorkflow\CatalogProductBundle\Repository\CatalogProductRepositoryInterface;
 use EveryWorkflow\EavBundle\Document\EntityDocument;
+use EveryWorkflow\EavBundle\Repository\AttributeGroupRepositoryInterface;
 use EveryWorkflow\EavBundle\Repository\AttributeRepositoryInterface;
 use EveryWorkflow\EavBundle\Repository\EntityRepositoryInterface;
 use EveryWorkflow\MongoBundle\Support\MigrationInterface;
@@ -20,20 +21,22 @@ class Mongo_2021_01_05_00_00_00_CatalogProduct_Migration implements MigrationInt
     public function __construct(
         protected EntityRepositoryInterface $entityRepository,
         protected AttributeRepositoryInterface $attributeRepository,
+        protected AttributeGroupRepositoryInterface $attributeGroupRepository,
         protected CatalogProductRepositoryInterface $catalogProductRepository
     ) {
     }
 
     public function migrate(): bool
     {
-        /** @var EntityDocument $productEntity */
-        $productEntity = $this->entityRepository->create();
-        $productEntity
+        /** @var EntityDocument $entity */
+        $entity = $this->entityRepository->create();
+        $entity
             ->setName('Catalog product')
             ->setCode($this->catalogProductRepository->getEntityCode())
             ->setClass(CatalogProductEntity::class)
             ->setStatus(CatalogProductEntity::STATUS_ENABLE);
-        $this->entityRepository->saveOne($productEntity);
+        $entity->setData('flags', ['can_delete' => false, 'can_update' => false]);
+        $this->entityRepository->saveOne($entity);
 
         $attributeData = [
             [
@@ -43,7 +46,8 @@ class Mongo_2021_01_05_00_00_00_CatalogProduct_Migration implements MigrationInt
                 'is_used_in_grid' => true,
                 'is_used_in_form' => true,
                 'is_required' => true,
-                'sort_order' => 1,
+                'sort_order' => 5,
+                'flags' => ['can_delete' => false, 'can_update' => false],
             ],
             [
                 'code' => 'name',
@@ -53,6 +57,7 @@ class Mongo_2021_01_05_00_00_00_CatalogProduct_Migration implements MigrationInt
                 'is_used_in_form' => true,
                 'is_required' => true,
                 'sort_order' => 10,
+                'flags' => ['can_delete' => false],
             ],
             [
                 'code' => 'price',
@@ -62,6 +67,7 @@ class Mongo_2021_01_05_00_00_00_CatalogProduct_Migration implements MigrationInt
                 'is_used_in_form' => true,
                 'is_required' => true,
                 'sort_order' => 50,
+                'flags' => ['can_delete' => false],
             ],
             [
                 'code' => 'special_price_from',
@@ -71,6 +77,7 @@ class Mongo_2021_01_05_00_00_00_CatalogProduct_Migration implements MigrationInt
                 'is_used_in_form' => true,
                 'is_required' => false,
                 'sort_order' => 51,
+                'flags' => ['can_delete' => false],
             ],
             [
                 'code' => 'special_price',
@@ -80,6 +87,7 @@ class Mongo_2021_01_05_00_00_00_CatalogProduct_Migration implements MigrationInt
                 'is_used_in_grid' => true,
                 'is_used_in_form' => true,
                 'is_required' => false,
+                'flags' => ['can_delete' => false],
             ],
             [
                 'code' => 'special_price_to',
@@ -89,6 +97,7 @@ class Mongo_2021_01_05_00_00_00_CatalogProduct_Migration implements MigrationInt
                 'is_used_in_form' => true,
                 'is_required' => false,
                 'sort_order' => 53,
+                'flags' => ['can_delete' => false],
             ],
             [
                 'code' => 'quantity',
@@ -98,6 +107,7 @@ class Mongo_2021_01_05_00_00_00_CatalogProduct_Migration implements MigrationInt
                 'is_used_in_form' => true,
                 'is_required' => true,
                 'sort_order' => 80,
+                'flags' => ['can_delete' => false],
             ],
             [
                 'code' => 'short_description',
@@ -108,6 +118,7 @@ class Mongo_2021_01_05_00_00_00_CatalogProduct_Migration implements MigrationInt
                 'is_required' => false,
                 'row_count' => 8,
                 'sort_order' => 500,
+                'flags' => ['can_delete' => false],
             ],
             [
                 'code' => 'description',
@@ -118,6 +129,7 @@ class Mongo_2021_01_05_00_00_00_CatalogProduct_Migration implements MigrationInt
                 'is_required' => false,
                 'field_type' => 'markdown_field',
                 'sort_order' => 1000,
+                'flags' => ['can_delete' => false],
             ],
             [
                 'code' => 'meta_title',
@@ -126,6 +138,7 @@ class Mongo_2021_01_05_00_00_00_CatalogProduct_Migration implements MigrationInt
                 'is_used_in_grid' => false,
                 'is_used_in_form' => true,
                 'sort_order' => 9000,
+                'flags' => ['can_delete' => false],
             ],
             [
                 'code' => 'meta_keywords',
@@ -135,6 +148,7 @@ class Mongo_2021_01_05_00_00_00_CatalogProduct_Migration implements MigrationInt
                 'is_used_in_form' => true,
                 'is_required' => false,
                 'sort_order' => 9101,
+                'flags' => ['can_delete' => false],
             ],
             [
                 'code' => 'meta_description',
@@ -144,6 +158,7 @@ class Mongo_2021_01_05_00_00_00_CatalogProduct_Migration implements MigrationInt
                 'is_used_in_form' => true,
                 'is_required' => false,
                 'sort_order' => 9102,
+                'flags' => ['can_delete' => false],
             ],
             [
                 'code' => 'url_key',
@@ -153,6 +168,7 @@ class Mongo_2021_01_05_00_00_00_CatalogProduct_Migration implements MigrationInt
                 'is_used_in_form' => true,
                 'is_required' => true,
                 'sort_order' => 9103,
+                'flags' => ['can_delete' => false],
             ],
         ];
 

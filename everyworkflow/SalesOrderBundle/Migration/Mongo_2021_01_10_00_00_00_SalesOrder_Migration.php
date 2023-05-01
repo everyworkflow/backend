@@ -33,6 +33,7 @@ class Mongo_2021_01_10_00_00_00_SalesOrder_Migration implements MigrationInterfa
             ->setCode($this->salesOrderRepository->getEntityCode())
             ->setClass(SalesOrderEntity::class)
             ->setStatus(SalesOrderEntity::STATUS_ENABLE);
+        $entity->setData('flags', ['can_delete' => false, 'can_update' => false]);
         $this->entityRepository->saveOne($entity);
 
         $attributeData = [

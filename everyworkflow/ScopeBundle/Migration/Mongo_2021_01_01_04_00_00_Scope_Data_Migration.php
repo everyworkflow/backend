@@ -21,18 +21,15 @@ class Mongo_2021_01_01_04_00_00_Scope_Data_Migration implements MigrationInterfa
 
     public function migrate(): bool
     {
-        $indexKeys = [];
-        foreach ($this->scopeRepository->getIndexKeys() as $key) {
-            $indexKeys[$key] = 1;
-        }
-        $this->scopeRepository->getCollection()->createIndex($indexKeys, ['unique' => true]);
+        $this->scopeRepository->getCollection()->createIndex(['code' => 1], ['unique' => true]);
 
         $items = [
             [
                 'name' => 'Default',
                 'code' => ScopeDocumentInterface::DEFAULT_CODE,
-                'parent' => '--',
+                'parent' => '---',
                 'status' => 'enable',
+                'flags' => ['can_delete' => false, 'can_update' => false],
             ],
             [
                 'name' => 'Admin',
@@ -85,7 +82,7 @@ class Mongo_2021_01_01_04_00_00_Scope_Data_Migration implements MigrationInterfa
                 'status' => 'enable',
             ],
         ];
-        $i = 0;
+        $i = 1;
         foreach ($items as $scope) {
             $scope['sort_order'] = $i++;
             $this->scopeRepository->saveOne($this->scopeRepository->create($scope));
