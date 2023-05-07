@@ -45,7 +45,13 @@
         plugins: [
           SwaggerUIBundle.plugins.DownloadUrl
         ],
-        layout: "StandaloneLayout"
+        layout: "StandaloneLayout",
+        onComplete: function() {
+          let bearerAuth = (new URLSearchParams(window.location.search)).get('bearerAuth');
+          if (bearerAuth && bearerAuth !== '') {
+            ui.preauthorizeApiKey('bearerAuth', bearerAuth);
+          }
+        }
       });
       // End Swagger UI call region
 
