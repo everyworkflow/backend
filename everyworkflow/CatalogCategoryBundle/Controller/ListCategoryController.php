@@ -27,7 +27,9 @@ class ListCategoryController extends AbstractController
         priority: 10,
         methods: 'GET',
         permissions: 'catalog.category.list',
-        swagger: true
+        swagger: [
+            'tags' => ['catalog_category'],
+        ]
     )]
     public function __invoke(Request $request): JsonResponse
     {

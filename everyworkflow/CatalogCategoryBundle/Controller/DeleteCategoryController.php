@@ -26,6 +26,7 @@ class DeleteCategoryController extends AbstractController
         methods: 'DELETE',
         permissions: 'catalog.category.delete',
         swagger: [
+            'tags' => ['catalog_category'],
             'parameters' => [
                 [
                     'name' => 'uuid',

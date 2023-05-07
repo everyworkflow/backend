@@ -25,17 +25,18 @@ class SwaggerGenerator implements SwaggerGeneratorInterface
     public function generate(): SwaggerData
     {
         $config = $this->configProvider->get() ?? [];
-        $servers = [
-            [
-                'url' => $this->requestStack->getCurrentRequest()->getSchemeAndHttpHost(),
-            ],
-        ];
+        $servers = [];
         if (isset($config['servers']) && is_array($config['servers'])) {
             foreach ($config['servers'] as $server) {
                 $servers[] = [
                     'url' => $server,
                 ];
             }
+        }
+        if (0 === count($servers)) {
+            $servers[] = [
+                'url' => $this->requestStack->getCurrentRequest()->getSchemeAndHttpHost(),
+            ];
         }
         $config['servers'] = $servers;
         $swaggerData = new SwaggerData([
@@ -55,12 +56,13 @@ class SwaggerGenerator implements SwaggerGeneratorInterface
             ...$config,
         ]);
 
-        $this->addControllerData($swaggerData);
+        $swaggerData = $this->addControllerData($swaggerData);
+        $swaggerData = $this->addModelData($swaggerData);
 
         return $swaggerData;
     }
 
-    protected function addControllerData(SwaggerData $swaggerData): void
+    protected function addControllerData(SwaggerData $swaggerData): SwaggerData
     {
         $tags = [];
         $paths = [];
@@ -82,18 +84,28 @@ class SwaggerGenerator implements SwaggerGeneratorInterface
                 continue;
             }
 
-            $routeNameArr = explode('.', $routeName);
-            $tag = $routeNameArr[0];
-            if (!isset($tags[$tag])) {
-                $tags[$tag] = [
-                    'name' => $tag,
-                ];
+            if (isset($controllerSwaggerData['tags']) && is_array($controllerSwaggerData['tags'])) {
+                $currentTags = $controllerSwaggerData['tags'];
+                if (is_array($currentTags) && count($currentTags) > 0) {
+                    $currentTag = $currentTags[0];
+                    $tags[$currentTag] = [
+                        'name' => $currentTag,
+                    ];
+                }
+            } else {
+                $routeNameArr = explode('.', $routeName);
+                $currentTag = $routeNameArr[0];
+                if (!isset($tags[$currentTag])) {
+                    $tags[$currentTag] = [
+                        'name' => $currentTag,
+                    ];
+                }
+                $currentTags = [$currentTag];
             }
-
             $pathData = [
                 'operationId' => $routeName,
                 'summary' => $routeName,
-                'tags' => [$tag],
+                'tags' => $currentTags,
                 'consumes' => [
                     'application/json',
                 ],
@@ -115,6 +127,8 @@ class SwaggerGenerator implements SwaggerGeneratorInterface
         $swaggerData->setTags(array_values($tags));
         ksort($paths);
         $swaggerData->setPaths($paths);
+
+        return $swaggerData;
     }
 
     protected function getSwaggerDataForController(string $controllerClassName, string $routeName): mixed
@@ -135,6 +149,18 @@ class SwaggerGenerator implements SwaggerGeneratorInterface
                                     'bearerAuth' => [],
                                 ],
                             ];
+                            if (isset($attrArgs['methods']) && is_string($attrArgs['methods']) && 'post' === strtolower($attrArgs['methods'])) {
+                                $swaggerData['responses'][400] = [
+                                    'description' => 'Bad Request',
+                                    'content' => [
+                                        'application/json' => [
+                                            'schema' => [
+                                                '$ref' => '#/components/schemas/ApiBadRequestResponse',
+                                            ],
+                                        ],
+                                    ],
+                                ];
+                            }
                             if (
                                 !isset($swaggerData['responses']) ||
                                 (isset($swaggerData['responses']) && !isset($swaggerData['responses'][403]))
@@ -144,21 +170,7 @@ class SwaggerGenerator implements SwaggerGeneratorInterface
                                     'content' => [
                                         'application/json' => [
                                             'schema' => [
-                                                'type' => 'object',
-                                                'properties' => [
-                                                    'title' => [
-                                                        'default' => 'An error occurred',
-                                                        'type' => 'string',
-                                                    ],
-                                                    'status' => [
-                                                        'default' => 403,
-                                                        'type' => 'number',
-                                                    ],
-                                                    'detail' => [
-                                                        'default' => 'You do not have permission to access this resource.',
-                                                        'type' => 'string',
-                                                    ],
-                                                ],
+                                                '$ref' => '#/components/schemas/ApiForbiddenResponse',
                                             ],
                                         ],
                                     ],
@@ -193,5 +205,57 @@ class SwaggerGenerator implements SwaggerGeneratorInterface
         }
 
         return null;
+    }
+
+    protected function addModelData(SwaggerData $swaggerData): SwaggerData
+    {
+        $components = $swaggerData->getComponents();
+
+        $components['schemas'] = $components['schemas'] ?? [];
+
+        $components['schemas']['ApiResponse'] = [
+            'type' => 'object',
+            'properties' => [],
+        ];
+
+        $components['schemas']['ApiBadRequestResponse'] = [
+            'type' => 'object',
+            'properties' => [
+                'title' => [
+                    'default' => 'An error occurred',
+                    'type' => 'string',
+                ],
+                'status' => [
+                    'default' => 403,
+                    'type' => 'number',
+                ],
+                'detail' => [
+                    'default' => 'You do not have permission to access this resource.',
+                    'type' => 'string',
+                ],
+            ],
+        ];
+
+        $components['schemas']['ApiForbiddenResponse'] = [
+            'type' => 'object',
+            'properties' => [
+                'title' => [
+                    'default' => 'An error occurred',
+                    'type' => 'string',
+                ],
+                'status' => [
+                    'default' => 403,
+                    'type' => 'number',
+                ],
+                'detail' => [
+                    'default' => 'You do not have permission to access this resource.',
+                    'type' => 'string',
+                ],
+            ],
+        ];
+
+        $swaggerData->setComponents($components);
+
+        return $swaggerData;
     }
 }

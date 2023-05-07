@@ -28,6 +28,7 @@ class GetProductController extends AbstractController
         methods: 'GET',
         // permissions: 'catalog.product.view',
         swagger: [
+            'tags' => ['catalog_product'],
             'parameters' => [
                 [
                     'name' => 'uuid',

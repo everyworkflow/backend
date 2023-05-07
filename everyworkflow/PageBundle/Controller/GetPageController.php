@@ -27,6 +27,7 @@ class GetPageController extends AbstractController
         methods: 'GET',
         permissions: 'cms.page.view',
         swagger: [
+            'tags' => ['cms_page'],
             'parameters' => [
                 [
                     'name' => 'uuid',

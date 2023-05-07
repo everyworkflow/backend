@@ -31,7 +31,9 @@ class AdditionalFormController extends AbstractController
         methods: 'POST',
         priority: 5,
         permissions: 'eav.attribute.view',
-        swagger: true
+        swagger: [
+            'tags' => ['eav_attribute'],
+        ]
     )]
     public function __invoke(Request $request): JsonResponse
     {

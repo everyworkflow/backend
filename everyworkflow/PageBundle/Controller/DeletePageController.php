@@ -26,6 +26,7 @@ class DeletePageController extends AbstractController
         methods: 'DELETE',
         permissions: 'cms.page.delete',
         swagger: [
+            'tags' => ['cms_page'],
             'parameters' => [
                 [
                     'name' => 'uuid',

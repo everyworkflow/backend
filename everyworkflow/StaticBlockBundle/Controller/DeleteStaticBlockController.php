@@ -26,6 +26,7 @@ class DeleteStaticBlockController extends AbstractController
         methods: 'DELETE',
         permissions: 'cms.static_block.delete',
         swagger: [
+            'tags' => ['cms_static_block'],
             'parameters' => [
                 [
                     'name' => 'uuid',

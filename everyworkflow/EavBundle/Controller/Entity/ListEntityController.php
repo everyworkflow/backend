@@ -27,7 +27,9 @@ class ListEntityController extends AbstractController
         priority: 10,
         methods: 'GET',
         permissions: 'eav.entity.list',
-        swagger: true
+        swagger: [
+            'tags' => ['eav_entity'],
+        ]
     )]
     public function __invoke(Request $request): JsonResponse
     {

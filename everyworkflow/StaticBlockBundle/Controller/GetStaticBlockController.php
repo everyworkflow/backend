@@ -29,6 +29,7 @@ class GetStaticBlockController extends AbstractController
         methods: 'GET',
         permissions: 'cms.static_block.view',
         swagger: [
+            'tags' => ['cms_static_block'],
             'parameters' => [
                 [
                     'name' => 'uuid',

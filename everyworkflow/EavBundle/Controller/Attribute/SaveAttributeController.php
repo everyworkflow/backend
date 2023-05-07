@@ -27,6 +27,7 @@ class SaveAttributeController extends AbstractController
         methods: 'POST',
         permissions: 'eav.attribute.save',
         swagger: [
+            'tags' => ['eav_attribute'],
             'parameters' => [
                 [
                     'name' => 'code',

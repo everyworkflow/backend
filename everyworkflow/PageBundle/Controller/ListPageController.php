@@ -27,7 +27,9 @@ class ListPageController extends AbstractController
         priority: 10,
         methods: 'GET',
         permissions: 'cms.page.list',
-        swagger: true
+        swagger: [
+            'tags' => ['cms_page'],
+        ]
     )]
     public function __invoke(Request $request): JsonResponse
     {

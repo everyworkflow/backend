@@ -27,6 +27,7 @@ class BulkActionAttributeController extends AbstractController
         methods: 'POST',
         permissions: 'eav.entity.save',
         swagger: [
+            'tags' => ['eav_attribute'],
             'parameters' => [
                 [
                     'name' => 'action',

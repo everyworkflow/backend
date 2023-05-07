@@ -28,6 +28,7 @@ class SaveCategoryController extends AbstractController
         methods: 'POST',
         permissions: 'catalog.category.save',
         swagger: [
+            'tags' => ['catalog_category'],
             'parameters' => [
                 [
                     'name' => 'uuid',

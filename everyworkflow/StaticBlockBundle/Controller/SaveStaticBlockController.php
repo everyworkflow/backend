@@ -27,6 +27,7 @@ class SaveStaticBlockController extends AbstractController
         methods: 'POST',
         permissions: 'cms.static_block.save',
         swagger: [
+            'tags' => ['cms_static_block'],
             'parameters' => [
                 [
                     'name' => 'uuid',

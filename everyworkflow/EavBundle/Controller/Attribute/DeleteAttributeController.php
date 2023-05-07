@@ -26,6 +26,7 @@ class DeleteAttributeController extends AbstractController
         methods: 'DELETE',
         permissions: 'eav.attribute.delete',
         swagger: [
+            'tags' => ['eav_attribute'],
             'parameters' => [
                 [
                     'name' => 'code',

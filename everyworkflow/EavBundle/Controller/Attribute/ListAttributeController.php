@@ -29,7 +29,9 @@ class ListAttributeController extends AbstractController
         priority: 10,
         methods: 'GET',
         permissions: 'eav.attribute.list',
-        swagger: true
+        swagger: [
+            'tags' => ['eav_attribute'],
+        ]
     )]
     public function __invoke(Request $request): JsonResponse
     {

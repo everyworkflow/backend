@@ -27,7 +27,9 @@ class ListStaticBlockController extends AbstractController
         priority: 10,
         methods: 'GET',
         permissions: 'cms.static_block.list',
-        swagger: true
+        swagger: [
+            'tags' => ['cms_static_block'],
+        ]
     )]
     public function __invoke(Request $request): JsonResponse
     {

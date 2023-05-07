@@ -26,6 +26,7 @@ class LoginController extends AbstractController
         name: 'login',
         methods: 'POST',
         swagger: [
+            'tags' => ['1-login'],
             'description' => 'Login with credentials.',
             'requestBody' => [
                 'content' => [
@@ -117,6 +118,7 @@ class LoginController extends AbstractController
         name: 'login.session',
         methods: 'POST',
         swagger: [
+            'tags' => ['1-login'],
             'description' => 'Start JWT session with session token.',
             'requestBody' => [
                 'content' => [
@@ -212,6 +214,7 @@ class LoginController extends AbstractController
         name: 'login.refresh',
         methods: 'POST',
         swagger: [
+            'tags' => ['1-login'],
             'description' => 'Refresh JWT token with session_token and refresh_token.',
             'requestBody' => [
                 'content' => [

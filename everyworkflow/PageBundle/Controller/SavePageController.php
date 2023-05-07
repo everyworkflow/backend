@@ -28,6 +28,7 @@ class SavePageController extends AbstractController
         methods: 'POST',
         permissions: 'cms.page.save',
         swagger: [
+            'tags' => ['cms_page'],
             'parameters' => [
                 [
                     'name' => 'uuid',

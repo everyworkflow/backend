@@ -28,7 +28,16 @@ class CatalogSearchController extends AbstractController
         name: 'catalog.search',
         priority: 10,
         methods: 'GET',
-        swagger: true
+        swagger: [
+            'tags' => ['catalog'],
+            'parameters' => [
+                [
+                    'name' => 'categoryCode',
+                    'in' => 'path',
+                    'default' => '',
+                ],
+            ],
+        ]
     )]
     public function __invoke(Request $request, string $categoryCode = ''): JsonResponse
     {

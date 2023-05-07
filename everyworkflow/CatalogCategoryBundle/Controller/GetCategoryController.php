@@ -27,6 +27,7 @@ class GetCategoryController extends AbstractController
         methods: 'GET',
         permissions: 'catalog.category.view',
         swagger: [
+            'tags' => ['catalog_category'],
             'parameters' => [
                 [
                     'name' => 'uuid',

@@ -27,6 +27,7 @@ class BulkActionProductController extends AbstractController
         methods: 'POST',
         permissions: 'catalog.product.save',
         swagger: [
+            'tags' => ['catalog_product'],
             'parameters' => [
                 [
                     'name' => 'action',

@@ -26,6 +26,7 @@ class DeleteProductController extends AbstractController
         methods: 'DELETE',
         permissions: 'catalog.product.delete',
         swagger: [
+            'tags' => ['catalog_product'],
             'parameters' => [
                 [
                     'name' => 'uuid',

@@ -27,7 +27,9 @@ class ListProductController extends AbstractController
         priority: 10,
         methods: 'GET',
         permissions: 'catalog.product.list',
-        swagger: true
+        swagger: [
+            'tags' => ['catalog_product'],
+        ]
     )]
     public function __invoke(Request $request): JsonResponse
     {

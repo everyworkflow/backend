@@ -29,6 +29,7 @@ class GetAttributeGroupController extends AbstractController
         methods: 'GET',
         permissions: 'eav.attribute_group.view',
         swagger: [
+            'tags' => ['eav_attribute_group'],
             'parameters' => [
                 [
                     'name' => 'code',

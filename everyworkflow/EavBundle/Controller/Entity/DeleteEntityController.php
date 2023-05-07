@@ -28,6 +28,7 @@ class DeleteEntityController extends AbstractController
         methods: 'DELETE',
         permissions: 'eav.entity.delete',
         swagger: [
+            'tags' => ['eav_entity'],
             'parameters' => [
                 [
                     'name' => 'code',

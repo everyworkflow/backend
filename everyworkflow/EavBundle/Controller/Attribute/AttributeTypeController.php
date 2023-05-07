@@ -27,7 +27,9 @@ class AttributeTypeController extends AbstractController
         name: 'eav.attribute_type',
         priority: 10,
         methods: 'GET',
-        swagger: true
+        swagger: [
+            'tags' => ['eav_attribute'],
+        ]
     )]
     public function __invoke(): JsonResponse
     {

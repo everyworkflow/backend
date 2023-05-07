@@ -29,6 +29,7 @@ class GetEntityController extends AbstractController
         methods: 'GET',
         permissions: 'eav.entity.view',
         swagger: [
+            'tags' => ['eav_entity'],
             'parameters' => [
                 [
                     'name' => 'code',
