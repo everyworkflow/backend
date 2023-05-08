@@ -25,6 +25,7 @@ class SwaggerGenerator implements SwaggerGeneratorInterface
     public function generate(): SwaggerData
     {
         $config = $this->configProvider->get() ?? [];
+        $config['openapi'] = '3.0.3';
         if (0 === count($config['servers'] ?? [])) {
             $config['servers'][] = [
                 'url' => $this->requestStack->getCurrentRequest()->getSchemeAndHttpHost(),
