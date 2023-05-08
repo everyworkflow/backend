@@ -6,8 +6,6 @@
 
 namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-use EveryWorkflow\SwaggerBundle\Model\SwaggerGenerator;
-
 return function (ContainerConfigurator $configurator) {
     /** @var DefaultsConfigurator $services */
     $services = $configurator
@@ -20,6 +18,6 @@ return function (ContainerConfigurator $configurator) {
         ->load('EveryWorkflow\\SwaggerBundle\\', '../../*')
         ->exclude('../../{DependencyInjection,Resources,Support,Tests}');
 
-    $services->set(SwaggerGenerator::class)
+    $services->set(\EveryWorkflow\SwaggerBundle\Model\Swagger\PathGenerator::class)
         ->arg('$router', service('router'));
 };
