@@ -1,9 +1,113 @@
 swagger:
+    openapi: 3.0.3
     info:
-        title: EveryWorkflow API
-        description: EveryWorkflow API documentation
+        title: EveryWorkflow API Documentation
+        description: |-
+            Quick links
+
+            - [https://docs.everyworkflow.com](https://docs.everyworkflow.com)
+
+            - [https://github.com/everyworkflow/backend](https://github.com/everyworkflow/backend)
+
+            - [https://github.com/everyworkflow/frontend](https://github.com/everyworkflow/frontend)
+
+        version: 0.1
         contact:
             email: everyworkflow@gmail.com
+        license:
+            name: MIT license
+            url: https://github.com/everyworkflow/backend/blob/main/LICENSE
     servers:
-        # - http://localhost:8000
-        # - http://localhost:8080
+        # - { url: http://localhost:8000 }
+        # - { url: http://localhost:8080 }
+    externalDocs:
+        description: Visit website
+        url: https://docs.everyworkflow.com
+    components:
+        securitySchemes:
+            bearerAuth:
+                type: http
+                scheme: bearer
+                bearerFormat: JWT
+        schemas:
+            api_response:
+                type: object
+            api_internal_server_error_response:
+                type: object
+                properties:
+                    title:
+                        default: An error occurred
+                        type: string
+                    status:
+                        default: 500
+                        type: number
+                    detail:
+                        default: This is error message.
+                        type: string
+            api_bad_request_response:
+                type: object
+                properties:
+                    title:
+                        default: An error occurred
+                        type: string
+                    status:
+                        default: 400
+                        type: number
+                    detail:
+                        default: Document data is not valid.
+                        type: string
+                    errors:
+                        type: object
+                        properties:
+                            field_key_1:
+                                type: object
+                                properties:
+                                    errors:
+                                        type: array
+                                        items:
+                                            default: The field_key_1 is required.
+                                            type: string
+                            field_key_2:
+                                type: object
+                                properties:
+                                    errors:
+                                        type: array
+                                        items:
+                                            default: The field_key_2 is required.
+                                            type: string
+            api_forbidden_response:
+                type: object
+                properties:
+                    title:
+                        default: An error occurred
+                        type: string
+                    status:
+                        default: 403
+                        type: number
+                    detail:
+                        default: You do not have permission to access this resource.
+                        type: string
+            data_collection_meta:
+                type: object
+                properties:
+                    per_page:
+                        default: 20
+                        type: number
+                    result_count:
+                        default: 20
+                        type: number
+                    total_count:
+                        default: 20
+                        type: number
+                    last_page:
+                        default: 1
+                        type: number
+                    current_page:
+                        default: 1
+                        type: number
+                    from:
+                        default: 0
+                        type: number
+                    to:
+                        default: 20
+                        type: number

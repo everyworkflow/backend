@@ -25,36 +25,12 @@ class SwaggerGenerator implements SwaggerGeneratorInterface
     public function generate(): SwaggerData
     {
         $config = $this->configProvider->get() ?? [];
-        $servers = [];
-        if (isset($config['servers']) && is_array($config['servers'])) {
-            foreach ($config['servers'] as $server) {
-                $servers[] = [
-                    'url' => $server,
-                ];
-            }
-        }
-        if (0 === count($servers)) {
-            $servers[] = [
+        if (0 === count($config['servers'] ?? [])) {
+            $config['servers'][] = [
                 'url' => $this->requestStack->getCurrentRequest()->getSchemeAndHttpHost(),
             ];
         }
-        $config['servers'] = $servers;
-        $swaggerData = new SwaggerData([
-            'openapi' => '3.0.1',
-            'info' => [
-                'version' => '0.1',
-            ],
-            'components' => [
-                'securitySchemes' => [
-                    'bearerAuth' => [
-                        'type' => 'http',
-                        'scheme' => 'bearer',
-                        'bearerFormat' => 'JWT',
-                    ],
-                ],
-            ],
-            ...$config,
-        ]);
+        $swaggerData = new SwaggerData($config);
 
         $swaggerData = $this->componentGenerator->generate($swaggerData);
         $swaggerData = $this->pathGenerator->generate($swaggerData);
