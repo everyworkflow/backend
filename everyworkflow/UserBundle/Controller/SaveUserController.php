@@ -38,6 +38,7 @@ class SaveUserController extends AbstractController
                 'content' => [
                     'application/json' => [
                         'schema' => [
+                            'type' => 'object',
                             'properties' => [
                                 'first_name' => [
                                     'type' => 'string',
@@ -53,10 +54,42 @@ class SaveUserController extends AbstractController
                                 ],
                                 'dob' => [
                                     'type' => 'string',
-                                    'required' => true,
                                 ],
                                 'phone' => [
                                     'type' => 'string',
+                                ],
+                            ],
+                            'examples' => [
+                                'John' => [
+                                    'first_name' => 'John',
+                                    'last_name' => 'Doe',
+                                    'email' => 'john@example.com',
+                                ],
+                                'TestUser' => [
+                                    'first_name' => 'Test',
+                                    'last_name' => 'User',
+                                    'email' => 'test@example.com',
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+            'responses' => [
+                200 => [
+                    'description' => 'Json Response',
+                    'content' => [
+                        'application/json' => [
+                            'schema' => [
+                                'properties' => [
+                                    'detail' => [
+                                        'type' => 'string',
+                                        'default' => 'Successfully saved changes.',
+                                    ],
+                                    'item' => [
+                                        'type' => 'object',
+                                        '$ref' => '#/components/schemas/user',
+                                    ],
                                 ],
                             ],
                         ],

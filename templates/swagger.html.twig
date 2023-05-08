@@ -27,6 +27,13 @@
   </head>
 
   <body>
+    <div style="position: absolute; top: 68px;width: 100%;padding: 0 16px;z-index: 1000;">
+      <form action="" method="GET" style="display: flex;justify-content: center;align-items: center;">
+        <label for="header-top-input-bearerAuth" style="margin-right: 8px;">Bearer Auth:</label>
+        <input id="header-top-input-bearerAuth" type="text" name="bearerAuth" style="margin-right: 8px;flex-grow: 1;" />
+        <button type="submit">Submit</button>
+      </form>
+    </div>
     <div id="swagger-ui"></div>
 
     <script src="{{ asset('swagger-dist/swagger-ui-bundle.js') }}" charset="UTF-8"> </script>
@@ -50,6 +57,7 @@
           let bearerAuth = (new URLSearchParams(window.location.search)).get('bearerAuth');
           if (bearerAuth && bearerAuth !== '') {
             ui.preauthorizeApiKey('bearerAuth', bearerAuth);
+            document.getElementById('header-top-input-bearerAuth').value = bearerAuth;
           }
         }
       });

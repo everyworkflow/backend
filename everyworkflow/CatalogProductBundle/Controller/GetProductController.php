@@ -36,6 +36,23 @@ class GetProductController extends AbstractController
                     'default' => 'create',
                 ],
             ],
+            'responses' => [
+                '200' => [
+                    'description' => 'Json Response',
+                    'content' => [
+                        'application/json' => [
+                            'schema' => [
+                                'properties' => [
+                                    'item' => [
+                                        'type' => 'object',
+                                        '$ref' => '#/components/schemas/catalog_product',
+                                    ],
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+            ],
         ]
     )]
     public function __invoke(Request $request, string $slug = 'create'): JsonResponse

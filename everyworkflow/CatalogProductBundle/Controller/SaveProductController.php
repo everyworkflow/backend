@@ -25,7 +25,7 @@ class SaveProductController extends AbstractController
     }
 
     #[EwRoute(
-        path: "catalog/product/{uuid}",
+        path: 'catalog/product/{uuid}',
         name: 'catalog.product.save',
         methods: 'POST',
         permissions: 'catalog.product.save',
@@ -36,26 +36,17 @@ class SaveProductController extends AbstractController
                     'name' => 'uuid',
                     'in' => 'path',
                     'default' => 'create',
-                ]
+                ],
             ],
             'requestBody' => [
                 'content' => [
                     'application/json' => [
                         'schema' => [
-                            'properties' => [
-                                'sku' => [
-                                    'type' => 'string',
-                                    'required' => true,
-                                ],
-                                'name' => [
-                                    'type' => 'string',
-                                    'required' => true,
-                                ]
-                            ]
-                        ]
-                    ]
-                ]
-            ]
+                            '$ref' => '#/components/schemas/catalog_product',
+                        ],
+                    ],
+                ],
+            ],
         ]
     )]
     public function __invoke(Request $request, string $uuid = 'create'): JsonResponse
@@ -69,7 +60,6 @@ class SaveProductController extends AbstractController
             foreach ($submitData as $key => $val) {
                 $item->setData($key, $val);
             }
-            
         }
 
         $item = $this->catalogProductRepository->saveOne($item);

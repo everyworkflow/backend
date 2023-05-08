@@ -11,7 +11,7 @@
     ],
     "require": {
         "symfony/asset": "6.2.*",
-        "everyworkflow/core-bundle": "*"
+        "everyworkflow/eav-bundle": "*"
     },
     "autoload": {
         "psr-4": {

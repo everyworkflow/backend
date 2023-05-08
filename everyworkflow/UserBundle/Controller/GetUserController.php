@@ -34,6 +34,23 @@ class GetUserController extends AbstractController
                     'default' => 'create',
                 ],
             ],
+            'responses' => [
+                '200' => [
+                    'description' => 'Json Response',
+                    'content' => [
+                        'application/json' => [
+                            'schema' => [
+                                'properties' => [
+                                    'item' => [
+                                        'type' => 'object',
+                                        '$ref' => '#/components/schemas/user',
+                                    ],
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+            ],
         ]
     )]
     public function __invoke(Request $request, string $uuid = 'create'): JsonResponse
