@@ -21,7 +21,7 @@ class Configuration implements ConfigurationInterface
 
         $rootNode
             ->children()
-                ->scalarNode('openapi')->end()
+                ->scalarNode('openapi')->defaultValue('3.0.3')->end()
                 ->arrayNode('info')
                     ->addDefaultsIfNotSet()
                     ->children()
