@@ -23,22 +23,21 @@ class CategoryAttributeForm extends EntityAttributeForm implements CategoryAttri
         foreach ($sections as $key => $section) {
             $fields = $section->getFields();
 
-            $fields[] = $this->formFieldFactory->create(
-                [
-                'label' => 'Parent',
-                'name' => 'parent',
-                'field_type' => 'tree_select_field',
-                'options' => [
-                    [
-                        'title' => 'Default',
-                        'value' => 'default',
-                        'children' => $this->getRecursiveTreeOptions($baseEntityRepository),
-                    ],
-                ],
-                'is_default_expand_all' => true,
-                'sort_order' => 10,
-                ]
-            );
+            foreach ($fields as $fKey => $field) {
+                if ('parent' === $field->getName()) {
+                    $fieldData = $field->toArray();
+                    $fieldData['field_type'] = 'tree_select_field';
+                    $fieldData['options'] = [
+                            [
+                                'title' => 'Default',
+                                'value' => '---',
+                                'children' => $this->getRecursiveTreeOptions($baseEntityRepository),
+                            ],
+                        ];
+                    $fieldData['is_default_expand_all'] = true;
+                    $fields[$fKey] = $this->formFieldFactory->create($fieldData);
+                }
+            }
 
             $sections[$key]->setFields($fields);
         }
@@ -48,7 +47,7 @@ class CategoryAttributeForm extends EntityAttributeForm implements CategoryAttri
 
     protected function getRecursiveTreeOptions(
         BaseEntityRepositoryInterface $baseEntityRepository,
-        string $parentCode = 'default',
+        string $parentCode = '---',
         array $skipCodes = []
     ): array {
         $itemList = [];
