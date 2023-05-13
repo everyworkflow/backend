@@ -377,13 +377,15 @@ class Mongo_2023_01_01_00_00_00_Ecommerce_Seeder implements SeederInterface
 
     protected function seedCategories(): void
     {
+        // TODO: Need to seed multi level categories
+
         $faker = $faker = \Faker\Factory::create();
-        for ($i = 1; $i < 20; ++$i) {
+        for ($i = 1; $i < 10; ++$i) {
             $name = $faker->unique()->words(3, true);
             $slug = $this->slugger->slug($name)->toString();
             $name = ucwords($name);
 
-            $this->categories[] = [
+            $categoryData = [
                 'status' => 'enable',
                 'name' => $name,
                 'code' => $slug,
@@ -393,6 +395,25 @@ class Mongo_2023_01_01_00_00_00_Ecommerce_Seeder implements SeederInterface
                     'is_created_via_seeder' => true,
                 ],
             ];
+            $this->categories[] = $categoryData;
+
+            for ($j = 1; $j < 20; ++$j) {
+                $name = $faker->unique()->words(3, true);
+                $slug = $this->slugger->slug($name)->toString();
+                $name = ucwords($name);
+
+                $childCategoryData = [
+                    'status' => 'enable',
+                    'name' => $name,
+                    'code' => $slug,
+                    'parent' => $categoryData['code'],
+                    'path' => $slug,
+                    'flags' => [
+                        'is_created_via_seeder' => true,
+                    ],
+                ];
+                $this->categories[] = $childCategoryData;
+            }
         }
 
         foreach ($this->categories as $item) {
