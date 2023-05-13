@@ -1,0 +1,13 @@
+# Media manager
+GET {{REST_BASE_URL}}/api/media-manager?path=/media&page=1
+Content-Type: application/json
+Authorization: Bearer {{REST_JWT_TOKEN}}
+
+#------------------------------------------------------------
+
+# Media manager -> page-cover
+GET {{REST_BASE_URL}}/api/media-manager?path=/media/page-cover&page=1
+Content-Type: application/json
+Authorization: Bearer {{REST_JWT_TOKEN}}
+
+#------------------------------------------------------------

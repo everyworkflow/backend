@@ -1,0 +1,6 @@
+# Panel layour
+GET {{REST_BASE_URL}}/api/admin-panel/layout
+Content-Type: application/json
+Authorization: Bearer {{REST_JWT_TOKEN}}
+
+#------------------------------------------------------------

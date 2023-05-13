@@ -1,0 +1,21 @@
+# Admin login
+POST {{REST_BASE_URL}}/api/login
+Content-Type: application/json
+
+{
+    "username": "admin@example.com",
+    "password": "admin@123"
+}
+
+#------------------------------------------------------------
+
+# Start auth session
+POST {{REST_BASE_URL}}/api/login/session
+Content-Type: application/json
+
+{
+    "session_name": "rest-api-client",
+    "session_token": "$2y$04$HWGFpF46R9GiWKCpkVeguezZ2n72TDldM.KnFpOcDU8t4Yd6lamwO"
+}
+
+#------------------------------------------------------------

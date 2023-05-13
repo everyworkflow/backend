@@ -1,0 +1,34 @@
+# Catalog product
+GET {{REST_BASE_URL}}/api/catalog/product?page=1&per-page=2
+Content-Type: application/json
+Authorization: Bearer {{REST_JWT_TOKEN}}
+
+#------------------------------------------------------------
+
+# Catalog product for data-grid
+GET {{REST_BASE_URL}}/api/catalog/product?for=data-grid&page=1&per-page=2
+Content-Type: application/json
+Authorization: Bearer {{REST_JWT_TOKEN}}
+
+#------------------------------------------------------------
+
+# Catalog product ?for=data-grid
+GET {{REST_BASE_URL}}/api/catalog/product?for=data-grid
+Content-Type: application/json
+Authorization: Bearer {{REST_JWT_TOKEN}}
+
+#------------------------------------------------------------
+
+# Catalog product ?page=2&per-page=2
+GET {{REST_BASE_URL}}/api/catalog/product?page=2&per-page=2
+Content-Type: application/json
+Authorization: Bearer {{REST_JWT_TOKEN}}
+
+#------------------------------------------------------------
+
+# Catalog product with filter
+GET {{REST_BASE_URL}}/api/catalog/product?filter={"sku":"molestias-ad-molestiae-voluptatum-temporibus-vel"}
+Content-Type: application/json
+Authorization: Bearer {{REST_JWT_TOKEN}}
+
+#------------------------------------------------------------
