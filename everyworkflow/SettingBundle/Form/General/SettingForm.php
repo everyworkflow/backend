@@ -36,56 +36,6 @@ class SettingForm extends Form implements SettingFormInterface
                 'field_type' => 'text_field',
                 'is_required' => true,
             ]),
-
-            $this->formFieldFactory->create([
-                'label' => 'System Name',
-                'name' => 'system_name1',
-                'field_type' => 'text_field',
-                'is_required' => true,
-            ]),
-            $this->formFieldFactory->create([
-                'label' => 'System Name',
-                'name' => 'system_name2',
-                'field_type' => 'text_field',
-                'is_required' => true,
-            ]),
-            $this->formFieldFactory->create([
-                'label' => 'System Name',
-                'name' => 'system_name3',
-                'field_type' => 'text_field',
-                'is_required' => true,
-            ]),
-            $this->formFieldFactory->create([
-                'label' => 'System Name',
-                'name' => 'system_name4',
-                'field_type' => 'text_field',
-                'is_required' => true,
-            ]),
-            $this->formFieldFactory->create([
-                'label' => 'System Name',
-                'name' => 'system_name5',
-                'field_type' => 'text_field',
-                'is_required' => true,
-            ]),
-            $this->formFieldFactory->create([
-                'label' => 'System Name',
-                'name' => 'system_name6',
-                'field_type' => 'text_field',
-                'is_required' => true,
-            ]),
-            $this->formFieldFactory->create([
-                'label' => 'System Name',
-                'name' => 'system_name7',
-                'field_type' => 'text_field',
-                'is_required' => true,
-            ]),
-            $this->formFieldFactory->create([
-                'label' => 'System Name',
-                'name' => 'system_name8',
-                'field_type' => 'text_field',
-                'is_required' => true,
-            ]),
-
             $this->formFieldFactory->create([
                 'label' => 'Language',
                 'name' => 'language',

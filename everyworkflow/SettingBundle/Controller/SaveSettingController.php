@@ -41,6 +41,7 @@ class SaveSettingController extends AbstractController
         } catch (\Exception $e) {
             $item = $this->settingDocumentRepository->create([
                 'code' => $code,
+                'status' => 'enable',
                 ...$submitData,
             ]);
         }
