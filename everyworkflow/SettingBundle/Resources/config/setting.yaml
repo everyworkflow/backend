@@ -1,4 +1,10 @@
 setting:
+    default_value:
+        advance.system:
+            media_storage: file_system
+    value:
+        general.setting:
+            system_name: New Overwritten Name
     menu:
         general:
             label: General

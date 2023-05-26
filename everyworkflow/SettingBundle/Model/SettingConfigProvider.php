@@ -37,6 +37,11 @@ class SettingConfigProvider extends BaseConfigProvider implements SettingConfigP
         return $value;
     }
 
+    /**
+     * @param array<int,mixed> $configs
+     *
+     * @return array<int,mixed>
+     */
     protected function parseConfig(array $configs): array
     {
         foreach ($configs as $key => $val) {
