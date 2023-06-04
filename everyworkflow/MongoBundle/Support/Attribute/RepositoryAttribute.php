@@ -99,6 +99,6 @@ class RepositoryAttribute
 
         $collectionName = $this->getCollectionName();
         $collectionName = str_replace('_collection', '', $collectionName);
-        return $collectionName . '_';
+        return $collectionName;
     }
 }
