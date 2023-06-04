@@ -13,5 +13,5 @@ use Symfony\Component\HttpFoundation\Request;
 
 interface RouteResolverInterface
 {
-    public function resolve($url, Request $request): JsonResponse;
+    public function resolve(string $url, Request $request): JsonResponse;
 }
