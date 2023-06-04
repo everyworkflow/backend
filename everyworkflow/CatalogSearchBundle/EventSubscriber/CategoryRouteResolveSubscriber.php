@@ -13,7 +13,7 @@ use EveryWorkflow\CatalogSearchBundle\Controller\CatalogSearchController;
 use EveryWorkflow\UrlRewriteBundle\Event\RouteResolveEventInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
-class CategoryRepositorySubscriber implements EventSubscriberInterface, CategoryRepositorySubscriberInterface
+class CategoryRouteResolveSubscriber implements EventSubscriberInterface, CategoryRouteResolveSubscriberInterface
 {
     public function __construct(
         protected CatalogCategoryRepositoryInterface $catalogCategoryRepository,

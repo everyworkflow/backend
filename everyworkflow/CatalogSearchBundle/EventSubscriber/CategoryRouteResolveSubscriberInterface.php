@@ -8,7 +8,7 @@ declare(strict_types=1);
 
 namespace EveryWorkflow\CatalogSearchBundle\EventSubscriber;
 
-interface CategoryRepositorySubscriberInterface
+interface CategoryRouteResolveSubscriberInterface
 {
     // Something
 }
