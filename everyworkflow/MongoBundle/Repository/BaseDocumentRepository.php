@@ -25,6 +25,7 @@ use MongoDB\Model\BSONArray;
 use MongoDB\Model\BSONDocument;
 use MongoDB\UpdateResult;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\Translation\Exception\NotFoundResourceException;
 
 class BaseDocumentRepository extends BaseRepository implements BaseDocumentRepositoryInterface
 {
@@ -435,7 +436,7 @@ class BaseDocumentRepository extends BaseRepository implements BaseDocumentRepos
     {
         $mongoItem = $this->getCollection()->findOne($filter, $options);
         if (!$mongoItem) {
-            throw new \Exception('Document not found under '.$this->getCollectionName());
+            throw new NotFoundResourceException('Document not found under '.$this->getCollectionName());
         }
 
         return $this->create($mongoItem);
