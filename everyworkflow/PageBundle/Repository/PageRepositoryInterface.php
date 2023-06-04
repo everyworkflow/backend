@@ -9,16 +9,8 @@ declare(strict_types=1);
 namespace EveryWorkflow\PageBundle\Repository;
 
 use EveryWorkflow\EavBundle\Repository\BaseEntityRepositoryInterface;
-use EveryWorkflow\PageBundle\Entity\PageEntityInterface;
 
 interface PageRepositoryInterface extends BaseEntityRepositoryInterface
 {
-    /**
-     * @throws \Exception
-     */
-    public function savePage(
-        PageEntityInterface $entity,
-        array $otherFilter = [],
-        array $otherOptions = []
-    ): PageEntityInterface;
+    // Something
 }
