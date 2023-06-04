@@ -35,7 +35,7 @@ class Mongo_2021_12_16_07_39_20_Page_Data_Seeder implements SeederInterface
             'meta_description' => 'EveryWorkflow meta description text',
             'meta_keyword' => 'every, workflow, everyworkflow, eCommerce, data platform, nepal',
         ]);
-        $this->pageRepository->savePage($page);
+        $this->pageRepository->saveOne($page);
 
         $page = $this->pageRepository->create([
             'title' => 'About',
@@ -50,7 +50,7 @@ class Mongo_2021_12_16_07_39_20_Page_Data_Seeder implements SeederInterface
             'meta_description' => 'EveryWorkflow meta description text',
             'meta_keyword' => 'every, workflow, everyworkflow, eCommerce, data platform, nepal',
         ]);
-        $this->pageRepository->savePage($page);
+        $this->pageRepository->saveOne($page);
 
         $page = $this->pageRepository->create([
             'title' => 'Contact',
@@ -65,7 +65,7 @@ class Mongo_2021_12_16_07_39_20_Page_Data_Seeder implements SeederInterface
             'meta_description' => 'EveryWorkflow meta description text',
             'meta_keyword' => 'every, workflow, everyworkflow, eCommerce, data platform, nepal',
         ]);
-        $this->pageRepository->savePage($page);
+        $this->pageRepository->saveOne($page);
 
         $page = $this->pageRepository->create([
             'title' => 'Privacy policy',
@@ -96,7 +96,7 @@ class Mongo_2021_12_16_07_39_20_Page_Data_Seeder implements SeederInterface
             'meta_description' => 'EveryWorkflow meta description text',
             'meta_keyword' => 'every, workflow, everyworkflow, eCommerce, data platform, nepal',
         ]);
-        $this->pageRepository->savePage($page);
+        $this->pageRepository->saveOne($page);
 
         $page = $this->pageRepository->create([
             'title' => 'Terms of use',
@@ -127,7 +127,7 @@ class Mongo_2021_12_16_07_39_20_Page_Data_Seeder implements SeederInterface
             'meta_description' => 'EveryWorkflow meta description text',
             'meta_keyword' => 'every, workflow, everyworkflow, eCommerce, data platform, nepal',
         ]);
-        $this->pageRepository->savePage($page);
+        $this->pageRepository->saveOne($page);
 
         return self::SUCCESS;
     }
