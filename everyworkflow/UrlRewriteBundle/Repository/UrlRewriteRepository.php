@@ -39,29 +39,4 @@ class UrlRewriteRepository extends BaseDocumentRepository implements UrlRewriteR
     {
         return $this->deleteByFilter(array_merge(['url' => $url], $otherFilter));
     }
-
-    /**
-     * @return UrlRewriteDocumentInterface[]
-     */
-    public function find(array $filter = [], array $options = []): array
-    {
-        $items = [];
-        $mongoData = $this->getCollection()->find($filter, $options);
-        /** @var \MongoDB\Model\BSONDocument $mongoItem */
-        foreach ($mongoData as $mongoItem) {
-            $items[] = $this->create($mongoItem->getArrayCopy());
-        }
-
-        return $items;
-    }
-
-    public function findOne(array $filter = [], array $options = []): UrlRewriteDocumentInterface
-    {
-        $mongoItem = $this->getCollection()->findOne($filter, $options);
-        if (!$mongoItem) {
-            throw new \Exception('Document not found under '.$this->collectionName);
-        }
-
-        return $this->create($mongoItem->getArrayCopy());
-    }
 }
