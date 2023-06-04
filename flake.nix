@@ -18,6 +18,8 @@
         php = "php82";
         withExtensions = [
           "process"
+          "pcntl"
+          "posix"
           "ctype"
           "dom"
           "simplexml"
