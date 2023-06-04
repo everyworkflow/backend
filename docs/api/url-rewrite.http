@@ -1,0 +1,23 @@
+# Home page
+GET {{REST_BASE_URL}}/api/url-rewrite/home
+Content-Type: application/json
+
+#------------------------------------------------------------
+
+# Catalog product
+GET {{REST_BASE_URL}}/api/url-rewrite/dicta-aliquam-sunt-voluptatem-nihil
+Content-Type: application/json
+
+#------------------------------------------------------------
+
+# Catalog category
+GET {{REST_BASE_URL}}/api/url-rewrite/doloribus-veritatis-pariatur
+Content-Type: application/json
+
+#------------------------------------------------------------
+
+# Catalog search
+GET {{REST_BASE_URL}}/api/catalog/search/doloribus-veritatis-pariatur
+Content-Type: application/json
+
+#------------------------------------------------------------
