@@ -64,7 +64,7 @@ class LoginController extends AbstractController
                         ],
                     ],
                 ],
-                '401' => [
+                '400' => [
                     'description' => 'Invalid credentials.',
                     'content' => [
                         'application/json' => [
@@ -95,9 +95,9 @@ class LoginController extends AbstractController
         if (!isset($data['username']) || !isset($data['password'])) {
             return new JsonResponse([
                 'title' => 'An error occurred',
-                'status' => 401,
+                'status' => 400,
                 'detail' => 'Enter valid credentials.',
-            ], 401);
+            ], 400);
         }
 
         try {
@@ -160,7 +160,7 @@ class LoginController extends AbstractController
                         ],
                     ],
                 ],
-                '401' => [
+                '400' => [
                     'description' => 'Invalid session token.',
                     'content' => [
                         'application/json' => [
@@ -191,9 +191,9 @@ class LoginController extends AbstractController
         if (!isset($data['session_token'])) {
             return new JsonResponse([
                 'title' => 'An error occurred',
-                'status' => 401,
+                'status' => 400,
                 'detail' => 'Invalid session token.',
-            ], 401);
+            ], 400);
         }
 
         try {
@@ -203,9 +203,9 @@ class LoginController extends AbstractController
         } catch (\Exception $e) {
             return new JsonResponse([
                 'title' => 'An error occurred',
-                'status' => 401,
+                'status' => 400,
                 'detail' => 'Invalid session token.',
-            ], 401);
+            ], 400);
         }
     }
 
@@ -256,7 +256,7 @@ class LoginController extends AbstractController
                         ],
                     ],
                 ],
-                '401' => [
+                '400' => [
                     'description' => 'Invalid session token or refresh token.',
                     'content' => [
                         'application/json' => [
@@ -287,9 +287,9 @@ class LoginController extends AbstractController
         if (!isset($data['session_token']) || !isset($data['refresh_token'])) {
             return new JsonResponse([
                 'title' => 'An error occurred',
-                'status' => 401,
+                'status' => 400,
                 'detail' => 'Invalid session token or refresh token.',
-            ], 401);
+            ], 400);
         }
 
         try {
@@ -299,9 +299,9 @@ class LoginController extends AbstractController
         } catch (\Exception $e) {
             return new JsonResponse([
                 'title' => 'An error occurred',
-                'status' => 401,
+                'status' => 400,
                 'detail' => $e->getMessage(),
-            ], 401);
+            ], 400);
         }
     }
 }
