@@ -10,7 +10,7 @@
         }
     ],
     "require": {
-        "symfony/asset": "6.2.*",
+        "symfony/asset": "6.3.*",
         "everyworkflow/eav-bundle": "*"
     },
     "autoload": {

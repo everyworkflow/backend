@@ -10,9 +10,9 @@
         }
     ],
     "require": {
-        "symfony/console": "6.2.*",
+        "symfony/console": "6.3.*",
         "lexik/jwt-authentication-bundle": "^2.16",
-        "symfony/security-bundle": "6.2.*",
+        "symfony/security-bundle": "6.3.*",
         "everyworkflow/mongo-bundle": "*"
     },
     "autoload": {
