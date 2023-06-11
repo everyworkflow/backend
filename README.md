@@ -6,24 +6,76 @@ A symfony based EveryWorkflow Server
 Version: Under Development `dev-main`
 
 
+## Env setup
+
+#### Self hosted
+
+```bash
+# Install php and extensions
+# Install symfony-cli
+symfony serve
+# Mongodb server need to be self hosted
+```
+
+#### Nix setup
+
+```bash
+mkdir ew && cd ew
+git clone https://github.com/everyworkflow/backend.git
+cd backend
+# Nix .envrc setup everythings
+bin/console
+symfony serve
+# Mongodb server need to be self hosted
+```
+
+#### Docker setup
+
+- https://github.com/readymadehost/symfony-dev-docker
+
+```bash
+# Create new dir
+mkdir everyworkflow
+cd everyworkflow
+# Clone symfony-dev-docker from https://github.com/readymadehost/symfony-dev-docker
+git clone https://github.com/readymadehost/symfony-dev-docker
+cd symfony-dev-docker
+# Clone backend project
+git clone https://github.com/everyworkflow/backend.git project
+# Copy docker files for symfony-dev-docker
+# Make sure docker is configured to use php8.2 and mongodb enabled in config
+cp project/symfony-dev-docker/.env ./.env
+cp project/symfony-dev-docker/docker-compose.yml ./docker-compose.yml
+# Build containers
+docker-compose build
+# Spin up development containers
+docker-compose up -d
+# Check status of development containers
+docker-compose ps
+# Get inside cli container
+docker-compose exec cli bash
+# Everything is included
+```
+
+
 ## Project setup
 
-- Install symfony-dev-docker from https://github.com/readymadehost/symfony-dev-docker
-- `git clone https://github.com/everyworkflow/everyworkflow-server.git project`
-- For docker setup use: `cp project/symfony-dev-docker/.env ./.env`
-- `cp project/symfony-dev-docker/docker-compose.yml ./docker-compose.yml`
-- Make sure docker is configured to use php8.2 and mongodb enabled
-- `docker-compose build` to build containers
-- `docker-compose up -d` to spin up development containers
-- `docker-compose ps` to check status of development containers
-- `docker-compose exec cli bash` to get inside cli container
-- `cp .env.sample .env`
-- `composer install` to install composer dependencies
-- `bin/console lexik:jwt:generate-keypair` to generate JWT keypair
-- `bin/console mongo:database:drop` to drop database
-- `bin/console mongo:migrate` to migrate mongo migrations
-- `bin/console mongo:sync` to sync mongo indexes
-- `mpp` to run `/root/manage-project-permission.sh`
+```bash
+# Copy .env
+cp .env.sample .env
+# Install composer dependencies
+composer install
+# Generate JWT keypair
+bin/console lexik:jwt:generate-keypair
+# Drop database if exists
+bin/console mongo:database:drop
+# Migrate mongo migrations
+bin/console mongo:migrate
+# Sync mongo indexes
+bin/console mongo:sync
+# Manage project permission
+mpp # /root/manage-project-permission.sh
+```
 
 
 ## Seeder
