@@ -20,7 +20,10 @@ symfony serve
 #### Nix setup
 
 ```bash
-mkdir ew && cd ew
+# Create new dir
+mkdir everyworkflow
+cd everyworkflow
+# Clone backend repository
 git clone https://github.com/everyworkflow/backend.git
 cd backend
 # Nix .envrc setup everythings
