@@ -103,14 +103,19 @@ bin/console mongo:seed:rollback -c "EveryWorkflow\EcommerceBundle\Seeder\Mongo_2
 
 #### Running symfony tests
 
-- `bin/console --env=test mongo:database:drop`
-- `bin/console --env=test mongo:migrate`
-- `bin/phpunit`
+```bash
+bin/console --env=test mongo:database:drop
+bin/console --env=test mongo:migrate
+bin/phpunit
+```
 
 #### Generating code coverage
 
-- `XDEBUG_MODE=coverage bin/phpunit --coverage-html public/test-html`
-- Visit: http://localhost:8080/test-html/index.html
+- http://localhost:8080/test-html/index.html
+
+```bash
+XDEBUG_MODE=coverage bin/phpunit --coverage-html public/test-html
+```
 
 
 ## Quick links
