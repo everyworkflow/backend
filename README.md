@@ -1,6 +1,6 @@
-# EveryWorkflow Server
+# Backend - EveryWorkflow
 
-A symfony based EveryWorkflow Server
+EveryWorkflow implementation of Symfony Backend.
 
 
 Version: Under Development `dev-main`
