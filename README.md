@@ -58,6 +58,8 @@ docker-compose ps
 # Get inside cli container
 docker-compose exec cli bash
 # Everything is included
+# Manage project permission
+mpp # /root/manage-project-permission.sh
 ```
 
 
@@ -76,8 +78,6 @@ bin/console mongo:database:drop
 bin/console mongo:migrate
 # Sync mongo indexes
 bin/console mongo:sync
-# Manage project permission
-mpp # /root/manage-project-permission.sh
 ```
 
 
