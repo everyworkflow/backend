@@ -106,6 +106,7 @@ bin/console mongo:seed:rollback -c "EveryWorkflow\EcommerceBundle\Seeder\Mongo_2
 ```bash
 bin/console --env=test mongo:database:drop
 bin/console --env=test mongo:migrate
+bin/console --env=test mongo:sync
 bin/phpunit
 ```
 
